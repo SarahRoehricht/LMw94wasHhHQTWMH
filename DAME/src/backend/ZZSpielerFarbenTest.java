@@ -12,26 +12,33 @@ public class ZZSpielerFarbenTest {
 	public void vorMethode(){
 		System.out.println("@Before");
 		String name;
-		Ki humorki;
-		FarbEnum farbe;
-		farbe=schwarz;
-		humorki="ki";
+	
+		FarbEnum farbe = null;
+		farbe=farbe.schwarz;
+	
 		name="egon";
 		
-		s=new Spieler(name, farbe, humorki);
+		s=new Spieler(name, farbe);
+		
 		
 	}
 	
 	@Test
 	public void SpielerCreation(){
-		
+		Spieler s2=new Spieler(new String ("Ebru"));
+		assertFalse(s.equals(s2));
 	}
 	
 	
 	@Test
 	public void SpielerFarbe() {
-	
-		assertTrue(erg=="schwarz");
+	FarbEnum erg=s.getFarbe();
+		assertTrue(erg==FarbEnum.schwarz);
+	}
+	@Test
+	public void SpielerFarbe2() {
+	FarbEnum erg=s.getFarbe();
+		assertTrue(erg!=FarbEnum.weiß);
 	}
 
 }
