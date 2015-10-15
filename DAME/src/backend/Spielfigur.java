@@ -47,6 +47,7 @@ public class Spielfigur {
 		return position;
 	}
 
+	
 	/**
 	 * 
 	 * @param Spielfeld position
