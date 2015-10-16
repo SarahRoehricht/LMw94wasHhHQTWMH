@@ -1,17 +1,17 @@
 package backend;
 
 public class SpielBrett {
-	private char Spielfelder[][];
+	private String Spielfelder;
 
-	SpielBrett(char Spielfelder[][]) {
+	SpielBrett(String Spielfelder) {
 		setSpielfelder(Spielfelder);
 	}
 
-	public char[][] getSpielfelder() {
+	public String getSpielfelder() {
 		return Spielfelder;
 	}
 
-	public void setSpielfelder(char[][] spielfelder) {
+	public void setSpielfelder(String spielfelder) {
 		Spielfelder = spielfelder;
 	}
 
