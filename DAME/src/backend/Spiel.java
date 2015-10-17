@@ -1,11 +1,13 @@
 package backend;
 
-public class Spiel implements iBediener{
+public class Spiel //implements iBediener
+{
 
 	
 	private SpielBrett spielbrett;
 	private static final int spielerMax = 2;
 	private Spieler[] spieler = new Spieler[spielerMax];
+	private int spielerBisher =0;
 	
 	
 	public Spiel(int i){
@@ -14,19 +16,39 @@ public class Spiel implements iBediener{
 
 
 	public Spiel() {
-		// TODO Auto-generated constructor stub
+	
 	}
 
-
+/**Fuegt einen Spieler dem Spieler Array hinzu. Max 2 Spieler
+ * 
+ * @param Spieler s1
+ */
 	public void add(Spieler s1) {
-		// TODO Auto-generated method stub
-		
+		if (spielerBisher >= 2) {
+			throw new RuntimeException("Maximale Spieleranzahl erreicht!");
+		} else if (spielerBisher == 0) {
+			spieler[0] = s1;
+			this.setSpielerBisher(++spielerBisher);
+		} else {
+			spieler[1] = s1;
+			this.setSpielerBisher(++spielerBisher);
+		}
 	}
 
 
 	public void move(Spieler s1, Spielfigur stein1, Spielfeld posxy) {
-		// TODO Auto-generated method stub
+	
 		
+	}
+
+
+	public int getSpielerBisher() {
+		return spielerBisher;
+	}
+
+
+	public void setSpielerBisher(int spielerBisher) {
+		this.spielerBisher = spielerBisher;
 	}
 
 

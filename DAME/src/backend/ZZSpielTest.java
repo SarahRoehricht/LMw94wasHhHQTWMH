@@ -35,14 +35,28 @@ public class ZZSpielTest {
 	}
 	
 	
-
+	//Testet Spieler add Funktion
+	@Test
+	public void testSpieleradd1(){
+		spiel=new Spiel();
+		spiel.add(s1);
+		assertTrue(spiel.getSpielerBisher()==1);
+	}
+	//Testet Spieler add Funktion
+	@Test
+	public void testSpieleradd2(){
+		spiel=new Spiel();
+		spiel.add(s1);
+		spiel.add(s2);
+		assertTrue(spiel.getSpielerBisher()==2);
+	}
 	// Testet Spieler auf unterschiedliche Farbe
 	@Test
 	public void testSpielerFarbe() {
 		spiel= new Spiel();
 		spiel.add(s1);
 		spiel.add(s2);
-			assertFalse(s1.getFarbe()==s2.getFarbe());
+			assertTrue(s1.getFarbe()!=s2.getFarbe());
 		
 		}
 		
