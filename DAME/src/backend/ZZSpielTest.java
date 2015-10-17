@@ -15,18 +15,19 @@ public class ZZSpielTest {
 	private Spieler s1;
 	private Spieler s2;
 	private Spieler s3;
-	private Object spiel;
+	private Spiel spiel;
 
 	@Before
 	public void vorTest(){
 		s1= new Spieler("Harald", FarbEnum.schwarz);
 		s2= new Spieler("Egon", FarbEnum.weiß);
+		
 	}
 	
 	// Testet gültige Spieleranzahl - 2 erlaubt
 	@Test(expected=RuntimeException.class)
 	public void testSpieleranzahl() {
-		
+		spiel= new Spiel();
 		s3=new Spieler("Heinrich", FarbEnum.schwarz);
 		spiel.add(s1);
 		spiel.add(s2);
@@ -38,7 +39,9 @@ public class ZZSpielTest {
 	// Testet Spieler auf unterschiedliche Farbe
 	@Test
 	public void testSpielerFarbe() {
-		
+		spiel= new Spiel();
+		spiel.add(s1);
+		spiel.add(s2);
 			assertFalse(s1.getFarbe()==s2.getFarbe());
 		
 		}
@@ -49,17 +52,19 @@ public class ZZSpielTest {
 		int i;
 		i=12;
 		
-		spiel(i);
-		String erg=SpielBrettarr[11][11];
+		spiel= new Spiel(i);
+		String erg=spiel.Spielbrettarr[11][11]; //!!!Ueberlegen wie man dies umsetzen kann.!!!
 		assertTrue(erg=="l12");
 		}
-//Testet SpielBrett erstellung, notation ende
+
+
+	//Testet SpielBrett erstellung, notation ende
 	@Test
 	public void testSpielBrettAnfang(){
 		int i;
 		i=12;
 		
-		Spiel(i);
+		spiel= new Spiel(i);
 		String erg=SpielBrettarr[0][0];
 		assertTrue(erg=="a1");
 		}
@@ -69,7 +74,7 @@ public class ZZSpielTest {
 		int i;
 		i=12;
 		
-		Spiel(i);
+		spiel= new Spiel(i);
 		String erg=SpielBrettarr[12][11];
 		}
 	//Testet Spielfigur initialisierung auf gueltigem Feld
@@ -77,6 +82,18 @@ public class ZZSpielTest {
 	public void testSpielfigurInit(){
 		
 		
+		
+	}
+	//Move Befehl testen
+	@Test
+	public void testMove1(){
+		int i =12;
+		spiel=new Spiel(i);
+		Spielfeld steinpos=new Spielfeld("b1");
+		Spielfigur stein1= new Spielfigur(FarbEnum.schwarz, steinpos);
+		Spielfeld posxy= new Spielfeld("a2");
+		spiel.move(s1, stein1, posxy);
+		assertTrue(stein1.getPosition()==posxy);
 		
 	}
 	
