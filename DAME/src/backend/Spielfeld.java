@@ -12,6 +12,13 @@ public class Spielfeld {
 	public Spielfeld(String id) {
 		this.setID(id);
 	}
+public Spielfeld(int i, int j) {
+		// TODO Auto-generated constructor stub
+	String c="";
+	c+=i;
+	c+=j;
+	this.setID(c);
+	}
 /**
  * 
  * @return String ID
