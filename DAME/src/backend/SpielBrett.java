@@ -1,37 +1,57 @@
 package backend;
-
+/**
+ * 
+ * @author A-2
+ * @version 0.0.3
+ */
 public class SpielBrett {
-	private char[][] Spielfelder = new char [12][12];
-	// private String Spielfelder
-
-	SpielBrett(char Spielfelder[][]) {
-		setSpielfelder(Spielfelder);
-	}
-
-	public char[][] getSpielfelder() {
-		return Spielfelder;
-	}
-
-	public void setSpielfelder(char[][] spielfelder) {
+	private Spielfeld[][] Brett;
+	public static int groesse = 12; // Setze nach Aufgabenstellung Größe auf 12
 	
-	for (int i = 0; i < spielfelder[i].length; i++) {
-		Spielfelder[i]=A(i++);
-		for (int j = 0; j < spielfelder.length; j++) {
-			Spielfelder[i][j]=B(j++);
+	
+	/**
+	 * 
+	 * @param groesse = 12
+	 */
+	SpielBrett(int groesse) {
+		Brett= new Spielfeld[groesse][groesse]; 
+		
+		this.fillBrett(); //unötige übergabe entfernt
+	}
+/**sets Spielfeld into Spielfeld array
+ * 
+ * @param groesse
+ */
+	private void fillBrett() { //benötigt keine Übergabe da Brett schon die groesse beinhaltet
+	
+	for (int i = Brett.length; i > -1; i--) {
+		
+		for (int j = 0; j < Brett[i].length; j++) {
+			
+			if(i%2==j%2)
+			{
+				Brett[i][j]=new Spielfeld(i, j);
+			}
+			
 		}
-		}
-		Spielfelder = spielfelder;
-		System.out.println(Spielfelder);
+	}
+		
+	}
+/**
+ * 
+ * @return Brett
+ */
+	public Spielfeld[][] getBrett() {
+		return Brett;
+	}
+/**
+ * 
+ * @param brett
+ */
+	public void setBrett(Spielfeld[][] brett) {
+		Brett = brett;
 	}
 
-	private char B(int i) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	private char[] A(int i) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+	
 
 }
