@@ -1,4 +1,5 @@
 package backend;
+
 /**
  * 
  * @author A2
@@ -6,33 +7,31 @@ package backend;
  */
 public class Spielfeld {
 
-	private String ID;
+	private int[] ID = new int[2];
 	private Spielfigur spielfigur;
 
-	public Spielfeld(String id) {
-		this.setID(id);
+
+	public Spielfeld(int i, int j) {
+		this.setID(i, j);
 	}
-public Spielfeld(int i, int j) {
-		// TODO Auto-generated constructor stub
-	String c="";
-	c+=i;
-	c+=j;
-	this.setID(c);
-	}
-/**
- * 
- * @return String ID
- */
-	public String getID() {
+
+	/**
+	 * 
+	 * @return String ID
+	 */
+	public int[] getID() {
 		return ID;
 	}
+
 	/**
 	 * 
 	 * @param iD
 	 */
-	public void setID(String iD) {
-		ID = iD;
+	public void setID(int posX, int posY) {
+		ID[0] = posX;
+		ID[1] = posY;
 	}
+
 	/**
 	 * 
 	 * @return Spielfigur spielfigur
@@ -40,6 +39,7 @@ public Spielfeld(int i, int j) {
 	public Spielfigur getSpielfigur() {
 		return spielfigur;
 	}
+
 	/**
 	 * 
 	 * @param spielfigur
@@ -48,4 +48,9 @@ public Spielfeld(int i, int j) {
 		this.spielfigur = spielfigur;
 	}
 
+	@Override
+	public String toString() {
+		return;
+
+	}
 }
