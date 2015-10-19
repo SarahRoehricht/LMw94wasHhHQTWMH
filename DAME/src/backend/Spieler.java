@@ -82,12 +82,4 @@ public class Spieler {
 		
 		return this.name; //Name Des Spielers
 	}
-	
-	/**
-	 * 
-	 * @param args
-	 */
-public static void main(String[] args) {
-	Spieler s1= new Spieler("Eberhard");
-	System.out.println(s1);
-}}
+}

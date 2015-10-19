@@ -16,7 +16,7 @@ public class Spiel //implements iBediener
 
 
 	public Spiel() {
-	
+	spielbrett=new SpielBrett();
 	}
 
 /**Fuegt einen Spieler dem Spieler Array hinzu. Max 2 Spieler
