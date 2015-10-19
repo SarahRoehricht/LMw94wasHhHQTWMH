@@ -34,8 +34,12 @@ public class SpielBrett {
 			for (int j = 0; j < Brett[i].length; j++) {
 
 				if (i % 2 == j % 2) {
-					Brett[i][j] = new Spielfeld(i, j);
+					Brett[i][j] = new Spielfeld(i, j, FarbEnum.schwarz);
 					System.out.print(Brett[i][j]+" "); 			//Print zum Testen
+				}
+				else{
+					Brett[i][j] = new Spielfeld(i, j, FarbEnum.weiß);
+					System.out.print(Brett[i][j]+" "); 		//Print zum Testen
 				}
 
 			}

@@ -9,12 +9,13 @@ public class Spielfeld {
 
 	private int posX, posY;
 	private Spielfigur spielfigur;
+	private FarbEnum farbe;
 
 
-	public Spielfeld(int i, int j) {
-		this.setPosX(i);
-		this.setPosY(j);
-	}
+//	public Spielfeld(int i, int j) {
+//		this.setPosX(i);
+//		this.setPosY(j);
+//	}
 
 	/**
 	 * 
@@ -32,6 +33,12 @@ public class Spielfeld {
 //		ID[0] = posX;
 //		ID[1] = posY;
 //	}
+
+	public Spielfeld(int i, int j, FarbEnum farbe) {
+		this.setPosX(i);
+		this.setPosY(j);
+		this.setFarbe(farbe);
+	}
 
 	/**
 	 * 
@@ -64,6 +71,14 @@ public class Spielfeld {
 	public void setPosY(int posY) {
 		this.posY = posY;
 	}
+public FarbEnum getFarbe() {
+		return farbe;
+	}
+
+	public void setFarbe(FarbEnum farbe) {
+		this.farbe = farbe;
+	}
+
 @Override
 public String toString() {
 	int c=this.getPosY()+1;
