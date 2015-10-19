@@ -80,7 +80,7 @@ public class Spieler {
 	@Override
 	public String toString() {
 		
-		return this.name; //Name Des Spielers
+		return this.name + "\n" + this.getFarbe(); //Name Des Spielers
 	}
 	
 	/**
