@@ -20,6 +20,9 @@ public class Spieler {
  * @param name
  */
 	public Spieler(String name) {//setzt Namen
+		if(name.length() <= 2){// überprüft auf korrekte Eingabe
+			throw new RuntimeException("Der Name ist zu kurz. Er muss mindestens 2 Buchstaben lang sein!");
+		}
 		this.setName(name);
 	}
 /**
@@ -82,12 +85,4 @@ public class Spieler {
 		
 		return this.name + "\n" + this.getFarbe(); //Name Des Spielers
 	}
-	
-	/**
-	 * 
-	 * @param args
-	 */
-public static void main(String[] args) {
-	Spieler s1= new Spieler("Eberhard");
-	System.out.println(s1);
-}}
+}

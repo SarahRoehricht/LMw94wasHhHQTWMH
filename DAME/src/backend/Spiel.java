@@ -16,7 +16,7 @@ public class Spiel implements iBediener
 
 
 	public Spiel() {
-	
+	spielbrett=new SpielBrett();
 	}
 
 /**Fuegt einen Spieler dem Spieler Array hinzu. Max 2 Spieler
@@ -32,6 +32,11 @@ public class Spiel implements iBediener
 		} else {
 			spieler[1] = s1;
 			this.setSpielerBisher(++spielerBisher);
+		}
+		if(spielerBisher == 2){// überprüft, dass kine zwei identischen Namen vergeben wurden
+			if(spieler[0].getName().equals(spieler[1].getName())){
+				throw new RuntimeException("Dieser Name ist bereits vergeben!");
+			}
 		}
 	}
 

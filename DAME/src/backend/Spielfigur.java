@@ -6,23 +6,26 @@ package backend;
  *
  */
 
-
 public class Spielfigur {
-	
+
 	private FarbEnum farbe;
 	private Spielfeld position;
-	
+	private boolean dame = false;
+
 	/**
 	 * 
-	 * @param FarbeEnum farbe 
-	 * @param Spielfeld position 
+	 * @param FarbeEnum
+	 *          farbe
+	 * @param Spielfeld
+	 *          position
 	 */
-	public Spielfigur(FarbEnum farbe,Spielfeld position){
-		
+	public Spielfigur(FarbEnum farbe, Spielfeld position) {
+
 		this.setFarbe(farbe);
 		this.setPosition(position);
-		
+
 	}
+
 	/**
 	 * 
 	 * @return Farbenum farbe
@@ -33,12 +36,13 @@ public class Spielfigur {
 
 	/**
 	 * 
-	 * @param Farbenum farbe
+	 * @param Farbenum
+	 *          farbe
 	 */
 	public void setFarbe(FarbEnum farbe) {
 		this.farbe = farbe;
 	}
-	
+
 	/**
 	 * 
 	 * @return Spielfeld position
@@ -47,12 +51,20 @@ public class Spielfigur {
 		return position;
 	}
 
-	
 	/**
 	 * 
-	 * @param Spielfeld position
+	 * @param Spielfeld
+	 *          position
 	 */
 	public void setPosition(Spielfeld position) {
 		this.position = position;
+	}
+
+	public boolean isDame() {
+		return dame;
+	}
+
+	public void setDame(boolean dame) {
+		this.dame = dame;
 	}
 }
