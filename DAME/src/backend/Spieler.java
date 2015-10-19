@@ -1,7 +1,7 @@
 package backend;
 /**
  * 
- * @author A-2 Gedrat, Carsten
+ * @author A-2
  * @Version 0.0.1
  *
  */
