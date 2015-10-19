@@ -1,6 +1,6 @@
 package backend;
 
-public class Spiel //implements iBediener
+public class Spiel implements iBediener
 {
 
 	
@@ -35,10 +35,21 @@ public class Spiel //implements iBediener
 		}
 	}
 
-
+//posxy gibt feld an auf das gezogen werden soll.
 	public void move(Spieler s1, Spielfigur stein1, Spielfeld posxy) {
-	
+		boolean hatGezogen=false;
+		boolean gegnerGeschlagen=false;
 		
+		while(posxy!=null && posxy.getSpielfigur()==null && ((hatGezogen==false && gegnerGeschlagen==false) || (hatGezogen==true && gegnerGeschlagen==true)))
+		{	
+			if(stein1.getPosition() != posxy )
+		stein1.setPosition(posxy);
+		hatGezogen=true;
+		//Überprüfung ob aus Stein eine Dame wird
+		stein1.getPosition().equals();
+		
+		}
+				
 	}
 
 
