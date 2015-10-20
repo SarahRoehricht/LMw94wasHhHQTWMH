@@ -38,8 +38,10 @@ public class Spielfeld {
 		this.setPosX(i);
 		this.setPosY(j);
 		this.setFarbe(farbe);
+//		kommentar test
 	}
 
+	
 	/**
 	 * 
 	 * @return Spielfigur spielfigur
