@@ -12,7 +12,7 @@ public class Spieler {
 /**
  * 
  */
-	public Spieler() {//default Konstruktor name leer.
+	private Spieler() {//default Konstruktor name leer.
 		this.setName("");
 	}
 /**
