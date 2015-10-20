@@ -1,5 +1,7 @@
 package backend;
 
 public enum FarbEnum {
-schwarz, weiß;
+schwarz, weiß, rosa;
+dgdfngcmhfmcmbcmaxzfdxd
+nht
 }
