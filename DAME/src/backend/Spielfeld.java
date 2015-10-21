@@ -44,7 +44,7 @@ public class Spielfeld {
 	 * 
 	 * @return Spielfigur spielfigur
 	 */
-	public Spielfigur getSpielfigur() {
+	public Spielfigur getSpielfigur(){
 		return spielfigur;
 	}
 
