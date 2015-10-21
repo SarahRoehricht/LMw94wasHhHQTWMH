@@ -40,6 +40,7 @@ public class Spiel implements iBediener {
 	}
 
 	// posxy gibt feld an auf das gezogen werden soll.
+	//Überlegung Methode move() in mehrere Methoden zu unterteilen!!
 	public void move(Spielfigur stein1, Spielfeld posxy) {
 		boolean hatGezogen = false;
 		boolean gegnerGeschlagen = false;
