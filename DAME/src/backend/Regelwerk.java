@@ -1,33 +1,77 @@
 package backend;
+
 /**
  * 
  * @author A2
  *
  */
 public class Regelwerk {
-/**
- * 
- * @param stein1
- * @param posxy
- */
-	// posxy gibt feld an auf das gezogen werden soll.
-	//Methode move() in mehrere Methoden zu unterteilen!!
+
+	/**
+	 * 
+	 * @param stein1
+	 * @param posxy
+	 */
 	public void move(Spielfigur stein1, Spielfeld posxy) {
 		boolean hatGezogen = false;
 		boolean gegnerGeschlagen = false;
 
-		while (posxy != null && posxy.getSpielfigur() == null && ((hatGezogen == false && gegnerGeschlagen == false) || (hatGezogen == true && gegnerGeschlagen == true))) {
+		while (istZugErlaubt(posxy) && ((!hatGezogen(hatGezogen) && !hatGeschlagen(gegnerGeschlagen)) || (hatGezogen(hatGezogen) && hatGeschlagen(gegnerGeschlagen)))) {
 			if (stein1.getPosition() != posxy)
 				stein1.setPosition(posxy);
 			hatGezogen = true;
-			// Überprüfung ob aus Stein eine Dame wird oder ob Stein schon Dame ist
-			if (stein1.isDame() != true) {
-				if (stein1.getPosition().getPosY() == 11 && stein1.getFarbe() == FarbEnum.weiß) {
-					// Wenn if-Bedingung erfüllt, dann wird Stein zur Dame
-				}
-				if (stein1.getPosition().getPosY() == 0 && stein1.getFarbe() == FarbEnum.schwarz) {
-					// Wenn if-Bedingung erfüllt, dann wird Stein zur Dame
-				}
+			wirdDame(stein1);
+		}
+	}
+
+	/**
+	 * 
+	 * @param posxy
+	 * @return
+	 */
+	public boolean istZugErlaubt(Spielfeld posxy) {
+		if (posxy != null && posxy.getSpielfigur() == null) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param hatGezogen
+	 * @return
+	 */
+	public boolean hatGezogen(boolean hatGezogen) {
+		if (hatGezogen) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param hatGeschlagen
+	 * @return
+	 */
+	public boolean hatGeschlagen(boolean hatGeschlagen) {
+		if (hatGeschlagen) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * 
+	 * @param stein1
+	 */
+	// Überprüfung ob aus Stein eine Dame wird oder ob Stein schon Dame ist
+	public void wirdDame(Spielfigur stein1) {
+		if (stein1.isDame() == false) {
+			if (stein1.getPosition().getPosY() == 11 && stein1.getFarbe() == FarbEnum.weiß) {
+				// Wenn if-Bedingung erfüllt, dann wird Stein zur Dame
+			}
+			if (stein1.getPosition().getPosY() == 0 && stein1.getFarbe() == FarbEnum.schwarz) {
+				// Wenn if-Bedingung erfüllt, dann wird Stein zur Dame
 			}
 		}
 	}
