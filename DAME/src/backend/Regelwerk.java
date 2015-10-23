@@ -102,7 +102,6 @@ public class Regelwerk {
 	 * @param akt_posxy
 	 * @return
 	 */
-
 	// überprüft, ob sich der Stein auf dem inneren Brett befindet
 	public boolean schlagenFeldGroesse(Spielfeld akt_posxy) {
 		for (int i = 0; i < schlagenMoeglichFelder().length; i++) {
