@@ -1,5 +1,5 @@
 package backend;
 
-public class Ki extends Spieler {
+public abstract class Ki {
 
 }
