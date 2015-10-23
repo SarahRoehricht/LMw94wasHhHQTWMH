@@ -98,8 +98,8 @@ public class Regelwerk {
 	}
 
 	/**
-	 *
-	 * @param posxy
+	 * 
+	 * @param akt_posxy
 	 * @return
 	 */
 
