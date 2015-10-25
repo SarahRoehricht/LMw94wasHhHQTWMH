@@ -18,8 +18,10 @@ public class Spiel implements iBediener {
 
 	
 	
-	/**Spielinitialisierung, fragt die Namen ab und generiert Spielbrett fuer den Spielbeginn
-	 * 
+	/**Spielinitialisierung, fragt die Namen ab und generiert Spieler fuer den Spielbeginn und Spielbrettausgabe
+	 *
+	 * @param Scanner scanner, String name1, String name2
+	 * creates 2 Spieler objects and calls this.add method with each of them one after another.
 	 */
 	public void welcome(){
 		System.out.println("Name Spieler 1:");
