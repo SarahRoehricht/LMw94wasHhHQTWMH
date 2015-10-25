@@ -18,7 +18,9 @@ public class Spiel implements iBediener {
 
 	
 	
-	
+	/**Spielinitialisierung, fragt die Namen ab und generiert Spielbrett fuer den Spielbeginn
+	 * 
+	 */
 	public void welcome(){
 		System.out.println("Name Spieler 1:");
 		Scanner scanner= new Scanner(System.in);

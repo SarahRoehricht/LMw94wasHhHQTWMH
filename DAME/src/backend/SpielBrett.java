@@ -35,15 +35,15 @@ public class SpielBrett {
 
 				if (i % 2 == j % 2) {
 					Brett[i][j] = new Spielfeld(j, i , FarbEnum.schwarz);
-					System.out.print(Brett[i][j]+" "); 			//Print zum Testen
+					
 				}
 				else{
 					Brett[i][j] = new Spielfeld(j, i, FarbEnum.weiß);
-					System.out.print(Brett[i][j]+" "); 		//Print zum Testen
+					
 				}
 
 			}
-			System.out.println(); //Zeile fuer Print-Test Formatierung
+			
 		}
 
 	}
