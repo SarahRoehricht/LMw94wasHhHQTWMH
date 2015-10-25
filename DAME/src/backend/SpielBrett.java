@@ -18,7 +18,7 @@ public class SpielBrett {
 	SpielBrett() {
 		Brett = new Spielfeld[groesse][groesse];
 
-		this.fillBrett(); // unötige übergabe entfernt
+		this.fillBrett(); 
 	}
 
 	/**
@@ -34,11 +34,11 @@ public class SpielBrett {
 			for (int j = 0; j < Brett[i].length; j++) {
 
 				if (i % 2 == j % 2) {
-					Brett[i][j] = new Spielfeld(i, j, FarbEnum.schwarz);
+					Brett[i][j] = new Spielfeld(j, i , FarbEnum.schwarz);
 					System.out.print(Brett[i][j]+" "); 			//Print zum Testen
 				}
 				else{
-					Brett[i][j] = new Spielfeld(i, j, FarbEnum.weiß);
+					Brett[i][j] = new Spielfeld(j, i, FarbEnum.weiß);
 					System.out.print(Brett[i][j]+" "); 		//Print zum Testen
 				}
 
@@ -63,7 +63,10 @@ public class SpielBrett {
 	public void setBrett(Spielfeld[][] brett) {
 		Brett = brett;
 	}
-
+/** goes through every Element of 2-D Spielfeld Brett Array and uses toString()
+ * 
+ * @return Brett[i][j].toString();
+ */
 	public String printBrett() {
 		for (int i = Brett.length - 1; i > -1; i--) {
 
@@ -77,7 +80,9 @@ public class SpielBrett {
 		}
 		return null;
 	}
-
+/**Funktion printBrett wird aufgerufen
+ * @return this.printBrett 
+ */
 	@Override
 	public String toString() {
 		

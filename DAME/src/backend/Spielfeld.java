@@ -101,15 +101,29 @@ public class Spielfeld {
 	 * @param farbe
 	 */
 	public void setFarbe(FarbEnum farbe) {
+		
 		this.farbe = farbe;
+		if(this.posY<5 && farbe==FarbEnum.schwarz){
+			this.spielfigur= new Spielfigur(FarbEnum.weiß, this); 
+			
+		}
+		if(this.posY>6 && farbe==FarbEnum.schwarz){
+			this.spielfigur= new Spielfigur(FarbEnum.schwarz, this); 
+			
+		}
 	}
-
+/**gibt Position in Schach Notation aus, mit der Information der Spielfigur die sich darauf befindet
+ * Override toString
+ */
 	@Override
 	public String toString() {
 		int c = this.getPosY() + 1;
 		char d = 97;
 		d += getPosX();
-
-		return "" + d + c;
+		if(this.spielfigur!=null){
+		return "" + d + c +spielfigur+"\t";
+	}else{
+		return "" + d + c+"\t";
+	}
 	}
 }

@@ -14,10 +14,10 @@ public class Spielfigur {
 
 	/**
 	 * 
-	 * @param FarbeEnum
-	 *          farbe
-	 * @param Spielfeld
-	 *          position
+	 * @param FarbeEnum farbe
+	 *          
+	 * @param Spielfeld position
+	 *          
 	 */
 	public Spielfigur(FarbEnum farbe, Spielfeld position) {
 
@@ -66,5 +66,20 @@ public class Spielfigur {
 
 	public void setDame(boolean dame) {
 		this.dame = dame;
+	}
+	/** gibt |O|, |x| v "farblos zurueck bei Weiss, schwarz oder bei falschem aufruf
+	 * @return |O|, |x| v "farblos
+	 */
+	@Override
+	public String toString() {
+		if(farbe== FarbEnum.weiß){
+			return "|O|";
+		}
+		else if(farbe==FarbEnum.schwarz){
+			return "|X|";	
+		}
+		else{
+			return "farblos";
+		}
 	}
 }
