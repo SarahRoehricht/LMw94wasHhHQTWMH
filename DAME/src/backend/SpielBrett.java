@@ -72,13 +72,14 @@ public class SpielBrett {
 
 			for (int j = 0; j < Brett[i].length; j++) {
 
-				if (i % 2 == j % 2) {
-					return Brett[i][j].toString();
-				}
+				//if (i % 2 == j % 2) {
+					System.out.print( Brett[i][j]);
+				//}
 				
 			}
+			System.out.println();
 		}
-		return null;
+		return "" ;
 	}
 /**Funktion printBrett wird aufgerufen
  * @return this.printBrett 

@@ -11,7 +11,6 @@ public class SpielTest implements iBediener{
 	public static void main(String[] args) {
 		
 	Spiel spiel= new Spiel();
-
 	}
 }
 

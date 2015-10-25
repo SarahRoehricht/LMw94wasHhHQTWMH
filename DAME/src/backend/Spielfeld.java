@@ -121,7 +121,8 @@ public class Spielfeld {
 		char d = 97;
 		d += getPosX();
 		if(this.spielfigur!=null){
-		return "" + d + c +spielfigur+"\t";
+		return "" + d + c +spielfigur+"\t";							
+		//	return spielfigur+"\t"; //Meinung? das hier vielleicht besser?
 	}else{
 		return "" + d + c+"\t";
 	}
