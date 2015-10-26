@@ -6,5 +6,5 @@ public interface iBediener {
 	 void welcome();
 	 int getSpielerBisher();
 	 void setSpielerBisher(int spielerBisher);
-	 void move(Spielfigur stein1, Spielfeld posxy); // mit vererbung über spiel ändern kein interface für 2 klassen.
+	 void move(Spielfigur stein1, Spielfeld posxy); 
 }
