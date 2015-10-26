@@ -23,7 +23,13 @@ public class Regelwerk {
 			wirdDame(stein1);
 		}
 	}
-
+	
+	public void moveDame(Spielfigur dame, Spielfeld posxy){
+		for(int posx = 0; posx <=  ;posx ++)
+		dame.getPosition();
+		
+	}
+	
 	/**
 	 * 
 	 * @param posxy
