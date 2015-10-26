@@ -1,5 +1,7 @@
 package backend;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author A2
@@ -32,8 +34,50 @@ public Regelwerk(Spiel spiel){
 	}
 	
 	public void moveDame(Spielfigur dame, Spielfeld posxy){
-		for(int posx = 0; posx <=  ;posx ++)
-		dame.getPosition();
+		ArrayList <Spielfeld> möglicheFelder = new ArrayList<>();
+		boolean gegnerischerStein = false;
+		//Alle Felder von Dame diagonal nach rechts oben
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse ;positionx ++){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse; positiony++){
+				positionx = dame.getPosition().getPosX()+1;
+				positiony = dame.getPosition().getPosY()+1;
+				
+				//Überprüfung ob gegenerischer Stein auf einem der Felder
+			
+				//Überprüfung ob Platz hinter gegenerischem Stein frei ist
+				
+				//Überprüfung ob eigener Stein auf einem der Felder
+				
+			}
+		}
+		
+		//Alle Felder von Dame nach links oben
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse-11 ;positionx--){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse; positiony++){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+				
+		//Alle Felder von Dame nach rechts unten
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse ;positionx ++){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse-11; positiony--){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+		
+		//Alle Felder von Dame nach links unten
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse-11 ;positionx--){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse-11; positiony--){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+		
+		if(möglicheFelder.contains(posxy)){
+			dame.setPosition(posxy);
+		}
 		
 	}
 	
