@@ -5,15 +5,30 @@ import java.util.Scanner;
 public class Spiel implements iBediener {
 
 	private SpielBrett spielbrett;
+	public SpielBrett getSpielbrett() {
+		return spielbrett;
+	}
+
+
+
+	public void setSpielbrett(SpielBrett spielbrett) {
+		this.spielbrett = spielbrett;
+	}
+
+
+
 	private static final int spielerMax = 2;
 	private Spieler[] spieler = new Spieler[spielerMax];
 	private int spielerBisher = 0;
+	private Regelwerk regelwerk;
+	private Scanner scanner= new Scanner(System.in);
 
 
 
 	public Spiel() {
 		spielbrett = new SpielBrett();
 		this.welcome();
+		regelwerk=new Regelwerk(this);
 	}
 
 	
@@ -25,7 +40,6 @@ public class Spiel implements iBediener {
 	 */
 	public void welcome(){
 		System.out.println("Name Spieler 1:");
-		Scanner scanner= new Scanner(System.in);
 		String name1=scanner.next();
 //		System.out.println("Mensch oder KI?");				Hum/Ki Abfrage implementieren
 //		String ki1=scanner.next();							
@@ -48,7 +62,34 @@ public class Spiel implements iBediener {
 		System.out.println("Moege das Spiel beginnen!");
 		
 		System.out.println(spielbrett);
+		System.out.println(player1.getName()+" - "+"'"+player1.getFarbe() +"'"+" faengt an!");
+		act(player1);
 	}
+	
+	private void act(Spieler player1) {
+		System.out.println(player1 +"ist am Zug!");
+		System.out.println("Eingabe Startfeld:");
+		String coorda=scanner.nextLine();
+		
+		System.out.println("Eingabe Zielfeld:");
+		String coordb=scanner.nextLine();
+		
+		
+		
+		
+		
+		
+		if(spieler[0]==player1){
+			act(spieler[1]);
+		}
+		else if(spieler[1]==player1){
+			act(spieler[0]);
+		}
+		
+	}
+
+
+
 	/**
 	 * Fuegt einen Spieler dem Spieler Array hinzu. Max 2 Spieler
 	 * 
@@ -80,6 +121,17 @@ public class Spiel implements iBediener {
 
 	public void setSpielerBisher(int spielerBisher) {
 		this.spielerBisher = spielerBisher;
+	}
+
+
+
+	public void move(Spielfigur stein1, Spielfeld posxy) {
+		
+		
+		regelwerk.move(stein1, posxy);
+		
+		System.out.println(stein1.getFarbe()+"er" + "Spieler am Zug.");
+		
 	}
 
 }
