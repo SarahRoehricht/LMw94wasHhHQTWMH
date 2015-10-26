@@ -6,6 +6,13 @@ package backend;
  *
  */
 public class Regelwerk {
+	
+	private Spiel spiel;
+	
+public Regelwerk(Spiel spiel){
+	this.setSpiel(spiel);
+}
+
 
 	/**
 	 * 
@@ -112,6 +119,12 @@ public class Regelwerk {
 			}
 		}
 		return false;
+	}
+	public Spiel getSpiel() {
+		return spiel;
+	}
+	public void setSpiel(Spiel spiel) {
+		this.spiel = spiel;
 	}
 
 }

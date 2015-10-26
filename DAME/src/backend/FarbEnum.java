@@ -1,6 +1,18 @@
 package backend;
 
 public enum FarbEnum {
-	schwarz, weiß;
+	schwarz {
+		@Override
+		public String toString() {
+			
+			return "schwarz";
+		}
+	}, weiß {
+		@Override
+		public String toString() {
+			
+			return "weiß";
+		}
+	};
 	
 }
