@@ -36,16 +36,34 @@ public class Regelwerk {
 	
 	public void moveDame(Spielfigur dame, Spielfeld posxy){
 		ArrayList <Spielfeld> möglicheFelder = new ArrayList<>();
-		boolean gegnerischerStein = false;
+		
 		//Alle Felder von Dame diagonal nach rechts oben
 		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse ;positionx ++){
 			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse; positiony++){
-				positionx = dame.getPosition().getPosX()+1;
-				positiony = dame.getPosition().getPosY()+1;
+				int i = 1;
+				int j = 1;
+				int posiX = dame.getPosition().getPosX()+i;
+				int posiY =  dame.getPosition().getPosY()+j;
+				i++;
+				j++;
+
+				Spielfeld[][] tempBrett = spiel.getSpielbrett().getBrett();
+				
+				if(tempBrett[posiX][posiY].getSpielfigur() == null){
+				möglicheFelder.add();
+				}
+				
+				//Überprüfung ob Eingabe posxy in ArrayList möglicheFelder enthalten ist
+				
 				
 				//Überprüfung ob gegenerischer Stein auf einem der Felder
-			
-				//Überprüfung ob Platz hinter gegenerischem Stein frei ist
+				if (tempBrett[posiX][posiY].getSpielfigur() != null){
+					if(tempBrett[posiX][posiY].getSpielfigur().getFarbe()==dame.getFarbe()){
+					//Überprüfung ob Platz hinter gegenerischem Stein frei ist
+					
+					}
+				}
+				
 				
 				//Überprüfung ob eigener Stein auf einem der Felder
 				
