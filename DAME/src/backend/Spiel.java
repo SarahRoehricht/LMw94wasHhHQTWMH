@@ -5,6 +5,18 @@ import java.util.Scanner;
 public class Spiel implements iBediener {
 
 	private SpielBrett spielbrett;
+	public SpielBrett getSpielbrett() {
+		return spielbrett;
+	}
+
+
+
+	public void setSpielbrett(SpielBrett spielbrett) {
+		this.spielbrett = spielbrett;
+	}
+
+
+
 	private static final int spielerMax = 2;
 	private Spieler[] spieler = new Spieler[spielerMax];
 	private int spielerBisher = 0;
@@ -53,12 +65,14 @@ public class Spiel implements iBediener {
 		System.out.println(player1.getName()+" - "+"'"+player1.getFarbe() +"'"+" faengt an!");
 		act(player1);
 	}
+	
 	private void act(Spieler player1) {
 		System.out.println(player1 +"ist am Zug!");
 		System.out.println("Eingabe Startfeld:");
-		Coord1=scanner.nextLine();
+		String coorda=scanner.nextLine();
 		
-		
+		System.out.println("Eingabe Zielfeld:");
+		String coordb=scanner.nextLine();
 		
 		
 		
