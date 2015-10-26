@@ -34,6 +34,7 @@ public class SpielBrett {
 			for (int j = 0; j < Brett[i].length; j++) {
 
 				if (i % 2 == j % 2) {
+				
 					Brett[i][j] = new Spielfeld(j, i , FarbEnum.schwarz);
 					
 				}
