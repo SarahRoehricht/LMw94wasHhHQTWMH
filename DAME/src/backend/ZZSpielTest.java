@@ -67,7 +67,7 @@ public class ZZSpielTest {
 		i=12;
 		
 		spiel= new Spiel(i);
-		String erg=spiel.Spielbrettarr[11][11]; //!!!Ueberlegen wie man dies umsetzen kann.!!!
+		String erg=; //!!!Ueberlegen wie man dies umsetzen kann.!!!
 		assertTrue(erg=="l12");
 		}
 
