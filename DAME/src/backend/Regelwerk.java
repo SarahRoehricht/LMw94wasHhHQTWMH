@@ -1,18 +1,21 @@
 package backend;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author A2
  *
  */
 public class Regelwerk {
-	
-	private Spiel spiel;
-	
-public Regelwerk(Spiel spiel){
-	this.setSpiel(spiel);
-}
 
+	private Spiel spiel;
+	private Spielfigur spielfigur;
+	private Spielfeld spielfeld;
+
+	public Regelwerk(Spiel spiel) {
+		this.setSpiel(spiel);
+	}
 
 	/**
 	 * 
@@ -30,7 +33,73 @@ public Regelwerk(Spiel spiel){
 			wirdDame(stein1);
 		}
 	}
+	
+	public void moveDame(Spielfigur dame, Spielfeld posxy){
+		ArrayList <Spielfeld> möglicheFelder = new ArrayList<>();
+		
+		//Alle Felder von Dame diagonal nach rechts oben
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse ;positionx ++){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse; positiony++){
+				int i = 1;
+				int j = 1;
+				int posiX = dame.getPosition().getPosX()+i;
+				int posiY =  dame.getPosition().getPosY()+j;
+				i++;
+				j++;
 
+				Spielfeld[][] tempBrett = spiel.getSpielbrett().getBrett();
+				
+				if(tempBrett[posiX][posiY].getSpielfigur() == null){
+				möglicheFelder.add();
+				}
+				
+				//Überprüfung ob Eingabe posxy in ArrayList möglicheFelder enthalten ist
+				
+				
+				//Überprüfung ob gegenerischer Stein auf einem der Felder
+				if (tempBrett[posiX][posiY].getSpielfigur() != null){
+					if(tempBrett[posiX][posiY].getSpielfigur().getFarbe()==dame.getFarbe()){
+					//Überprüfung ob Platz hinter gegenerischem Stein frei ist
+					
+					}
+				}
+				
+				
+				//Überprüfung ob eigener Stein auf einem der Felder
+				
+			}
+		}
+		
+		//Alle Felder von Dame nach links oben
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse-11 ;positionx--){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse; positiony++){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+				
+		//Alle Felder von Dame nach rechts unten
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse ;positionx ++){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse-11; positiony--){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+		
+		//Alle Felder von Dame nach links unten
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse-11 ;positionx--){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse-11; positiony--){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+		
+		if(möglicheFelder.contains(posxy)){
+			dame.setPosition(posxy);
+		}
+		
+	}
+	
 	/**
 	 * 
 	 * @param posxy
@@ -82,27 +151,21 @@ public Regelwerk(Spiel spiel){
 			}
 		}
 	}
-	
-	
-	
+
 	/**
 	 * 
 	 * @return
 	 */
-	// schließt die äußerste Reihe des Brettes aus. Hier ist grundsätzlich kein Schlagen möglich
-	public Spielfeld[][] schlagenMoeglichFelder() {
-		Spielfeld[][] zulaessig = new Spielfeld[11][11];
-		for (int i = zulaessig.length - 1; i >= 1; i--) {
-			for (int j = 1; j < zulaessig[i].length; j++) {
-				if (i % 2 == j % 2) {
-					zulaessig[i][j] = new Spielfeld(i, j, FarbEnum.schwarz);
-				} else {
-					zulaessig[i][j] = new Spielfeld(i, j, FarbEnum.weiß);
-				}
-			}
-		}
-		return zulaessig;
-	}
+	// schließt die äußerste Reihe des Brettes aus. Hier ist grundsätzlich kein
+	// Schlagen möglich
+	/*
+	 * public Spielfeld[][] schlagenMoeglichFelder() { Spielfeld[][] zulaessig =
+	 * new Spielfeld[11][11]; for (int i = zulaessig.length - 1; i >= 1; i--) {
+	 * for (int j = 1; j < zulaessig[i].length; j++) { if (i % 2 == j % 2) {
+	 * zulaessig[i][j] = new Spielfeld(i, j, FarbEnum.schwarz); } else {
+	 * zulaessig[i][j] = new Spielfeld(i, j, FarbEnum.weiß); } } } return
+	 * zulaessig; }
+	 */
 
 	/**
 	 * 
@@ -110,21 +173,42 @@ public Regelwerk(Spiel spiel){
 	 * @return
 	 */
 	// überprüft, ob sich der Stein auf dem inneren Brett befindet
-	public boolean schlagenFeldGroesse(Spielfeld akt_posxy) {
-		for (int i = 0; i < schlagenMoeglichFelder().length; i++) {
-			for (int j = 0; j < schlagenMoeglichFelder()[i].length; j++) {
-				if (akt_posxy == schlagenMoeglichFelder()[i][j]) {
-					return true;
-				}
-			}
-		}
-		return false;
-	}
+//	public boolean schlagenFeldGroesse(Spielfeld akt_posxy) {
+//		for (int i = 0; i < schlagenMoeglichFelder().length; i++) {
+//			for (int j = 0; j < schlagenMoeglichFelder()[i].length; j++) {
+//				if (akt_posxy == schlagenMoeglichFelder()[i][j]) {
+//					return true;
+//				}
+//			}
+//		}
+//		return false;
+//	}
+
 	public Spiel getSpiel() {
 		return spiel;
 	}
+
 	public void setSpiel(Spiel spiel) {
 		this.spiel = spiel;
+	}
+
+	public boolean removeStein(Spielfeld spielfeld) {
+		Spielfigur temp = spielfeld.getSpielfigur();
+		temp.setPosition(null);
+		spielfeld.setSpielfigur(null);
+		return true;
+	}
+
+	public boolean schlagen() {
+
+		move(spielfigur, spielfeld);
+		removeStein(spielfeld);
+
+		if (removeStein(spielfeld) == true) {
+			return true;
+		}
+
+		return false;
 	}
 
 }
