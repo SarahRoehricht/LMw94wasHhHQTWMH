@@ -1,5 +1,7 @@
 package backend;
 
+import java.util.ArrayList;
+
 /**
  * 
  * @author A2
@@ -31,7 +33,73 @@ public class Regelwerk {
 			wirdDame(stein1);
 		}
 	}
+	
+	public void moveDame(Spielfigur dame, Spielfeld posxy){
+		ArrayList <Spielfeld> möglicheFelder = new ArrayList<>();
+		
+		//Alle Felder von Dame diagonal nach rechts oben
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse ;positionx ++){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse; positiony++){
+				int i = 1;
+				int j = 1;
+				int posiX = dame.getPosition().getPosX()+i;
+				int posiY =  dame.getPosition().getPosY()+j;
+				i++;
+				j++;
 
+				Spielfeld[][] tempBrett = spiel.getSpielbrett().getBrett();
+				
+				if(tempBrett[posiX][posiY].getSpielfigur() == null){
+				möglicheFelder.add();
+				}
+				
+				//Überprüfung ob Eingabe posxy in ArrayList möglicheFelder enthalten ist
+				
+				
+				//Überprüfung ob gegenerischer Stein auf einem der Felder
+				if (tempBrett[posiX][posiY].getSpielfigur() != null){
+					if(tempBrett[posiX][posiY].getSpielfigur().getFarbe()==dame.getFarbe()){
+					//Überprüfung ob Platz hinter gegenerischem Stein frei ist
+					
+					}
+				}
+				
+				
+				//Überprüfung ob eigener Stein auf einem der Felder
+				
+			}
+		}
+		
+		//Alle Felder von Dame nach links oben
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse-11 ;positionx--){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse; positiony++){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+				
+		//Alle Felder von Dame nach rechts unten
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse ;positionx ++){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse-11; positiony--){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+		
+		//Alle Felder von Dame nach links unten
+		for(int positionx = dame.getPosition().getPosX(); positionx <= spiel.getSpielbrett().groesse-11 ;positionx--){
+			for(int positiony = dame.getPosition().getPosY(); positiony <= spiel.getSpielbrett().groesse-11; positiony--){
+				Spielfeld feld = new Spielfeld(positionx, positiony, null);
+				möglicheFelder.add(feld);
+			}
+		}
+		
+		if(möglicheFelder.contains(posxy)){
+			dame.setPosition(posxy);
+		}
+		
+	}
+	
 	/**
 	 * 
 	 * @param posxy
