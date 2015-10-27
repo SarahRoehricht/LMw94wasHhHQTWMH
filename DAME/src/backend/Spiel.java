@@ -31,12 +31,11 @@ public class Spiel implements iBediener {
 		String name1 = scanner.next();
 		System.out.println("KI? - y/n");
 		String ki1 = scanner.next();
-		System.out.println(ki1);
 		String kiabfrage = new String("y");
 		while (ki1.equals(kiabfrage)) { // Ki funktionsfaehig machen!
 			System.out.println("Ki noch nicht funktionsfaehig :(");
 			System.out.println("KI? - y/n");
-			kiabfrage = scanner.next();
+			ki1 = scanner.next();
 		}
 		Spieler player1 = new Spieler(name1, FarbEnum.weiß);
 		add(player1);
@@ -45,14 +44,13 @@ public class Spiel implements iBediener {
 		String name2 = scanner.next();
 		System.out.println("KI? - y/n");
 		String ki2 = scanner.next();
-		System.out.println(ki1);
 		String kiabfrage2 = "y";
 		while (ki2.equals(kiabfrage2)) {
 			System.out.println("Ki noch nicht funktionsfaehig :(");// Ki
 																															// funktionsfaehig
 																															// machen!
 			System.out.println("KI? - y/n");
-			kiabfrage = scanner.next();
+			ki2 = scanner.next();
 		}
 
 		Spieler player2 = new Spieler(name2, FarbEnum.schwarz);
