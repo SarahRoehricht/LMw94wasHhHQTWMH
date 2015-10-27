@@ -7,22 +7,24 @@ package backend;
  */
 
 public class Spielfigur {
-
+	private ZustandEnum zustand;
 	private FarbEnum farbe;
 	private Spielfeld position;
 	private boolean dame = false;
 
 	/**
 	 * 
+	 * @param sstein 
 	 * @param FarbeEnum farbe
 	 *          
 	 * @param Spielfeld position
 	 *          
 	 */
-	public Spielfigur(FarbEnum farbe, Spielfeld position) {
+	public Spielfigur(FarbEnum farbe, Spielfeld position, ZustandEnum Stein) {
 
 		this.setFarbe(farbe);
 		this.setPosition(position);
+		this.setZustand(Stein);
 
 	}
 
@@ -67,6 +69,14 @@ public class Spielfigur {
 	public void setDame(boolean dame) {
 		this.dame = dame;
 	}
+	public ZustandEnum getZustand() {
+		return zustand;
+	}
+
+	public void setZustand(ZustandEnum zustand) {
+		this.zustand = zustand;
+	}
+
 	/** gibt |O|, |x| v "farblos zurueck bei Weiss, schwarz oder bei falschem aufruf
 	 * @return |O|, |x| v "farblos
 	 */
@@ -79,7 +89,7 @@ public class Spielfigur {
 			return "|X|";	
 		}
 		else{
-			return "farblos";
+			return "|_|";
 		}
 	}
 }

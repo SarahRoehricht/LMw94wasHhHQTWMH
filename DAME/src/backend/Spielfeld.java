@@ -39,12 +39,15 @@ public class Spielfeld {
 		this.setFarbe(farbe);
 		
 		if(this.getPosY()<5 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, this));
+			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, this, ZustandEnum.WStein));
 			
 		}
-		if(this.getPosY()>6 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, this)); 
+		else if(this.getPosY()>6 && this.getFarbe()==FarbEnum.schwarz){
+			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, this, ZustandEnum.SStein)); 
 			
+		}
+		else{
+			this.setSpielfigur(new Spielfigur(FarbEnum.nichts, this, ZustandEnum.nichts));
 		}
 		// kommentar test
 	}
@@ -120,14 +123,15 @@ public class Spielfeld {
  */
 	@Override
 	public String toString() {
-		int c = this.getPosY() + 1;
-		char d = 97;
-		d += getPosX();
-		if(this.spielfigur!=null){
-		return "" + d + c +spielfigur+"\t";							
+		//int c = this.getPosY() + 1;
+		//char d = 97;
+		//d += getPosX();
+		//if(this.spielfigur!=null){
+		//return "" + d + c +spielfigur+"\t";				
+		return spielfigur+"\t";			
 		//	return spielfigur+"\t"; //Meinung? das hier vielleicht besser?
-	}else{
-		return "" + d + c+"\t";
-	}
+	//}else{
+		//return "" + d + c+"\t";
+	//}
 	}
 }

@@ -13,6 +13,6 @@ public enum FarbEnum {
 			
 			return "weiß";
 		}
-	};
+	}, nichts;
 	
 }

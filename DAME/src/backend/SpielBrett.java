@@ -69,8 +69,16 @@ public class SpielBrett {
  * @return Brett[i][j].toString();
  */
 	public String printBrett() {
+		char cd= 97;
+		System.out.print("\t");
+		for (int i = 0; i < Brett.length; i++) {
+			System.out.print(cd+"\t");
+			cd++;
+		}
+		System.out.println();
+		int d=12;
 		for (int i = Brett.length - 1; i > -1; i--) {
-
+System.out.print(d+"\t");
 			for (int j = 0; j < Brett[i].length; j++) {
 
 				//if (i % 2 == j % 2) {
@@ -78,7 +86,16 @@ public class SpielBrett {
 				//}
 				
 			}
+			System.out.print(d+"\t");
 			System.out.println();
+			
+			d--;
+		}
+		char c= 97;
+		System.out.print("\t");
+		for (int i = 0; i < Brett.length; i++) {
+			System.out.print(c+"\t");
+			c++;
 		}
 		return "" ;
 	}

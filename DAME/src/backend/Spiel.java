@@ -29,22 +29,32 @@ public class Spiel implements iBediener {
 		Scanner scanner = new Scanner(System.in);
 		System.out.println("Name Spieler 1:");
 		String name1 = scanner.next();
-		// System.out.println("Mensch oder KI?"); Hum/Ki Abfrage implementieren
-		// String ki1=scanner.next();
-		// System.out.println(ki1);
-		// String kiname=new String("ki");
-		// while(ki1==kiname){ diese While-Schleife funktioniert noch nicht
-		// ki1!=kiname wenn Eingabe ki ist, liegt das an der Enter-Taste beim
-		// Scanner?
-		// System.out.println("Ki noch nicht funktionsfaehig :(");
-		// System.out.println("Mensch oder KI?");
-		// name1=scanner.next();
-		// }
+		System.out.println("KI? - y/n");
+		String ki1 = scanner.next();
+		System.out.println(ki1);
+		String kiabfrage = new String("y");
+		while (ki1.equals(kiabfrage)) { // Ki funktionsfaehig machen!
+			System.out.println("Ki noch nicht funktionsfaehig :(");
+			System.out.println("KI? - y/n");
+			kiabfrage = scanner.next();
+		}
 		Spieler player1 = new Spieler(name1, FarbEnum.weiß);
 		add(player1);
 
 		System.out.println("Name Spieler 2:");
 		String name2 = scanner.next();
+		System.out.println("KI? - y/n");
+		String ki2 = scanner.next();
+		System.out.println(ki1);
+		String kiabfrage2 = "y";
+		while (ki2.equals(kiabfrage2)) {
+			System.out.println("Ki noch nicht funktionsfaehig :(");// Ki
+																															// funktionsfaehig
+																															// machen!
+			System.out.println("KI? - y/n");
+			kiabfrage = scanner.next();
+		}
+
 		Spieler player2 = new Spieler(name2, FarbEnum.schwarz);
 		add(player2);
 
@@ -54,33 +64,54 @@ public class Spiel implements iBediener {
 		System.out.println(player1.getName() + " - " + "'" + player1.getFarbe() + "'" + " faengt an!");
 		act(player1);
 		scanner.reset();
-		
+
 	}
 
 	public void act(Spieler player1) {
+		// ----v----------------v-----------------#----------v-----------TEST--------v------
+
+		Spielfeld[][] abc = spielbrett.getBrett();
+
+		for (int i = abc.length - 1; i > -1; i--) {
+
+			for (int j = 0; j < abc[i].length; j++) {
+
+				if (abc[i][j].getSpielfigur() != null) {
+					System.out.print("X " + i + "/" + j + "\t");
+				} else {
+					System.out.print("O " + i + "/" + j + "\t");
+				}
+
+			}
+			System.out.println("");
+		}
+
+		// -----^---------------^-----------------#-----------^-----------TEST--------^---
+		// spaeter loeschen!
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(player1 + " ist am Zug!");
+
 		System.out.println("Eingabe Startfeld:");
 		String coorda = scanner.nextLine();
 		Spielfeld startfeld = EingabeSpielfeld(coorda);
-		if (startfeld.getSpielfigur() == null) {
-			System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda+ "!");// Muss
-																																		// zurueckSpringen
-																																		// zu
-																																		// Eingabe
-																																		// Startfeld.
-																																		// Fehlt die
-																																		// Implementierung.
-		} else if (startfeld.getSpielfigur() != null) {
+		if (startfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
+			System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");// Muss
+			// zurueckSpringen
+			// zu
+			// Eingabe
+			// Startfeld.
+			// Fehlt die
+			// Implementierung.
+		} else {
 
-			Spielfigur startSF = startfeld.getSpielfigur();
+			// Spielfigur startSF = startfeld.getSpielfigur();
 			System.out.println("Eingabe Zielfeld:");
 			String coordb = scanner.nextLine();
-			Spielfeld Zielfeld = EingabeSpielfeld(coordb);
+			// Spielfeld Zielfeld =EingabeSpielfeld(coordb) ;
 
-			move(startSF, Zielfeld);
+			move(startfeld.getSpielfigur(), EingabeSpielfeld(coordb));
 
-	}
+		}
 		if (spieler[0] == player1) {
 			act(spieler[1]);
 		} else if (spieler[1] == player1) {
@@ -93,12 +124,11 @@ public class Spiel implements iBediener {
 	private Spielfeld EingabeSpielfeld(String coord) {
 		char Stelle1 = coord.charAt(0);
 		int Stelle2 = coord.charAt(1);
-		int Stelle1X = ((int) Stelle1 )- 97;
-		int Stelle2Y = Stelle2 - 48;
-		Spielfeld[][] spielfelder= spielbrett.getBrett();
-		
-		
-		Spielfeld spielfeld=spielfelder[Stelle1X][Stelle2Y];
+		int Stelle1X = ((int) Stelle1) - 97;
+		int Stelle2Y = Stelle2 - 49;
+		Spielfeld[][] spielfelder = spielbrett.getBrett();
+
+		Spielfeld spielfeld = spielfelder[Stelle2Y][Stelle1X];
 		return spielfeld;
 	}
 
@@ -126,20 +156,23 @@ public class Spiel implements iBediener {
 		}
 	}
 
+	public void move(Spielfigur stein1, Spielfeld posxy) {
+		System.out.println(stein1);
+		System.out.println(posxy);
+
+		// if(regelwerk.legitmove){
+		regelwerk.move(stein1, posxy);
+		// }
+		System.out.println(stein1.getFarbe() + "er" + "Spieler am Zug.");
+
+	}
+
 	public int getSpielerBisher() {
 		return spielerBisher;
 	}
 
 	public void setSpielerBisher(int spielerBisher) {
 		this.spielerBisher = spielerBisher;
-	}
-
-	public void move(Spielfigur stein1, Spielfeld posxy) {
-
-		regelwerk.move(stein1, posxy);
-
-		System.out.println(stein1.getFarbe() + "er" + "Spieler am Zug.");
-
 	}
 
 	public SpielBrett getSpielbrett() {
