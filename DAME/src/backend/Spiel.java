@@ -7,6 +7,8 @@ public class Spiel implements iBediener {
 	private SpielBrett spielbrett;
 
 	private static final int spielerMax = 2;
+
+	private boolean Siegkondition = false;
 	private Spieler[] spieler = new Spieler[spielerMax];
 	private int spielerBisher = 0;
 	private Regelwerk regelwerk;
@@ -60,45 +62,136 @@ public class Spiel implements iBediener {
 
 		System.out.println(spielbrett);
 		System.out.println(player1.getName() + " - " + "'" + player1.getFarbe() + "'" + " faengt an!");
-		act(player1);
 		scanner.reset();
-
+		playerRotation(player1, player2);
 	}
 
 	public void act(Spieler player1) {
+		// boolean actdone=false;
+		// while(actdone==true){
 		Scanner scanner = new Scanner(System.in);
-		System.out.println(player1 + " ist am Zug!");
 
 		System.out.println("Eingabe Startfeld:");
 		String coorda = scanner.nextLine();
 		Spielfeld startfeld = EingabeSpielfeld(coorda);
-		if (startfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
-			System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");// Muss
-			// zurueckSpringen
-			// zu
-			// Eingabe
-			// Startfeld.
-			// Fehlt die
-			// Implementierung.
-		} else {
+		// test ob die While Schleife darunter nur mit der if abfrage funktioniert,
+		// und dies hier mit implementiert.
+		// if(startfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
+		// System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
+		// System.out.println("Eingabe Startfeld:");
+		// String coorda2 = scanner.nextLine();
+		// Spielfeld startfeldtemp=EingabeSpielfeld(coorda2);
+		// startfeld=startfeldtemp;
+		// }
 
-			// Spielfigur startSF = startfeld.getSpielfigur();
-			System.out.println("Eingabe Zielfeld:");
-			String coordb = scanner.nextLine();
-			// Spielfeld Zielfeld =EingabeSpielfeld(coordb) ;
-
-			move(startfeld.getSpielfigur(), EingabeSpielfeld(coordb));
-
+		while (!startfeld.getSpielfigur().getFarbe().equals(player1.getFarbe())) {
+			if (startfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
+				System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
+				System.out.println("Eingabe Startfeld:");
+				String coorda2 = scanner.nextLine();
+				Spielfeld startfeldtemp = EingabeSpielfeld(coorda2);
+				startfeld = startfeldtemp;
+			} else {
+				System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
+				System.out.println("Eingabe Startfeld:");
+				String coorda2 = scanner.nextLine();
+				Spielfeld startfeldtemp = EingabeSpielfeld(coorda2);
+				startfeld = startfeldtemp;
+			}
 		}
-		if (spieler[0] == player1) {
-			
-			act(spieler[1]);
-		} else if (spieler[1] == player1) {
-		
-			act(spieler[0]);
-		}
-		
 
+		System.out.println("Eingabe Zielfeld:");
+		String coordb = scanner.nextLine();
+		Spielfeld zielfeld = EingabeSpielfeld(coordb);
+		if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().getZustand() == ZustandEnum.WStein) {
+			if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																						// move
+																																																						// right
+																																																						// up
+																																																						// legit
+				// if(regelwerk.legitmove()){
+				move(startfeld.getSpielfigur(), zielfeld);
+				// }
+			}
+			if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																						// move
+																																																						// left
+																																																						// up
+																																																						// legit
+				// if(regelwerk.legitmove()){
+				move(startfeld.getSpielfigur(), zielfeld);
+				// }
+			} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) { // Zielfeld:
+																																																										// move
+																																																										// left
+																																																										// down
+																																																										// not
+																																																										// legit
+				System.out.println("ungueltiger Zug!");
+			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																									// move
+																																																									// right
+																																																									// down
+																																																									// not
+																																																									// legit
+				System.out.println("ungueltiger Zug!");
+			}
+		}
+		if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().getZustand() == ZustandEnum.SStein) {
+			if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																						// move
+																																																						// left
+																																																						// down
+																																																						// legit
+				// if(regelwerk.legitmove()){
+				move(startfeld.getSpielfigur(), zielfeld);
+				// }
+			}
+			if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																						// move
+																																																						// right
+																																																						// down
+																																																						// legit
+				// if(regelwerk.legitmove()){
+				move(startfeld.getSpielfigur(), zielfeld);
+				// }
+			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																									// move
+																																																									// right
+																																																									// up
+																																																									// not
+																																																									// legit
+				System.out.println("ungueltiger Zug!");
+			} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																									// move
+																																																									// left
+																																																									// up
+																																																									// not
+																																																									// legit
+			} else if (startfeld.getPosX() == zielfeld.getPosX() && startfeld.getPosY() == zielfeld.getPosY()) {// Zielfeld=Startfeld
+																																																					// syso,
+																																																					// back
+																																																					// to
+																																																					// act.
+				System.out.println("Startfeld ist gleiches Feld wie Zielfeld");
+				// break;
+			}
+		}
+
+		// }
+
+	}
+
+	private void playerRotation(Spieler player1, Spieler player2) {
+
+		while (Siegkondition != true) {
+			System.out.println(player1 + " ist am Zug!");
+			act(player1);
+			System.out.println(player2 + " ist am Zug!");
+			act(player2);
+		}
+
+		System.out.println("Spiel zuende!"); // Sieger ermitteln
 	}
 
 	private Spielfeld EingabeSpielfeld(String coord) {
@@ -137,18 +230,13 @@ public class Spiel implements iBediener {
 	}
 
 	public void move(Spielfigur stein1, Spielfeld posxy) {
-		System.out.println(stein1);
-		System.out.println(posxy.getSpielfigur());
 
-		// if(regelwerk.legitmove()){
 		posxy.getSpielfigur().setZustand(stein1.getZustand());
 		posxy.getSpielfigur().setFarbe(stein1.getFarbe());
 		stein1.setFarbe(FarbEnum.nichts);
 		stein1.setZustand(ZustandEnum.nichts);
-		
-		// }
-	
-		System.out.println(posxy.getSpielfigur().getFarbe() + " er" + "Spieler am Zug.");
+
+		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur().getZustand() + ") " + stein1.getPosition().getSchachNotation() + " -> " + posxy.getSchachNotation());
 		System.out.println(spielbrett);
 	}
 
@@ -166,5 +254,13 @@ public class Spiel implements iBediener {
 
 	public void setSpielbrett(SpielBrett spielbrett) {
 		this.spielbrett = spielbrett;
+	}
+
+	public boolean isSiegkondition() {
+		return Siegkondition;
+	}
+
+	public void setSiegkondition(boolean siegkondition) {
+		Siegkondition = siegkondition;
 	}
 }

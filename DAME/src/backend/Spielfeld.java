@@ -118,6 +118,20 @@ public class Spielfeld {
 		
 	
 	}
+	
+	/**Gibt String als Schachnotation zurueck
+	 * 
+	 * @return String d+c
+	 */
+	public String getSchachNotation(){
+	int c = this.getPosY() + 1;
+			char d = 97;
+			d += getPosX();
+		return "" + d + c+"";
+		
+		
+		
+	}
 /**gibt Position in Schach Notation aus, mit der Information der Spielfigur die sich darauf befindet
  * Override toString
  */
