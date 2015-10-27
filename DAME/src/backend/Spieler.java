@@ -83,6 +83,6 @@ public class Spieler {
 	@Override
 	public String toString() {
 		
-		return this.name + "\n" + this.getFarbe(); //Name Des Spielers
+		return this.name + ", '" + this.getFarbe()+"'"; //Name Des Spielers + Farbe
 	}
 }

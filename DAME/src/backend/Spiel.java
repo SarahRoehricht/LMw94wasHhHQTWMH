@@ -68,26 +68,6 @@ public class Spiel implements iBediener {
 	}
 
 	public void act(Spieler player1) {
-		// ----v----------------v-----------------#----------v-----------TEST--------v------
-
-		Spielfeld[][] abc = spielbrett.getBrett();
-
-		for (int i = abc.length - 1; i > -1; i--) {
-
-			for (int j = 0; j < abc[i].length; j++) {
-
-				if (abc[i][j].getSpielfigur() != null) {
-					System.out.print("X " + i + "/" + j + "\t");
-				} else {
-					System.out.print("O " + i + "/" + j + "\t");
-				}
-
-			}
-			System.out.println("");
-		}
-
-		// -----^---------------^-----------------#-----------^-----------TEST--------^---
-		// spaeter loeschen!
 		Scanner scanner = new Scanner(System.in);
 		System.out.println(player1 + " ist am Zug!");
 
@@ -113,11 +93,13 @@ public class Spiel implements iBediener {
 
 		}
 		if (spieler[0] == player1) {
+			
 			act(spieler[1]);
 		} else if (spieler[1] == player1) {
+		
 			act(spieler[0]);
 		}
-		scanner.close();
+		
 
 	}
 
@@ -158,13 +140,18 @@ public class Spiel implements iBediener {
 
 	public void move(Spielfigur stein1, Spielfeld posxy) {
 		System.out.println(stein1);
-		System.out.println(posxy);
+		System.out.println(posxy.getSpielfigur());
 
-		// if(regelwerk.legitmove){
-		regelwerk.move(stein1, posxy);
+		// if(regelwerk.legitmove()){
+		posxy.getSpielfigur().setZustand(stein1.getZustand());
+		posxy.getSpielfigur().setFarbe(stein1.getFarbe());
+		stein1.setFarbe(FarbEnum.nichts);
+		stein1.setZustand(ZustandEnum.nichts);
+		
 		// }
-		System.out.println(stein1.getFarbe() + "er" + "Spieler am Zug.");
-
+	
+		System.out.println(posxy.getSpielfigur().getFarbe() + " er" + "Spieler am Zug.");
+		System.out.println(spielbrett);
 	}
 
 	public int getSpielerBisher() {
