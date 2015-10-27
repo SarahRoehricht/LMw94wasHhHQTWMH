@@ -17,6 +17,21 @@ public class Regelwerk {
 		this.setSpiel(spiel);
 	}
 
+	// --------v----------------v---------v--------------v------------------#Test#--------v----------------v---------v--------------v------------------
+
+	public boolean legitmove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+
+		if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().getZustand() == ZustandEnum.WStein) {
+			if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {
+
+				return true;
+			}
+		}
+		return false;
+	}
+
+	// --------v----------------v---------v--------------v------------------#Test#--------v----------------v---------v--------------v------------------
+	//spaeter loeschen!
 	/**
 	 * 
 	 * @param stein1
