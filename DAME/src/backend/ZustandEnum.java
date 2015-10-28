@@ -1,7 +1,6 @@
 package backend;
 
-public enum ZustandEnum {
-	nichts, SStein {
+public enum ZustandEnum { Stein {
 		@Override
 		public String toString() {
 
@@ -10,22 +9,8 @@ public enum ZustandEnum {
 	}
 
 	,
-	WStein {
-		@Override
-		public String toString() {
-
-			return "Stein";
-		}
-	},
-	SDame {
-
-		@Override
-		public String toString() {
-
-			return "Dame";
-		}
-	},
-	WDame {
+	
+	Dame {
 		@Override
 		public String toString() {
 

@@ -39,16 +39,14 @@ public class Spielfeld {
 		this.setFarbe(farbe);
 		
 		if(this.getPosY()<5 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, ZustandEnum.WStein));
+			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, false));
 			
 		}
 		else if(this.getPosY()>6 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, ZustandEnum.SStein)); 
+			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, false)); 
 			
 		}
-		else{
-			this.setSpielfigur(new Spielfigur(FarbEnum.nichts, ZustandEnum.nichts));
-		}
+		
 		// kommentar test
 	}
 
@@ -141,9 +139,12 @@ public class Spielfeld {
 		//char d = 97;
 		//d += getPosX();
 		//if(this.spielfigur!=null){
-		//return "" + d + c +spielfigur+"\t";				
+		//return "" + d + c +spielfigur+"\t";	
+		if(this.spielfigur==null){
+			return "|_| \t";
+		}else{
 		return spielfigur+"\t";			
-		//	return spielfigur+"\t"; //Meinung? das hier vielleicht besser?
+		}//	return spielfigur+"\t"; //Meinung? das hier vielleicht besser?
 	//}else{
 		//return "" + d + c+"\t";
 	//}

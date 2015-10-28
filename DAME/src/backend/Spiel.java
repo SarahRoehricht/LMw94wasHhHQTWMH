@@ -16,7 +16,7 @@ public class Spiel implements iBediener {
 	public Spiel() {
 		this.setSpielbrett(new SpielBrett());
 		this.welcome();
-		regelwerk = new Regelwerk(this);
+		this.regelwerk = new Regelwerk(this);
 	}
 
 	/**
@@ -94,31 +94,20 @@ public class Spiel implements iBediener {
 					break;
 				}
 				Spielfeld startfeld = EingabeSpielfeld(coorda);
-				// test ob die While Schleife darunter nur mit der if abfrage
-				// funktioniert,
-				// und dies hier mit implementiert.
-				// if(startfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
-				// System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda +
-				// "!");
-				// System.out.println("Eingabe Startfeld:");
-				// String coorda2 = scanner.nextLine();
-				// Spielfeld startfeldtemp=EingabeSpielfeld(coorda2);
-				// startfeld=startfeldtemp;
-				// }
-
-				while (!startfeld.getSpielfigur().getFarbe().equals(player1.getFarbe())) {
-					if (startfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
-						System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
-						System.out.println("Eingabe Startfeld:");
-						String coorda2 = scanner.nextLine();
-						Spielfeld startfeldtemp = EingabeSpielfeld(coorda2);
-						startfeld = startfeldtemp;
-					} else {
-						System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
-						System.out.println("Eingabe Startfeld:");
-						String coorda2 = scanner.nextLine();
-						Spielfeld startfeldtemp = EingabeSpielfeld(coorda2);
-						startfeld = startfeldtemp;
+				while (startfeld.getSpielfigur() == null) {
+					System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
+					System.out.println("Eingabe Startfeld:");
+					String coorda2 = scanner.nextLine();
+					Spielfeld startfeldtemp = EingabeSpielfeld(coorda2);
+					startfeld = startfeldtemp;
+					if (startfeld.getSpielfigur() != null) {
+						while (!startfeld.getSpielfigur().getFarbe().equals(player1.getFarbe())) {
+							System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
+							System.out.println("Eingabe Startfeld:");
+							coorda2 = scanner.nextLine();
+							startfeldtemp = EingabeSpielfeld(coorda2);
+							startfeld = startfeldtemp;
+						}
 					}
 				}
 
@@ -131,100 +120,113 @@ public class Spiel implements iBediener {
 				if (startfeld.equals(zielfeld)) {
 					System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
 					break;
+
 				}
-				if (zielfeld.getSpielfigur().getZustand() != ZustandEnum.nichts) {
+
+				if (zielfeld.getSpielfigur() != null) {
 					System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
 					break;
 				}
-				if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().getZustand() == ZustandEnum.WStein) {
-					if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {// Zielfeld:
-						// move
-						// right
-						// up
-						// legit
-						// if(regelwerk.legitmove(player1,startfeld,zielfeld)==true){
-						move(startfeld, zielfeld);
-						// }
-					} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {// Zielfeld:
-						// move
-						// left
-						// up
-						// legit
-						// if(regelwerk.legitmove()){
-						move(startfeld, zielfeld);
-						// }
-					} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) { // Zielfeld:
+				if(startfeld.getSpielfigur().isDame()==true){
+				if (doMoveStein(player1, startfeld, zielfeld)==false) {
+					System.out.println("ungueltiger Zug!");
+					break;
+				} else {
+			
+				}}
+
+				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+
+					if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+						if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+							// move
+							// right
+							// up
+							// legit
+							// if(regelwerk.legitmove(player1,startfeld,zielfeld)==true){
+							move(startfeld, zielfeld);
+							// }
+						} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+							// move
+							// left
+							// up
+							// legit
+							// if(regelwerk.legitmove()){
+							move(startfeld, zielfeld);
+							// }
+						} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) { // Zielfeld:
+																																																													// move
+																																																													// left
+																																																													// down
+																																																													// not
+																																																													// legit
+							System.out.println("ungueltiger Zug!");
+							break;
+						} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
 																																																												// move
-																																																												// left
+																																																												// right
 																																																												// down
 																																																												// not
 																																																												// legit
-						System.out.println("ungueltiger Zug!");
-						break;
-					} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
-																																																											// move
-																																																											// right
-																																																											// down
-																																																											// not
-																																																											// legit
-						System.out.println("ungueltiger Zug!");
-						break;
-					} else if (startfeld.getPosX() == zielfeld.getPosX() || startfeld.getPosY() == zielfeld.getPosY()) {
-						System.out.println("ungueltiger Zug");
-						break;
-					}
+							System.out.println("ungueltiger Zug!");
+							break;
+						} else if (startfeld.getPosX() == zielfeld.getPosX() || startfeld.getPosY() == zielfeld.getPosY()) {
+							System.out.println("ungueltiger Zug");
+							break;
+						}
 
-					else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:Top
-																																																																																										// right
-																																																																																										// 1
-																																																																																										// Figur
-																																																																																										// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
-							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
+						else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																												// right
+																																																												// 1
+																																																												// Figur
+																																																												// ueberspringen
+							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
+							} else {
+								System.out.println("ungueltiger Zug!");
+								break;
+							}
+						} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																													// left
+																																																													// 1
+																																																													// Figur
+																																																													// ueberspringen
+							if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
+							} else {
+								System.out.println("ungueltiger Zug!");
+								break;
+							}
+						} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																													// right
+																																																													// 1
+																																																													// Figur
+																																																													// ueberspringen
+							if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
+							} else {
+								System.out.println("ungueltiger Zug!");
+								break;
+							}
+						} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																													// left
+																																																													// 1
+																																																													// Figur
+																																																													// ueberspringen
+							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
+							} else {
+								System.out.println("ungueltiger Zug!");
+								break;
+							}
 						} else {
 							System.out.println("ungueltiger Zug!");
 							break;
 						}
-					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
-																																																																																											// left
-																																																																																											// 1
-																																																																																											// Figur
-																																																																																											// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosX() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
-							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
-						} else {
-							System.out.println("ungueltiger Zug!");
-							break;
-						}
-					} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
-																																																																																											// right
-																																																																																											// 1
-																																																																																											// Figur
-																																																																																											// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
-							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
-						} else {
-							System.out.println("ungueltiger Zug!");
-							break;
-						}
-					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:Top
-																																																																																											// left
-																																																																																											// 1
-																																																																																											// Figur
-																																																																																											// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
-							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
-						} else {
-							System.out.println("ungueltiger Zug!");
-							break;
-						}
-					} else {
-						System.out.println("ungueltiger Zug!");
-						break;
 					}
 				}
 
-				if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().getZustand() == ZustandEnum.SStein && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
+				if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().isDame() == false) {
 					if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
 																																																								// move
 																																																								// left
@@ -233,7 +235,7 @@ public class Spiel implements iBediener {
 						// if(regelwerk.legitmove()){
 						move(startfeld, zielfeld);
 						// }
-					} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {// Zielfeld:
+					} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
 						// move
 						// right
 						// down
@@ -258,45 +260,45 @@ public class Spiel implements iBediener {
 					} else if (startfeld.getPosX() == zielfeld.getPosX() || startfeld.getPosY() == zielfeld.getPosY()) {
 						System.out.println("ungueltiger Zug");
 						break;
-					} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:Top
-																																																																																											// right
-																																																																																											// 1
-																																																																																											// Figur
-																																																																																											// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
+					} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																												// right
+																																																												// 1
+																																																												// Figur
+																																																												// ueberspringen
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
 						} else {
 							System.out.println("ungueltiger Zug!");
 							break;
 						}
-					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
-																																																																																											// left
-																																																																																											// 1
-																																																																																											// Figur
-																																																																																											// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosX() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
+					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																												// left
+																																																												// 1
+																																																												// Figur
+																																																												// ueberspringen
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosX() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
 						} else {
 							System.out.println("ungueltiger Zug!");
 							break;
 						}
-					} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
-																																																																																											// right
-																																																																																											// 1
-																																																																																											// Figur
-																																																																																											// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
+					} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																												// right
+																																																												// 1
+																																																												// Figur
+																																																												// ueberspringen
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
 						} else {
 							System.out.println("ungueltiger Zug!");
 							break;
 						}
-					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:Top
-																																																																																											// left
-																																																																																											// 1
-																																																																																											// Figur
-																																																																																											// ueberspringen
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
+					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																												// left
+																																																												// 1
+																																																												// Figur
+																																																												// ueberspringen
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
 						} else {
 							System.out.println("ungueltiger Zug!");
@@ -314,6 +316,185 @@ public class Spiel implements iBediener {
 
 		// }
 
+	}
+
+	private boolean doMoveStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+
+			if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+					// move
+					// right
+					// up
+					// legit
+					// if(regelwerk.legitmove(player1,startfeld,zielfeld)==true){
+					move(startfeld, zielfeld);
+					// }
+				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+					// move
+					// left
+					// up
+					// legit
+					// if(regelwerk.legitmove()){
+					move(startfeld, zielfeld);
+					// }
+				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) { // Zielfeld:
+																																																											// move
+																																																											// left
+																																																											// down
+																																																											// not
+																																																											// legit
+					
+					return false;
+				} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																										// move
+																																																										// right
+																																																										// down
+																																																										// not
+																																																										// legit
+					
+					return false;
+				} else if (startfeld.getPosX() == zielfeld.getPosX() || startfeld.getPosY() == zielfeld.getPosY()) {
+					
+					return false;
+				}
+
+				else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																										// right
+																																																										// 1
+																																																										// Figur
+																																																										// ueberspringen
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
+					} else {
+						
+						return false;
+					}
+				} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																											// left
+																																																											// 1
+																																																											// Figur
+																																																											// ueberspringen
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
+					} else {
+						
+						return false;
+					}
+				} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																											// right
+																																																											// 1
+																																																											// Figur
+																																																											// ueberspringen
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
+					} else {
+						
+						return false;
+					}
+				} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																											// left
+																																																											// 1
+																																																											// Figur
+																																																											// ueberspringen
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
+					} else {
+						
+						return false;
+					}
+				} else {
+					
+					return false;
+				}
+			}
+		
+		}
+
+		if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().isDame() == false) {
+			if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																						// move
+																																																						// left
+																																																						// down
+																																																						// legit
+				// if(regelwerk.legitmove()){
+				move(startfeld, zielfeld);
+				// }
+			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+				// move
+				// right
+				// down
+				// legit
+				// if(regelwerk.legitmove()){
+				move(startfeld, zielfeld);
+				// }
+			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																									// move
+																																																									// right
+																																																									// up
+																																																									// not
+																																																									// legit
+				
+				return false;
+			} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																																																									// move
+																																																									// left
+				 // up
+				return false; // not
+				// legit
+			} else if (startfeld.getPosX() == zielfeld.getPosX() || startfeld.getPosY() == zielfeld.getPosY()) {
+				System.out.println("ungueltiger Zug");
+				return false;
+			} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																										// right
+																																																										// 1
+																																																										// Figur
+																																																										// ueberspringen
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
+				} else {
+					
+					return false;
+				}
+			} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																										// left
+																																																										// 1
+																																																										// Figur
+																																																										// ueberspringen
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosX() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
+				} else {
+					
+					return false;
+				}
+			} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+																																																										// right
+																																																										// 1
+																																																										// Figur
+																																																										// ueberspringen
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
+				} else {
+					
+					return false;
+				}
+			} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+																																																										// left
+																																																										// 1
+																																																										// Figur
+																																																										// ueberspringen
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().isDame() == false && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
+				} else {
+					
+					return false;
+				}
+			} else {
+				
+				return false;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -368,15 +549,12 @@ public class Spiel implements iBediener {
 	 * @param LoeschSteinAufFeld
 	 */
 	private void schlagen(Spielfeld startfeld, Spielfeld zielfeld, Spielfeld LoeschSteinAufFeld) {
-		System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe() + ",(" + startfeld.getSpielfigur().getZustand() + ") " + startfeld.getSchachNotation() + " -> " + zielfeld.getSchachNotation() + "(" + LoeschSteinAufFeld.getSpielfigur().getZustand() + ") auf Feld: "
-				+ LoeschSteinAufFeld.getSchachNotation() + " geschlagen");
+		System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe() + ",(" + startfeld.getSpielfigur() + ") " + startfeld.getSchachNotation() + " -> " + zielfeld.getSchachNotation() + "   (" + LoeschSteinAufFeld.getSpielfigur() + ") auf Feld: " + LoeschSteinAufFeld.getSchachNotation()
+				+ " geschlagen");
 
-		zielfeld.getSpielfigur().setZustand(startfeld.getSpielfigur().getZustand());
-		zielfeld.getSpielfigur().setFarbe(startfeld.getSpielfigur().getFarbe());
-		startfeld.getSpielfigur().setZustand(ZustandEnum.nichts);
-		startfeld.getSpielfigur().setFarbe(FarbEnum.nichts);
-		LoeschSteinAufFeld.getSpielfigur().setZustand(ZustandEnum.nichts);
-		LoeschSteinAufFeld.getSpielfigur().setFarbe(FarbEnum.nichts);
+		zielfeld.setSpielfigur(startfeld.getSpielfigur());
+		startfeld.setSpielfigur(null);
+		LoeschSteinAufFeld.setSpielfigur(null);
 
 		System.out.println(spielbrett);
 	}
@@ -447,21 +625,27 @@ public class Spiel implements iBediener {
 		if (player.getFarbe() == FarbEnum.weiß) {
 			for (int i = 0; i < spielfelder.length - 1; i++) {
 				for (int j = 0; j < spielfelder[i].length; j++) {
-					if (spielfelder[i][j].getSpielfigur().getZustand() == ZustandEnum.WStein || spielfelder[i][j].getSpielfigur().getZustand() == ZustandEnum.WDame) {
+					if (spielfelder[i][j].getSpielfigur() == null) {
+					} else if (spielfelder[i][j].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 						AnzSteinePlayer++;
 					}
 				}
 			}
 		}
+
 		if (player.getFarbe() == FarbEnum.schwarz) {
 			for (int i = 0; i < spielfelder.length - 1; i++) {
 				for (int j = 0; j < spielfelder[i].length; j++) {
-					if (spielfelder[i][j].getSpielfigur().getZustand() == ZustandEnum.SStein || spielfelder[i][j].getSpielfigur().getZustand() == ZustandEnum.SDame) {
+					if (spielfelder[i][j].getSpielfigur() == null) {
+					}
+
+					else if (spielfelder[i][j].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 						AnzSteinePlayer++;
 					}
 				}
 			}
 		}
+
 		if (AnzSteinePlayer == 0) {
 			this.setSiegkondition(true);
 		}
@@ -533,12 +717,10 @@ public class Spiel implements iBediener {
 	 */
 	public void move(Spielfeld stein1, Spielfeld posxy) {
 
-		posxy.getSpielfigur().setZustand(stein1.getSpielfigur().getZustand());
-		posxy.getSpielfigur().setFarbe(stein1.getSpielfigur().getFarbe());
-		stein1.getSpielfigur().setFarbe(FarbEnum.nichts);
-		stein1.getSpielfigur().setZustand(ZustandEnum.nichts);
+		posxy.setSpielfigur(stein1.getSpielfigur());
+		stein1.setSpielfigur(null);
 
-		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur().getZustand() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
+		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
 		System.out.println(spielbrett);
 	}
 
