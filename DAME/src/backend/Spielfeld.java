@@ -39,15 +39,15 @@ public class Spielfeld {
 		this.setFarbe(farbe);
 		
 		if(this.getPosY()<5 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, this, ZustandEnum.WStein));
+			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, ZustandEnum.WStein));
 			
 		}
 		else if(this.getPosY()>6 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, this, ZustandEnum.SStein)); 
+			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, ZustandEnum.SStein)); 
 			
 		}
 		else{
-			this.setSpielfigur(new Spielfigur(FarbEnum.nichts, this, ZustandEnum.nichts));
+			this.setSpielfigur(new Spielfigur(FarbEnum.nichts, ZustandEnum.nichts));
 		}
 		// kommentar test
 	}

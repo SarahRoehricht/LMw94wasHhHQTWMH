@@ -9,7 +9,7 @@ package backend;
 public class Spielfigur {
 	private ZustandEnum zustand;
 	private FarbEnum farbe;
-	private Spielfeld position;
+//	private Spielfeld position; //noch noetig?
 	private boolean dame = false;
 
 	/**
@@ -20,10 +20,10 @@ public class Spielfigur {
 	 * @param Spielfeld position
 	 *          
 	 */
-	public Spielfigur(FarbEnum farbe, Spielfeld position, ZustandEnum Stein) {
+	public Spielfigur(FarbEnum farbe, ZustandEnum Stein) {
 
 		this.setFarbe(farbe);
-		this.setPosition(position);
+		//this.setPosition(position); noch noetig?
 		this.setZustand(Stein);
 
 	}
@@ -49,18 +49,18 @@ public class Spielfigur {
 	 * 
 	 * @return Spielfeld position
 	 */
-	public Spielfeld getPosition() {
-		return position;
-	}
+//	public Spielfeld getPosition() {
+//		return position; noch noetig?
+//	}
 
 	/**
 	 * 
 	 * @param Spielfeld
 	 *          position
 	 */
-	public void setPosition(Spielfeld position) {
-		this.position = position;
-	}
+//	public void setPosition(Spielfeld position) {
+//		this.position = position; noch noetig?
+//	}
 
 	public boolean isDame() {
 		return dame;
