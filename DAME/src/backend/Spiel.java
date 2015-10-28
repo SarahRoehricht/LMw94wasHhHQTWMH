@@ -90,6 +90,9 @@ public class Spiel implements iBediener {
 
 				System.out.println("Eingabe Startfeld:");
 				String coorda = scanner.nextLine();
+				if (checkLegitFeld(coorda) == false) {
+					break;
+				}
 				Spielfeld startfeld = EingabeSpielfeld(coorda);
 				// test ob die While Schleife darunter nur mit der if abfrage
 				// funktioniert,
@@ -121,9 +124,16 @@ public class Spiel implements iBediener {
 
 				System.out.println("Eingabe Zielfeld:");
 				String coordb = scanner.nextLine();
+				if (checkLegitFeld(coordb) == false) {
+					break;
+				}
 				Spielfeld zielfeld = EingabeSpielfeld(coordb);
 				if (startfeld.equals(zielfeld)) {
 					System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
+					break;
+				}
+				if (zielfeld.getSpielfigur().getZustand() != ZustandEnum.nichts) {
+					System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
 					break;
 				}
 				if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().getZustand() == ZustandEnum.WStein) {
@@ -135,8 +145,7 @@ public class Spiel implements iBediener {
 						// if(regelwerk.legitmove(player1,startfeld,zielfeld)==true){
 						move(startfeld, zielfeld);
 						// }
-					}
-					else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {// Zielfeld:
+					} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {// Zielfeld:
 						// move
 						// left
 						// up
@@ -173,6 +182,7 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
 						} else {
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
@@ -183,6 +193,7 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosX() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
 						} else {
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
@@ -193,7 +204,7 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
 						} else {
-
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:Top
@@ -204,15 +215,17 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.SDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
 						} else {
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else {
+						System.out.println("ungueltiger Zug!");
 						break;
 					}
 				}
 
 				if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().getZustand() == ZustandEnum.SStein && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {
-				if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+					if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
 																																																								// move
 																																																								// left
 																																																								// down
@@ -220,8 +233,7 @@ public class Spiel implements iBediener {
 						// if(regelwerk.legitmove()){
 						move(startfeld, zielfeld);
 						// }
-					}
-				else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {// Zielfeld:
+					} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) {// Zielfeld:
 						// move
 						// right
 						// down
@@ -254,6 +266,7 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
 						} else {
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
@@ -264,6 +277,7 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosX() - 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
 						} else {
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:bottom
@@ -274,7 +288,7 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
 						} else {
-
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY() && zielfeld.getSpielfigur().getZustand() == ZustandEnum.nichts) { // Zielfeld:Top
@@ -285,9 +299,11 @@ public class Spiel implements iBediener {
 						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WStein || spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getZustand() == ZustandEnum.WDame) {
 							schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
 						} else {
+							System.out.println("ungueltiger Zug!");
 							break;
 						}
 					} else {
+						System.out.println("ungueltiger Zug!");
 						break;
 					}
 				}
@@ -300,6 +316,57 @@ public class Spiel implements iBediener {
 
 	}
 
+	/**
+	 * Ueberprueft die Eingabe, ob das Feld im Brett liegt. ueber die Zerteilung
+	 * des Strings und der Stellenweisen Ueberpruefung
+	 * 
+	 * @param feld
+	 * @return boolean
+	 */
+	private boolean checkLegitFeld(String feld) {
+		if (feld.isEmpty() || feld.charAt(0) < 97 || feld.charAt(0) > 108) {// Nur
+																																				// a->l
+																																				// gueltig
+			return false;
+		} else if (feld.length() == 1) {// ungueltig, wenn nur ein Buchstabe
+																		// eingegeben wird.
+			return false;
+		}
+		if (feld.length() == 3) {
+			if (feld.charAt(1) == 49) {
+				if (feld.charAt(2) == 48 || feld.charAt(2) == 49 || feld.charAt(2) == 50) { // Nur
+																																										// 10/11/12
+																																										// gueltig
+																																										// 1/2/3
+																																										// an
+																																										// 3.
+																																										// Stelle
+					return true;
+				}
+				if (feld.charAt(2) < 48 || feld.charAt(2) > 50) {
+					return false;
+				}
+			}
+		}
+		if (feld.length() > 3) {// Ungueltig wenn String laenger als 3
+			return false;
+		}
+		if (feld.charAt(1) < 49 || feld.charAt(1) > 57) { // Nur gueltig bei 0-9 in
+																											// char Wert
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	/**
+	 * bewegt Spielfigur auf Startfeld auf Zielfeld und setzt Spielfigur auf
+	 * Startfeld und LoeschSteinAufFeld auf ZustandEnum.nichts.
+	 * 
+	 * @param startfeld
+	 * @param zielfeld
+	 * @param LoeschSteinAufFeld
+	 */
 	private void schlagen(Spielfeld startfeld, Spielfeld zielfeld, Spielfeld LoeschSteinAufFeld) {
 		System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe() + ",(" + startfeld.getSpielfigur().getZustand() + ") " + startfeld.getSchachNotation() + " -> " + zielfeld.getSchachNotation() + "(" + LoeschSteinAufFeld.getSpielfigur().getZustand() + ") auf Feld: "
 				+ LoeschSteinAufFeld.getSchachNotation() + " geschlagen");
@@ -329,13 +396,15 @@ public class Spiel implements iBediener {
 		while (Siegkondition != true) {
 			System.out.println(player1 + " ist am Zug!");
 			act(player1);
-			checkSiegkondition(player1);
+			checkSiegkondition(player2); // Schaut ob beim anderen Spieler keine
+																		// Steine mehr uebrig sind, um zu gewinnen
 			if (Siegkondition == true) {
 				System.out.println(player1 + "hat gewonnen");
 			}
 			System.out.println(player2 + " ist am Zug!");
 			act(player2);
-			checkSiegkondition(player2);
+			checkSiegkondition(player1); // Schaut ob beim anderen Spieler keine
+																		// Steine mehr uebrig sind, um zu gewinnen
 			if (Siegkondition == true) {
 				System.out.println(player2 + "hat gewonnen");
 			}
@@ -365,7 +434,14 @@ public class Spiel implements iBediener {
 		}
 	}
 
-	private void checkSiegkondition(Spieler player) {
+	/**
+	 * Setzt Siegkondition auf true, wenn ein Spieler, keine Figuren mehr auf dem
+	 * Feld hat.
+	 * 
+	 * @param player
+	 */
+	private void checkSiegkondition(Spieler player) { // Siegkondition, kann nicht
+																										// mehr ziehen fehlt noch.
 		int AnzSteinePlayer = 0;
 		Spielfeld[][] spielfelder = spielbrett.getBrett();
 		if (player.getFarbe() == FarbEnum.weiß) {
@@ -391,11 +467,33 @@ public class Spiel implements iBediener {
 		}
 	}
 
+	/**
+	 * Gibt Spielfeld an Position zurueck die Benutzer eingegeben hat,
+	 * Ueberpruefungen werden vorab in checklegitFeld vorgenommen.
+	 * 
+	 * @param coord
+	 * @return Spielfeld spielfeld = spielfelder[Stelle2Y][Stelle1X]
+	 */
 	private Spielfeld EingabeSpielfeld(String coord) {
 		char Stelle1 = coord.charAt(0);
-		int Stelle2 = coord.charAt(1);
-		int Stelle1X = ((int) Stelle1) - 97;
-		int Stelle2Y = Stelle2 - 49;
+		int Stelle1X;
+		int Stelle2Y = -1;
+		if (coord.length() == 3) {
+			if (coord.charAt(2) == 48) {
+				Stelle2Y = 9;
+			}
+
+			else if (coord.charAt(2) == 49) {
+				Stelle2Y = 10;
+			} else if (coord.charAt(2) == 50) {
+				Stelle2Y = 11;
+			}
+		}
+		if (coord.length() == 2) {
+			int Stelle2 = coord.charAt(1);
+			Stelle2Y = Stelle2 - 49;
+		}
+		Stelle1X = ((int) Stelle1) - 97;
 		Spielfeld[][] spielfelder = spielbrett.getBrett();
 
 		Spielfeld spielfeld = spielfelder[Stelle2Y][Stelle1X];
