@@ -700,7 +700,7 @@ public class Spiel implements iBediener {
 			spieler[1] = s1;
 			this.setSpielerBisher(++spielerBisher);
 		}
-		if (spielerBisher == 2) {// überprüft, dass kine zwei identischen Namen
+		if (spielerBisher == 2) {// überprüft, dass keine zwei identischen Namen
 															// vergeben wurden
 			if (spieler[0].getName().equals(spieler[1].getName())) {
 				throw new RuntimeException("Dieser Name ist bereits vergeben!");
