@@ -6,5 +6,5 @@ public interface iBediener {
 	 void welcome();
 	 int getSpielerBisher();
 	 void setSpielerBisher(int spielerBisher);
-	 void move(Spielfigur stein1, Spielfeld posxy); 
+	 void act(Spieler player); 
 }

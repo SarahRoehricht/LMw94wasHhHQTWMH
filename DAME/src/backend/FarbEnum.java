@@ -5,13 +5,13 @@ public enum FarbEnum {
 		@Override
 		public String toString() {
 			
-			return "schwarz";
+			return "Schwarz";
 		}
 	}, weiß {
 		@Override
 		public String toString() {
 			
-			return "weiß";
+			return "Weiß";
 		}
 	}, nichts;
 	

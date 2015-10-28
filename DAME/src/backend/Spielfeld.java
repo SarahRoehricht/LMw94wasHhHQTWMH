@@ -39,15 +39,15 @@ public class Spielfeld {
 		this.setFarbe(farbe);
 		
 		if(this.getPosY()<5 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, this, ZustandEnum.WStein));
+			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, ZustandEnum.WStein));
 			
 		}
 		else if(this.getPosY()>6 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, this, ZustandEnum.SStein)); 
+			this.setSpielfigur(new Spielfigur(FarbEnum.schwarz, ZustandEnum.SStein)); 
 			
 		}
 		else{
-			this.setSpielfigur(new Spielfigur(FarbEnum.nichts, this, ZustandEnum.nichts));
+			this.setSpielfigur(new Spielfigur(FarbEnum.nichts, ZustandEnum.nichts));
 		}
 		// kommentar test
 	}
@@ -117,6 +117,20 @@ public class Spielfeld {
 		this.farbe = farbe;
 		
 	
+	}
+	
+	/**Gibt String als Schachnotation zurueck
+	 * 
+	 * @return String d+c
+	 */
+	public String getSchachNotation(){
+	int c = this.getPosY() + 1;
+			char d = 97;
+			d += getPosX();
+		return "" + d + c+"";
+		
+		
+		
 	}
 /**gibt Position in Schach Notation aus, mit der Information der Spielfigur die sich darauf befindet
  * Override toString
