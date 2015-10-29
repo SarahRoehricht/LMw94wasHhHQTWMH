@@ -2,7 +2,7 @@ package backend;
 
 import java.util.Random;
 
-public abstract class Ki extends Spiel implements iBediener {
+public abstract class Ki extends Spiel implements iKi {
 
 	private Spielfeld[][] spielbrett;
 	private Spielfeld[][] startWeiß;
@@ -33,6 +33,8 @@ public abstract class Ki extends Spiel implements iBediener {
 			}
 		}
 
+		//boolean feindlich = (super.getSpielbrett().getBrett()[0][0].getFarbe() == FarbEnum.schwarz);
+		
 		// WEISS
 		if (super.getSpielerBisher() == 1) {
 			for (int j = 0; j < spielbrett[4].length; j = j++) {
@@ -68,6 +70,10 @@ public abstract class Ki extends Spiel implements iBediener {
 				}
 			}
 		}
-
 	}
+	
+	public void kiAct(){
+	
+	}
+	
 }

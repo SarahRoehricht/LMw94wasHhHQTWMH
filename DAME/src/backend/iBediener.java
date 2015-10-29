@@ -7,6 +7,4 @@ public interface iBediener {
 	 int getSpielerBisher();
 	 void setSpielerBisher(int spielerBisher);
 	 void act(Spieler player); 
-	 void kiFirstAct();
-	 
 }
