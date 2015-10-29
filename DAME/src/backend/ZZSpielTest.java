@@ -102,7 +102,7 @@ public class ZZSpielTest {
 	@Test
 	public void testMove1(){
 		int i =12;
-		spiel=new Spiel(i);
+		spiel=new Spiel();
 		Spielfeld steinpos=new Spielfeld("b1");
 		Spielfigur stein1= new Spielfigur(FarbEnum.schwarz, steinpos);
 		Spielfeld posxy= new Spielfeld("a2");
