@@ -187,7 +187,7 @@ if(ki2.equals("y")){
 			if (doMoveStein(player1, startfeld, zielfeld) == false) {
 
 				if (doSchlagStein(player1, startfeld, zielfeld) == true) {
-					if (SchlagMoeglich(player1, zielfeld) == true) {
+					if (SchlagMoeglich( zielfeld) == true) {
 						askSchlagen(player1, zielfeld);
 
 					}
@@ -469,7 +469,7 @@ if(ki2.equals("y")){
 				if (startfeld.getSpielfigur().isDame() == false) {
 					if (doSchlagStein(player1, startfeld, zielfeld) == true) {
 
-						if (SchlagMoeglich(player1, zielfeld) == true) {
+						if (SchlagMoeglich( zielfeld) == true) {
 							askSchlagen(player1, zielfeld);
 
 						} else {
@@ -502,11 +502,11 @@ if(ki2.equals("y")){
 	 * @param startfeld
 	 * @return
 	 */
-	private boolean SchlagMoeglich(Spieler player1, Spielfeld startfeld) {
+	private boolean SchlagMoeglich( Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() != null) {
 			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
 
-				if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
 					try {
 						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
 							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
@@ -562,7 +562,7 @@ if(ki2.equals("y")){
 					}
 				}
 
-				if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().isDame() == false) {
 
 					try {
 						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
@@ -637,7 +637,7 @@ if(ki2.equals("y")){
 
 				for (int j = 0; j < spielbrett.getBrett()[i].length - 1; j++) {
 
-					if (moveMoeglich(player1, spielbrett.getBrett()[j][i]) == true || SchlagMoeglich(player1, spielbrett.getBrett()[j][i]) == true) {
+					if (moveMoeglich(player1, spielbrett.getBrett()[j][i]) == true || SchlagMoeglich( spielbrett.getBrett()[j][i]) == true) {
 						return true;
 					}
 				}
@@ -1203,7 +1203,7 @@ if(ki2.equals("y")){
 	 */
 	public void move(Spielfeld stein1, Spielfeld posxy) {
 		// Check Pusten
-		if(doCheckPusten(stein1, posxy)==true){
+		if(doCheckPusten(stein1)==true){
 		}else{
 			
 		
@@ -1217,19 +1217,48 @@ if(ki2.equals("y")){
 		}
 	}
 
-	private boolean doCheckPusten(Spielfeld stein1, Spielfeld posxy) {
+	private boolean doCheckPusten(Spielfeld stein1) {
+		Spielfeld[] pustenarr = new Spielfeld[2];
+		int z=0;
 		for (int i = 0; i < spielbrett.getBrett().length-1; i++) {
 			for (int j = 0; j < spielbrett.getBrett()[i].length-1; j++) {
 				if(spielbrett.getBrett()[j][i].getSpielfigur()!=null){
 					if(spielbrett.getBrett()[j][i].getSpielfigur().getFarbe()==stein1.getSpielfigur().getFarbe()){
 						if(SchlagMoeglich(spielbrett.getBrett()[j][i])==true){
-							
+							pustenarr[z]=spielbrett.getBrett()[j][i];
+							z++;
 						}
 					}
 				}
 			}
 		}
+		if(z>=0){
+			askRemove(pustenarr);
+			
+		return true;
+	}else{
 		return false;
+	}
+		}
+
+	private void askRemove(Spielfeld[] pustenarr) {
+		Spielfeld moeglichkeit1=pustenarr[0];
+		if(pustenarr[1]!=null){
+		Spielfeld moeglichkeit2=pustenarr[1];}
+		
+		System.out.println("Es wurde gezogen, obwohl man haette schlagen koennen!!!");
+		if(pustenarr[1]==null){
+			System.out.println("Spielstein an Stelle "+moeglichkeit1.getSchachNotation()+"("+moeglichkeit1.getSpielfigur()+") wird geloescht." );
+	//		removeSpielfigur(moeglichkeit1);
+		}
+		else{
+			System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
+			System.out.println(moeglichkeit1.getSpielfigur());
+		}
+		
+		
+		
+		
 	}
 
 	/**
