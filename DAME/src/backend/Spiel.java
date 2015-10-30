@@ -10,7 +10,7 @@ public class Spiel implements iBediener {
 
 	private static final int spielerMax = 2;
 
-	private Spieler[] spieler = new Spieler[spielerMax];
+	protected Spieler[] spieler = new Spieler[spielerMax];
 	private int spielerBisher = 0;
 
 	/**
