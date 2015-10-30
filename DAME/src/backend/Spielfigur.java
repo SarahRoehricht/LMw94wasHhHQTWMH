@@ -7,7 +7,7 @@ package backend;
  */
 
 public class Spielfigur {
-	private ZustandEnum zustand;
+	
 	private FarbEnum farbe;
 //	private Spielfeld position; //noch noetig?
 	private boolean dame = false;
@@ -20,11 +20,11 @@ public class Spielfigur {
 	 * @param Spielfeld position
 	 *          
 	 */
-	public Spielfigur(FarbEnum farbe, ZustandEnum Stein) {
+	public Spielfigur(FarbEnum farbe, boolean b) {
 
 		this.setFarbe(farbe);
 		//this.setPosition(position); noch noetig?
-		this.setZustand(Stein);
+		this.setDame(b);
 
 	}
 
@@ -69,13 +69,7 @@ public class Spielfigur {
 	public void setDame(boolean dame) {
 		this.dame = dame;
 	}
-	public ZustandEnum getZustand() {
-		return zustand;
-	}
-
-	public void setZustand(ZustandEnum zustand) {
-		this.zustand = zustand;
-	}
+	
 
 	/** gibt |O|, |x| v "farblos zurueck bei Weiss, schwarz oder bei falschem aufruf
 	 * @return |O|, |x| v "farblos
@@ -83,13 +77,22 @@ public class Spielfigur {
 	@Override
 	public String toString() {
 		if(farbe== FarbEnum.weiß){
+			if(this.dame==false){
 			return "|O|";
+			}
+			if(this.dame==true){
+				return "|LOL|";
+			}
 		}
-		else if(farbe==FarbEnum.schwarz){
+		if(farbe==FarbEnum.schwarz){
+			if(this.dame==false){
+				
+			
 			return "|X|";	
+		}if(this.dame==true){
+		return "|OXO|";	
 		}
-		else{
-			return "|_|";
 		}
-	}
-}
+			return "|_DASD|";
+		
+	}}

@@ -77,7 +77,7 @@ public class SpielBrett {
 		}
 		System.out.println();
 		int d=12;
-		for (int i = Brett.length - 1; i > -1; i--) {
+		for (int i = Brett.length - 1; i >= 0; i--) {
 System.out.print(d+"\t");
 			for (int j = 0; j < Brett[i].length; j++) {
 
