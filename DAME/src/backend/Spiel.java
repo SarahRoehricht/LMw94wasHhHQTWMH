@@ -2,6 +2,8 @@ package backend;
 
 import java.util.Scanner;
 
+import javax.management.RuntimeErrorException;
+
 public class Spiel implements iBediener {
 
 	private SpielBrett spielbrett;
@@ -36,43 +38,53 @@ public class Spiel implements iBediener {
 		String name1 = scanner.next();
 		System.out.println("KI? - y/n");
 		String ki1 = scanner.next();
-		String kiabfrage = new String("y");
-
-		String kiabfrage1no = "n";
-		while (!ki1.equals(kiabfrage1no)) {
-			if (ki1.equals(kiabfrage)) { // Ki funktionsfaehig machen!
-				System.out.println("Ki noch nicht funktionsfaehig :(");
-				System.out.println("KI? - y/n");
-				ki1 = scanner.next();
-			} else {
-				System.out.println("KI? - y/n");
-				ki1 = scanner.next();
-			}
+		boolean ki1erstellen = false;
+		if(ki1.equals("y")){
+			ki1erstellen=true;
 		}
-		Spieler player1 = new Spieler(name1, FarbEnum.weiß);
+		
+		
+		// boolean kidone = false;
+		// while (kidone == false) {
+		// if (ki1 == kiabfrage) {
+		//
+		// ki1erstellen = true;
+		// kidone = true;
+		// }
+		// if (ki1 == kiabfrageno) {
+		// ki1erstellen = false;
+		// kidone = true;
+		// }
+		// System.out.println("KI? - y/n");
+		// ki1 = scanner.next();
+		// }
+
+		Spieler player1 = new Spieler(name1, FarbEnum.weiß, ki1erstellen);
+
 		add(player1);
 		System.out.println(player1 + " hinzugefuegt!");
 		System.out.println("Name Spieler 2:");
 		String name2 = scanner.next();
 		System.out.println("KI? - y/n");
 		String ki2 = scanner.next();
-		String kiabfrage2 = "y";
+		boolean ki2erstellen = false;
+if(ki2.equals("y")){
+	ki2erstellen=true;
+}
+		// while (!ki2.equals(kiabfrage) || !ki2.equals(kiabfrageno)) {
+		// if (ki2.equals(kiabfrage)) { // Ki funktionsfaehig machen!
+		//
+		// ki2erstellen = true;
+		//
+		// } else {
+		//
+		// }
+		// System.out.println("KI? - y/n");
+		// ki2 = scanner.next();
+		// }
 
-		String kiabfrage2no = "n";
-		while (!ki2.equals(kiabfrage2no)) {
-			if (ki2.equals(kiabfrage2)) {
-				System.out.println("Ki noch nicht funktionsfaehig :(");// Ki
-																																// funktionsfaehig
-																																// machen!
-				System.out.println("KI? - y/n");
-				ki2 = scanner.next();
-			} else {
-				System.out.println("KI? - y/n");
-				ki2 = scanner.next();
-			}
-		}
+		Spieler player2 = new Spieler(name2, FarbEnum.weiß, ki2erstellen);
 
-		Spieler player2 = new Spieler(name2, FarbEnum.schwarz);
 		add(player2);
 		System.out.println(player2 + " hinzugefuegt!");
 
@@ -91,9 +103,17 @@ public class Spiel implements iBediener {
 	 */
 	@Override
 	public void act(Spieler player1) {
-		if (player1.getName() == "ki") {
-			// Random Dance
-		}
+		if (player1.getKi() != null) {
+			
+			Spielfeld kiarray[];
+			kiarray=player1.getKi().kiAct(spielbrett.getBrett());
+			Spielfeld startfeld=kiarray[0];
+			Spielfeld zielfeld=kiarray[1];
+			if (doTheMove(player1, startfeld, zielfeld) == false) {
+				System.out.println("ungueltiger Zug!");
+				throw new RuntimeErrorException( null, "KI BAUT MIST.");
+			}
+		}else{
 		boolean actdone = false;
 		while (actdone != true) {// doppelte While-Schleife fuer breaks;
 			while (actdone != true) {
@@ -144,7 +164,7 @@ public class Spiel implements iBediener {
 				actdone = true;
 			}
 
-		}
+		}}
 	}
 
 	private boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
@@ -238,7 +258,7 @@ public class Spiel implements iBediener {
 	}
 
 	private void schlagenDame(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
-//Flying Kings implementieren?
+		// Flying Kings implementieren?
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
 			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld.getPosX() - 1]);
 		}
@@ -257,64 +277,68 @@ public class Spiel implements iBediener {
 	private boolean schlagenDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-try{
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1] == zielfeld) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
-							return true;
+				try {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+								return true;
+							}
+						} else {
+							return false;
 						}
-					} else {
-						return false;
 					}
-				}}catch(java.lang.ArrayIndexOutOfBoundsException e){
+				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 					return false;
 				}
 			}
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-try{
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1] == zielfeld) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
-							return true;
+				try {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+								return true;
+							}
+						} else {
+							return false;
 						}
-					} else {
-						return false;
 					}
-				}}catch(java.lang.ArrayIndexOutOfBoundsException e){
+				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 					return false;
 				}
 			}
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-try{
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1] == zielfeld) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
-							return true;
+				try {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+								return true;
+							}
+						} else {
+							return false;
 						}
-					} else {
-						return false;
 					}
+				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+					return false;
 				}
-			}catch(java.lang.ArrayIndexOutOfBoundsException e){
-				return false;
 			}
-		}}
+		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-try{
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1] == zielfeld) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
-							return true;
+				try {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+								return true;
+							}
+						} else {
+							return false;
 						}
-					} else {
-						return false;
 					}
-				}}catch(java.lang.ArrayIndexOutOfBoundsException e){
+				} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 					return false;
 				}
 			}
@@ -454,8 +478,7 @@ try{
 					} else {
 						break;
 					}
-				}
-				else	if (startfeld.getSpielfigur().isDame() == true) {
+				} else if (startfeld.getSpielfigur().isDame() == true) {
 					if (schlagenDameLegit(player1, startfeld, zielfeld) == true) {
 						schlagenDame(player1, startfeld, zielfeld);
 						if (schlagMoeglichDame(player1, zielfeld) == true) {
@@ -632,7 +655,8 @@ try{
 	 * @param startfeld
 	 * @return
 	 */
-	private boolean moveMoeglich(Spieler player1, Spielfeld startfeld) {
+	private boolean 
+	moveMoeglich(Spieler player1, Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() == null) {
 			return false;
 		}
@@ -1040,7 +1064,7 @@ try{
 	private void checkAndGetDame(Spieler player1) {
 		if (player1.getFarbe() == FarbEnum.weiß) {
 			for (int i = 0; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[11][i].getSpielfigur() != null &&spielbrett.getBrett()[11][i].getSpielfigur().isDame()==false) {
+				if (spielbrett.getBrett()[11][i].getSpielfigur() != null && spielbrett.getBrett()[11][i].getSpielfigur().isDame() == false) {
 					if (spielbrett.getBrett()[11][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 						wirdDame(spielbrett.getBrett()[11][i]);
 					}
@@ -1049,7 +1073,7 @@ try{
 		}
 		if (player1.getFarbe() == FarbEnum.schwarz) {
 			for (int i = 0; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[0][i].getSpielfigur() != null&&spielbrett.getBrett()[0][i].getSpielfigur().isDame() ==false) {
+				if (spielbrett.getBrett()[0][i].getSpielfigur() != null && spielbrett.getBrett()[0][i].getSpielfigur().isDame() == false) {
 					if (spielbrett.getBrett()[0][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 						wirdDame(spielbrett.getBrett()[0][i]);
 					}
@@ -1178,17 +1202,34 @@ try{
 	 * @param posxy
 	 */
 	public void move(Spielfeld stein1, Spielfeld posxy) {
-//Check Pusten
-		
-		
+		// Check Pusten
+		if(doCheckPusten(stein1, posxy)==true){
+		}else{
+			
 		
 		//
-		posxy.setSpielfigur(stein1.getSpielfigur());//Setzt Spielfigur auf Zielfeld.
-		stein1.setSpielfigur(null); //Setzt Spielfigur auf Startfeld auf null.
+		posxy.setSpielfigur(stein1.getSpielfigur());// Setzt Spielfigur auf
+																								// Zielfeld.
+		stein1.setSpielfigur(null); // Setzt Spielfigur auf Startfeld auf null.
 
 		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
 		System.out.println(spielbrett);
+		}
+	}
 
+	private boolean doCheckPusten(Spielfeld stein1, Spielfeld posxy) {
+		for (int i = 0; i < spielbrett.getBrett().length-1; i++) {
+			for (int j = 0; j < spielbrett.getBrett()[i].length-1; j++) {
+				if(spielbrett.getBrett()[j][i].getSpielfigur()!=null){
+					if(spielbrett.getBrett()[j][i].getSpielfigur().getFarbe()==stein1.getSpielfigur().getFarbe()){
+						if(SchlagMoeglich(spielbrett.getBrett()[j][i])==true){
+							
+						}
+					}
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
