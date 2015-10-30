@@ -9,8 +9,9 @@ public class Ki_Dame extends Ki {
 	// private Spielfeld[][] startSchwarz;
 	private Spieler ki;
 	private FarbEnum farbe;
-	private Spielfeld StartZiel[];
-	private boolean schlagen;
+	final int anzahl = 2;
+	private Spielfeld StartZiel[] = new Spielfeld[anzahl];
+	private boolean schlagen=false;//daweil true
 
 	public Ki_Dame(FarbEnum farbe) {
 		super(farbe);
@@ -40,20 +41,23 @@ public class Ki_Dame extends Ki {
 	 */
 	@Override
 	public Spielfeld[] kiAct(Spielfeld[][] brett) {
-		spielbrett = null;
+		//spielbrett = null;
 		// startWeiß = null;
 		// startSchwarz = null;
 		// Random r;
-		int[] lor = { -1, 1 };
+		final int max = 2;
+		int[] lor = new int[max];
+		lor[0]= -1;
+		lor[1]= 1;
 		Random linksRechts = new Random();
 		int entscheide = linksRechts.nextInt(2);
 
-		// KopieSpielBrett
-		// for (int i = 0; i < brett.length; i++) {
-		// for (int j = 0; j < brett[i].length; j++) {
-		// spielbrett[i][j] = brett[i][j];
-		// }
-		// }
+//		 KopieSpielBrett
+//		 for (int i = 0; i < brett.length; i++) {
+//		 for (int j = 0; j < brett[i].length; j++) {
+//		 spielbrett[i][j] = brett[i][j];
+//		 }
+//		 }
 
 		// boolean feindlich = (super.getSpielbrett().getBrett()[0][0].getFarbe() ==
 		// FarbEnum.schwarz);
@@ -99,15 +103,16 @@ public class Ki_Dame extends Ki {
 		if (farbe == FarbEnum.weiß) {
 			ArrayList<Spielfeld> figurenWeiß = new ArrayList<Spielfeld>();
 			ArrayList<Spielfeld> figurenSchwarz = new ArrayList<Spielfeld>();
-			for (int i = 0; i < spielbrett.length; i++) {
-				for (int j = 0; j < spielbrett[i].length; j++) {
-					if (spielbrett[j][i].getSpielfigur() != null) {
-						if (spielbrett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-							figurenSchwarz.add(spielbrett[j][i]);
+			for (int i = 0; i < brett.length; i++) {
+				for (int j = 0; j < brett[i].length; j++) {
+					if (brett[j][i].getSpielfigur() != null) {
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+							figurenSchwarz.add(brett[j][i]);
+							System.out.println("schwarze Figuren:" + figurenSchwarz.toString());
 						}
-						if (spielbrett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
-							figurenWeiß.add(spielbrett[j][i]);
-
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+							figurenWeiß.add(brett[j][i]);
+							System.out.println("weiße Figuren:" + figurenWeiß.toString());
 						}
 					}
 
@@ -115,8 +120,11 @@ public class Ki_Dame extends Ki {
 			}
 			Random weiß = new Random();
 			int weißZufall = weiß.nextInt(figurenWeiß.size());
-			this.StartZiel[0] = spielbrett[figurenWeiß.get(weißZufall).getPosY()][figurenWeiß.get(weißZufall).getPosX()];
-			this.StartZiel[1] = spielbrett[figurenWeiß.get(weißZufall).getPosY() + 1][figurenWeiß.get(weißZufall).getPosX() + lor[entscheide]];
+			this.StartZiel[0] = brett[figurenWeiß.get(weißZufall).getPosY()][figurenWeiß.get(weißZufall).getPosX()];
+			this.StartZiel[1] = brett[figurenWeiß.get(weißZufall).getPosY() + 1][figurenWeiß.get(weißZufall).getPosX() + lor[entscheide]];
+			//StartZiel[0]=brett[4][0];
+			//StartZiel[1]=brett[5][1];
+			
 			return StartZiel;
 
 		}
@@ -125,14 +133,14 @@ public class Ki_Dame extends Ki {
 		if (farbe == FarbEnum.schwarz) {
 			ArrayList<Spielfeld> figurenSchwarz = new ArrayList<Spielfeld>();
 			ArrayList<Spielfeld> figurenWeiß = new ArrayList<Spielfeld>();
-			for (int i = 0; i < spielbrett.length; i++) {
-				for (int j = 0; j < spielbrett[i].length; j++) {
-					if (spielbrett[j][i].getSpielfigur() != null) {
-						if (spielbrett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-							figurenSchwarz.add(spielbrett[j][i]);
+			for (int i = 0; i < brett.length; i++) {
+				for (int j = 0; j < brett[i].length; j++) {
+					if (brett[j][i].getSpielfigur() != null) {
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+							figurenSchwarz.add(brett[j][i]);
 						}
-						if (spielbrett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
-							figurenWeiß.add(spielbrett[j][i]);
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+							figurenWeiß.add(brett[j][i]);
 
 						}
 					}
@@ -142,8 +150,8 @@ public class Ki_Dame extends Ki {
 			if (schlagen == false) {
 				Random schwarz = new Random();
 				int schwarzZufall = schwarz.nextInt(figurenSchwarz.size());
-				this.StartZiel[0] = spielbrett[figurenSchwarz.get(schwarzZufall).getPosY()][figurenSchwarz.get(schwarzZufall).getPosX()];
-				this.StartZiel[1] = spielbrett[figurenWeiß.get(schwarzZufall).getPosY() + 1][figurenWeiß.get(schwarzZufall).getPosX() + lor[entscheide]];
+				//this.StartZiel[0] = brett[figurenSchwarz.get(schwarzZufall).getPosY()][figurenSchwarz.get(schwarzZufall).getPosX()];
+				//this.StartZiel[1] = brett[figurenWeiß.get(schwarzZufall).getPosY() + 1][figurenWeiß.get(schwarzZufall).getPosX() + lor[entscheide]];
 				return StartZiel;
 			}
 
@@ -162,7 +170,7 @@ public class Ki_Dame extends Ki {
 		int yS = start.getPosY();
 		int xZ = ziel.getPosX();
 		int yZ = ziel.getPosY();
-		spielbrett[yZ][xZ].setSpielfigur(spielbrett[yS][xS].getSpielfigur());
+		spielbrett[yZ][xZ].setSpielfigur(spielbrett[yS][xS].getSpielfigur());//kopie erstellen
 		spielbrett[yS][xS].setSpielfigur(null);
 
 	}
