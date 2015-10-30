@@ -105,7 +105,7 @@ public class Spieler {
 		}
 		return this.name + ", '" + this.getFarbe()+"'"; //Name Des Spielers + Farbe
 
-		return this.name + ", '" + this.getFarbe() + "'"; // Name Des Spielers +
+
 																											// Farbe
 	}
 }
