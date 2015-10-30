@@ -5,14 +5,15 @@ import java.util.Random;
 
 public class Ki_Dame extends Ki {
 	private Spielfeld[][] spielbrett;
-	//private Spielfeld[][] startWeiß;
-	//private Spielfeld[][] startSchwarz;
+	// private Spielfeld[][] startWeiß;
+	// private Spielfeld[][] startSchwarz;
 	private Spieler ki;
 	private FarbEnum farbe;
 	private Spielfeld StartZiel[];
 	private boolean schlagen;
+
 	public Ki_Dame(FarbEnum farbe) {
-		this.setFarbe(farbe);
+		super(farbe);
 
 	}
 
@@ -40,9 +41,9 @@ public class Ki_Dame extends Ki {
 	@Override
 	public Spielfeld[] kiAct(Spielfeld[][] brett) {
 		spielbrett = null;
-		//startWeiß = null;
-		//startSchwarz = null;
-		//Random r;
+		// startWeiß = null;
+		// startSchwarz = null;
+		// Random r;
 		int[] lor = { -1, 1 };
 		Random linksRechts = new Random();
 		int entscheide = linksRechts.nextInt(2);
@@ -138,12 +139,12 @@ public class Ki_Dame extends Ki {
 
 				}
 			}
-			if (schlagen==false){
-			Random schwarz = new Random();
-			int schwarzZufall = schwarz.nextInt(figurenSchwarz.size());
-			this.StartZiel[0] = spielbrett[figurenSchwarz.get(schwarzZufall).getPosY()][figurenSchwarz.get(schwarzZufall).getPosX()];
-			this.StartZiel[1] = spielbrett[figurenWeiß.get(schwarzZufall).getPosY() + 1][figurenWeiß.get(schwarzZufall).getPosX() + lor[entscheide]];
-			return StartZiel;
+			if (schlagen == false) {
+				Random schwarz = new Random();
+				int schwarzZufall = schwarz.nextInt(figurenSchwarz.size());
+				this.StartZiel[0] = spielbrett[figurenSchwarz.get(schwarzZufall).getPosY()][figurenSchwarz.get(schwarzZufall).getPosX()];
+				this.StartZiel[1] = spielbrett[figurenWeiß.get(schwarzZufall).getPosY() + 1][figurenWeiß.get(schwarzZufall).getPosX() + lor[entscheide]];
+				return StartZiel;
 			}
 
 		}
@@ -153,6 +154,7 @@ public class Ki_Dame extends Ki {
 		// schlagen(null, null, null);
 		// }
 	}
+
 	@Override
 	public void move(Spielfeld start, Spielfeld ziel) {
 
@@ -164,6 +166,5 @@ public class Ki_Dame extends Ki {
 		spielbrett[yS][xS].setSpielfigur(null);
 
 	}
-	
 
 }

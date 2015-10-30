@@ -3,7 +3,7 @@ package backend;
 public abstract class Ki {
 
 	
-	Ki(Spielfeld[][] abc){
+	Ki(FarbEnum farbe){
 		
 	}
 	public abstract Spielfeld[] kiAct(Spielfeld[][] brett);
