@@ -4,7 +4,7 @@ import java.util.Random;
 
 public abstract class Ki {
 	
-	Ki(Spielfeld[][] abc){
+	Ki(FarbEnum farbe){
 		
 	}
 

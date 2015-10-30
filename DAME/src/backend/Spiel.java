@@ -105,7 +105,7 @@ if(ki2.equals("y")){
 	public void act(Spieler player1) {
 		if (player1.getKi() != null) {
 			
-			Spielfeld kiarray[];
+			Spielfeld kiarray[]=new Spielfeld[2];
 			kiarray=player1.getKi().kiAct(spielbrett.getBrett());
 			Spielfeld startfeld=kiarray[0];
 			Spielfeld zielfeld=kiarray[1];
@@ -1135,7 +1135,10 @@ if(ki2.equals("y")){
 			}
 		}
 		return false;
+		
 	}
+	
+	
 
 	/**
 	 * Gibt Spielfeld an Position zurueck die Benutzer eingegeben hat,
@@ -1253,7 +1256,12 @@ if(ki2.equals("y")){
 				Spielfeld moeglichkeit2=pustenarr[1];
 			System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
 			System.out.println(moeglichkeit1.getSpielfigur() +" auf Feld: "+moeglichkeit1.getSchachNotation()+" oder " +moeglichkeit2.getSpielfigur()+" auf Feld: "+moeglichkeit2.getSchachNotation()+"?");
+			Scanner scanner= new Scanner(System.in);
 			
+			if (checkLegitFeld(coordb) == false) {
+				System.out.println("Das ist kein Feld, versuche es erneut!");
+				break;
+			}
 		}
 		
 		
