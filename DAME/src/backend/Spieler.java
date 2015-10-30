@@ -1,4 +1,10 @@
 package backend;
+
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.ObjectOutputStream;
+import java.util.Properties;
+
 /**
  * 
  * @author A-2
@@ -83,6 +89,11 @@ public class Spieler {
 	public void setKi(Ki ki) {
 		this.ki = ki;
 	}
+
+	public String generiereCSV(){
+		return "" + getClass() + ":(name=" + this.getName() + "; farbe=" + this.getFarbe() + ")\n";
+	}
+	
 	/**
 	 * String Override
 	 * @return String name
@@ -93,5 +104,8 @@ public class Spieler {
 			return this.name+", '"+this.getFarbe()+"'"+" (KI)";
 		}
 		return this.name + ", '" + this.getFarbe()+"'"; //Name Des Spielers + Farbe
+
+		return this.name + ", '" + this.getFarbe() + "'"; // Name Des Spielers +
+																											// Farbe
 	}
 }
