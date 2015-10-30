@@ -1243,17 +1243,17 @@ if(ki2.equals("y")){
 
 	private void askRemove(Spielfeld[] pustenarr) {
 		Spielfeld moeglichkeit1=pustenarr[0];
-		if(pustenarr[1]!=null){
-		Spielfeld moeglichkeit2=pustenarr[1];}
 		
 		System.out.println("Es wurde gezogen, obwohl man haette schlagen koennen!!!");
 		if(pustenarr[1]==null){
 			System.out.println("Spielstein an Stelle "+moeglichkeit1.getSchachNotation()+"("+moeglichkeit1.getSpielfigur()+") wird geloescht." );
-	//		removeSpielfigur(moeglichkeit1);
+			//removeSpielfigur(moeglichkeit1);
 		}
 		else{
+				Spielfeld moeglichkeit2=pustenarr[1];
 			System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
-			System.out.println(moeglichkeit1.getSpielfigur());
+			System.out.println(moeglichkeit1.getSpielfigur() +" auf Feld: "+moeglichkeit1.getSchachNotation()+" oder " +moeglichkeit2.getSpielfigur()+" auf Feld: "+moeglichkeit2.getSchachNotation()+"?");
+			
 		}
 		
 		
