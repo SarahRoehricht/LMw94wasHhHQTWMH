@@ -10,7 +10,7 @@ public class Spiel implements iBediener {
 
 	private static final int spielerMax = 2;
 
-	protected Spieler[] spieler = new Spieler[spielerMax];
+	private Spieler[] spieler = new Spieler[spielerMax];
 	private int spielerBisher = 0;
 
 	/**
@@ -1135,6 +1135,14 @@ public class Spiel implements iBediener {
 
 	private void setSpielbrett(SpielBrett spielbrett) {
 		this.spielbrett = spielbrett;
+	}
+
+	public Spieler[] getSpieler() {
+		return spieler;
+	}
+
+	public void setSpieler(Spieler[] spieler) {
+		this.spieler = spieler;
 	}
 
 }
