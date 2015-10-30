@@ -2,8 +2,6 @@ package backend;
 
 import java.util.Scanner;
 
-import javax.management.RuntimeErrorException;
-
 public class Spiel implements iBediener {
 
 	private SpielBrett spielbrett;
@@ -153,9 +151,13 @@ public class Spiel implements iBediener {
 		if (startfeld.getSpielfigur().isDame() == true) {
 			if (moveDameLegit(player1, startfeld, zielfeld) == true) {
 				move(startfeld, zielfeld);
+				return true;
 			}
 			if (schlagenDameLegit(player1, startfeld, zielfeld) == true) {
 				schlagenDame(player1, startfeld, zielfeld);
+				if (schlagMoeglichDame(player1, zielfeld) == true) {
+					askSchlagen(player1, zielfeld);
+				}
 			} else {
 
 				return false;
@@ -179,19 +181,75 @@ public class Spiel implements iBediener {
 		return true;
 	}
 
+	private boolean schlagMoeglichDame(Spieler player1, Spielfeld startfeld) {
+		try {
+			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+							return true;
+						}
+					}
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+							return true;
+						}
+					}
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+							return true;
+						}
+					}
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+							return true;
+						}
+					}
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		return false;
+	}
+
 	private void schlagenDame(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
-
+//Flying Kings implementieren?
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
-
+			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld.getPosX() - 1]);
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
-
+			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld.getPosX() + 1]);
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
-
+			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() + 1][zielfeld.getPosX() - 1]);
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
-
+			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() + 1][zielfeld.getPosX() + 1]);
 		}
 
 	}
@@ -199,7 +257,7 @@ public class Spiel implements iBediener {
 	private boolean schlagenDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-
+try{
 				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
 					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1] == zielfeld) {
 						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
@@ -208,48 +266,56 @@ public class Spiel implements iBediener {
 					} else {
 						return false;
 					}
+				}}catch(java.lang.ArrayIndexOutOfBoundsException e){
+					return false;
 				}
 			}
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-
+try{
 				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
 					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1] == zielfeld) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
 							return true;
 						}
 					} else {
 						return false;
 					}
+				}}catch(java.lang.ArrayIndexOutOfBoundsException e){
+					return false;
 				}
 			}
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-
+try{
 				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
 					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1] == zielfeld) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
 							return true;
 						}
 					} else {
 						return false;
 					}
 				}
+			}catch(java.lang.ArrayIndexOutOfBoundsException e){
+				return false;
 			}
-		}
+		}}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-
+try{
 				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
 					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1] == zielfeld) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
 							return true;
 						}
 					} else {
 						return false;
 					}
+				}}catch(java.lang.ArrayIndexOutOfBoundsException e){
+					return false;
 				}
 			}
 		}
@@ -376,17 +442,29 @@ public class Spiel implements iBediener {
 					System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
 					break;
 				}
+				if (startfeld.getSpielfigur().isDame() == false) {
+					if (doSchlagStein(player1, startfeld, zielfeld) == true) {
 
-				if (doSchlagStein(player1, startfeld, zielfeld) == true) {
+						if (SchlagMoeglich(player1, zielfeld) == true) {
+							askSchlagen(player1, zielfeld);
 
-					if (SchlagMoeglich(player1, zielfeld) == true) {
-						askSchlagen(player1, zielfeld);
+						} else {
 
+						}
+					} else {
+						break;
+					}
+				}
+				else	if (startfeld.getSpielfigur().isDame() == true) {
+					if (schlagenDameLegit(player1, startfeld, zielfeld) == true) {
+						schlagenDame(player1, startfeld, zielfeld);
+						if (schlagMoeglichDame(player1, zielfeld) == true) {
+							askSchlagen(player1, zielfeld);
+						}
 					} else {
 
+						break;
 					}
-				} else {
-					break;
 				}
 				askdone = true;
 			}
@@ -962,7 +1040,7 @@ public class Spiel implements iBediener {
 	private void checkAndGetDame(Spieler player1) {
 		if (player1.getFarbe() == FarbEnum.weiß) {
 			for (int i = 0; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[11][i].getSpielfigur() != null) {
+				if (spielbrett.getBrett()[11][i].getSpielfigur() != null &&spielbrett.getBrett()[11][i].getSpielfigur().isDame()==false) {
 					if (spielbrett.getBrett()[11][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 						wirdDame(spielbrett.getBrett()[11][i]);
 					}
@@ -971,7 +1049,7 @@ public class Spiel implements iBediener {
 		}
 		if (player1.getFarbe() == FarbEnum.schwarz) {
 			for (int i = 0; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[0][i].getSpielfigur() != null) {
+				if (spielbrett.getBrett()[0][i].getSpielfigur() != null&&spielbrett.getBrett()[0][i].getSpielfigur().isDame() ==false) {
 					if (spielbrett.getBrett()[0][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 						wirdDame(spielbrett.getBrett()[0][i]);
 					}
@@ -1100,9 +1178,13 @@ public class Spiel implements iBediener {
 	 * @param posxy
 	 */
 	public void move(Spielfeld stein1, Spielfeld posxy) {
-
-		posxy.setSpielfigur(stein1.getSpielfigur());
-		stein1.setSpielfigur(null);
+//Check Pusten
+		
+		
+		
+		//
+		posxy.setSpielfigur(stein1.getSpielfigur());//Setzt Spielfigur auf Zielfeld.
+		stein1.setSpielfigur(null); //Setzt Spielfigur auf Startfeld auf null.
 
 		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
 		System.out.println(spielbrett);
@@ -1116,7 +1198,7 @@ public class Spiel implements iBediener {
 	private void wirdDame(Spielfeld spielfeld) {
 		if (spielfeld.getSpielfigur() != null) {
 			spielfeld.getSpielfigur().setDame(true);
-			System.out.println("Spielfigur auf Feld " + spielfeld.getSchachNotation() + "wurde zu einer Dame! TETEREETEEE");
+			System.out.println("Spielfigur auf Feld " + spielfeld.getSchachNotation() + " wurde zu einer Dame! TETEREETEEE");
 			System.out.println(spielbrett);
 		}
 	}
