@@ -145,6 +145,7 @@ public class Ki_Dame extends Ki {
 			return StartZiel;
 
 		}
+		
 
 		// public void kiAct(){
 		// schlagen(null, null, null);
