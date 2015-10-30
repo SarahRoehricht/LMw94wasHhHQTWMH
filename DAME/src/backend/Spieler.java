@@ -49,7 +49,7 @@ public class Spieler {
 	public Spieler(String name, FarbEnum farbe, boolean ki) {//ruft Konstruktor name, farbe auf, setzt ki Objekt(klug so?) nochmal im Kopf durchgehen..
 		this(name, farbe);
 		if(ki==true){
-		this.ki= new Ki_Dame();
+		this.ki= new Ki_Dame(farbe);
 	}}
 
 	
