@@ -164,5 +164,6 @@ public class Ki_Dame extends Ki {
 		spielbrett[yS][xS].setSpielfigur(null);
 
 	}
+	
 
 }
