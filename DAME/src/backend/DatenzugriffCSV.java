@@ -7,9 +7,7 @@ import java.util.Properties;
 
 public class DatenzugriffCSV implements iDatenzugriff {
 
-	public static void main(String[] args) {
 
-	}
 /**
  * 
  * @param str
@@ -18,7 +16,7 @@ public class DatenzugriffCSV implements iDatenzugriff {
 
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("spielstand.txt"));
-			bw.write(str + "\n");
+			bw.write(str);
 			bw.close();
 
 		} catch (IOException e) {
@@ -30,6 +28,8 @@ public class DatenzugriffCSV implements iDatenzugriff {
 	public static void ladenCSV() {
 		
 	}
+	
+	
 	@Override
 	public void open(Properties prop) throws IOException {
 		// TODO Auto-generated method stub
@@ -37,7 +37,7 @@ public class DatenzugriffCSV implements iDatenzugriff {
 	}
 	@Override
 	public void writeObject(Object obj) {
-		// Wenn @Override, dann in Serialisiert und in CSV write. Keine Differenzierung anhand des Namens. 
+		// TODO Auto-generated method stub
 		
 	}
 	@Override
