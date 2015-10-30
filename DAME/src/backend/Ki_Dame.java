@@ -137,7 +137,7 @@ public class Ki_Dame extends Ki {
 
 				}
 			}
-			
+
 			Random schwarz = new Random();
 			int schwarzZufall = schwarz.nextInt(figurenSchwarz.size());
 			this.StartZiel[0] = spielbrett[figurenSchwarz.get(schwarzZufall).getPosY()][figurenSchwarz.get(schwarzZufall).getPosX()];
