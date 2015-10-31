@@ -183,7 +183,5 @@ public class Ki_Dame extends Ki {
 		int yZ = ziel.getPosY();
 		spielbrett[yZ][xZ].setSpielfigur(spielbrett[yS][xS].getSpielfigur());// kopie erstellen
 		spielbrett[yS][xS].setSpielfigur(null);
-
 	}
-
 }
