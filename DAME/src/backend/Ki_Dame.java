@@ -2,6 +2,7 @@ package backend;
 
 import java.util.ArrayList;
 import java.util.Random;
+
 /**
  * 
  * @author A2
@@ -13,7 +14,8 @@ public class Ki_Dame extends Ki {
 	private FarbEnum farbe;
 	final int anzahl = 2;
 	private Spielfeld StartZiel[] = new Spielfeld[anzahl];
-//	private boolean schlagen = false;// daweil true
+
+	// private boolean schlagen = false;// daweil true
 
 	/**
 	 * 
@@ -43,12 +45,12 @@ public class Ki_Dame extends Ki {
 	@Override
 	public Spielfeld[] kiAct(Spielfeld[][] brett) {
 
-		final int max = 2;
-		int[] lor = new int[max];
-		lor[0] = -1;
-		lor[1] = 1;
-		Random linksRechts = new Random();
-		int entscheide = linksRechts.nextInt(max);
+		// final int max = 2;
+		// int[] lor = new int[max];
+		// lor[0] = -1;
+		// lor[1] = 1;
+		// Random linksRechts = new Random();
+		// int entscheide = linksRechts.nextInt(max);
 
 		// Weiße KI
 		if (farbe == FarbEnum.weiß) {
@@ -75,7 +77,7 @@ public class Ki_Dame extends Ki {
 			// this.StartZiel[1] = brett[figurenWeiß.get(weißZufall).getPosY() +
 			// 1][figurenWeiß.get(weißZufall).getPosX() + lor[entscheide]];
 
-			kiRadar(brett, figurenWeiß.get(weißZufall).getPosY(), figurenWeiß.get(weißZufall).getPosX(), lor, entscheide);
+			kiRadar(brett, figurenWeiß.get(weißZufall).getPosY(), figurenWeiß.get(weißZufall).getPosX());
 
 			return StartZiel;
 
@@ -99,30 +101,33 @@ public class Ki_Dame extends Ki {
 
 				}
 			}
-		//	if (schlagen == false) {
-				Random schwarz = new Random();
-				int schwarzZufall = schwarz.nextInt(figurenSchwarz.size());
-				// this.StartZiel[0] =
-				// brett[figurenSchwarz.get(schwarzZufall).getPosY()][figurenSchwarz.get(schwarzZufall).getPosX()];
-				// this.StartZiel[1] = brett[figurenWeiß.get(schwarzZufall).getPosY() +
-				// 1][figurenWeiß.get(schwarzZufall).getPosX() + lor[entscheide]];
+			// if (schlagen == false) {
+			Random schwarz = new Random();
+			int schwarzZufall = schwarz.nextInt(figurenSchwarz.size());
+			// this.StartZiel[0] =
+			// brett[figurenSchwarz.get(schwarzZufall).getPosY()][figurenSchwarz.get(schwarzZufall).getPosX()];
+			// this.StartZiel[1] = brett[figurenWeiß.get(schwarzZufall).getPosY() +
+			// 1][figurenWeiß.get(schwarzZufall).getPosX() + lor[entscheide]];
 
-				kiRadar(brett, figurenSchwarz.get(schwarzZufall).getPosY(), figurenSchwarz.get(schwarzZufall).getPosX(), lor, entscheide);
+			kiRadar(brett, figurenSchwarz.get(schwarzZufall).getPosY(), figurenSchwarz.get(schwarzZufall).getPosX());
 
-				return StartZiel;
-			//}
-
+			return StartZiel;
 		}
+
+		// }
 		return null;
 	}
 
-	
-	
-	
-	
 	/************************************ Radar-Methode ******************************************/
-	
-	public Spielfeld[] kiRadar(Spielfeld[][] brett, int j, int i, int[] lor, int entscheide) {
+
+	public Spielfeld[] kiRadar(Spielfeld[][] brett, int j, int i) {
+
+		final int max = 2;
+		int[] lor = new int[max];
+		lor[0] = -1;
+		lor[1] = 1;
+		Random linksRechts = new Random();
+		int entscheide = linksRechts.nextInt(max);
 
 		StartZiel[0] = brett[j][i];
 
@@ -130,35 +135,47 @@ public class Ki_Dame extends Ki {
 		if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 
 			// rechts oben schlagen
-			if ((brett[j + 1][i + 1].getSpielfigur() != null && brett[j + 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) && (brett[j + 2][i + 2].getSpielfigur() == null && (i + 2 < brett.length && j + 2 < brett.length))) {
-				StartZiel[1] = brett[j + 2][i + 2];
-				//schlagen = true;
+			if ((brett[j + 1][i + 1].getSpielfigur() != null) && (brett[j + 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz)) {
+				if ((brett[j + 2][i + 2].getSpielfigur() == null) && (i + 2 < brett.length && j + 2 < brett.length)) {
+					StartZiel[1] = brett[j + 2][i + 2];
+				}
 			}
+
 			// links oben schlagen
-			else if ((brett[j + 1][i - 1].getSpielfigur() != null && brett[j + 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) && (brett[j + 2][i - 2].getSpielfigur() == null && ((i - 2 >= 0 && j + 2 < brett.length)))) {
-				StartZiel[1] = brett[j + 2][i - 2];
-				//schlagen = true;
+			else if ((brett[j + 1][i - 1].getSpielfigur() != null) && (brett[j + 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz)) {
+				if ((brett[j + 2][i - 2].getSpielfigur() == null) && ((i - 2 >= 0 && j + 2 < brett.length))) {
+					StartZiel[1] = brett[j + 2][i - 2];
+				}
 			}
+
 			// sind rechts und links 2 Felder frei
 			// und kein Schlagen möglich, dann zufälliges Feld wählen
-			else if ((brett[j + 1][i + 1].getSpielfigur() == null && brett[j + 2][i + 2].getSpielfigur() == null) || (brett[j + 1][i - 1].getSpielfigur() == null && brett[j + 2][i - 2].getSpielfigur() == null) && (i + 2 < brett.length && j + 2 < brett.length) || (i - 1 >= 0 && j + 1 < brett.length - 1)) {
-				StartZiel[1] = brett[j + 1][i + lor[entscheide]];
+			else if (((brett[j + 1][i + 1].getSpielfigur() == null) && (brett[j + 2][i + 2].getSpielfigur() == null)) || ((brett[j + 1][i - 1].getSpielfigur() == null && brett[j + 2][i - 2].getSpielfigur() == null))) {
+				if ((i + 2 < brett.length && j + 2 < brett.length) || (i - 1 >= 0 && j + 1 < brett.length - 1)) {
+					StartZiel[1] = brett[j + 1][i + lor[entscheide]];
+				}
 			}
 
 			// rechts unten schlagen
-			else if ((brett[j - 1][i + 1].getSpielfigur() != null && brett[j - 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) && (brett[j - 2][i + 2].getSpielfigur() == null && (i + 2 < brett.length && j - 2 >= 0))) {
-				StartZiel[1] = brett[j - 2][i + 2];
-				//schlagen = true;
+			else if ((brett[j - 1][i + 1].getSpielfigur() != null) && (brett[j - 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz)) {
+				if (brett[j - 2][i + 2].getSpielfigur() == null && (i + 2 < brett.length && j - 2 >= 0)) {
+					StartZiel[1] = brett[j - 2][i + 2];
+				}
 			}
+
 			// links unten schlagen
-			else if ((brett[j - 1][i - 1].getSpielfigur() != null && brett[j - 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) && (brett[j - 2][i - 2].getSpielfigur() == null && (i - 2 >= 0 && j - 2 >= 0))) {
-				StartZiel[1] = brett[j - 2][i - 2];
-				//schlagen = true;
+			else if ((brett[j - 1][i - 1].getSpielfigur() != null) && (brett[j - 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz)) {
+				if (brett[j - 2][i - 2].getSpielfigur() == null && (i - 2 >= 0 && j - 2 >= 0)) {
+					StartZiel[1] = brett[j - 2][i - 2];
+				}
 			}
+
 			// sind rechts und links 2 Felder frei
 			// und kein Schlagen möglich, dann zufälliges Feld wählen
-			else if ((brett[j + 1][i + 1].getSpielfigur() == null && brett[j + 2][i + 2].getSpielfigur() == null) || (brett[j + 1][i - 1].getSpielfigur() == null && brett[j + 2][i - 2].getSpielfigur() == null) && (j - 2 >= 0 && i - 2 >= 0) && (i + 2 < brett.length && j + 2 < brett.length)) {
-				StartZiel[1] = brett[j + 1][i + lor[entscheide]];
+			else if ((i + 1 < brett.length && j + 1 < brett.length) && (j - 1 >= 0 && i - 1 >= 0)) {
+				if (((brett[j + 1][i + 1].getSpielfigur() == null)) || (brett[j + 1][i - 1].getSpielfigur() == null)) {
+					StartZiel[1] = brett[j + 1][i + lor[entscheide]];
+				}
 			}
 		}
 
@@ -167,29 +184,31 @@ public class Ki_Dame extends Ki {
 			// rechts unten schlagen
 			if ((brett[j - 1][i + 1].getSpielfigur() != null && brett[j - 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j - 2][i + 2].getSpielfigur() == null && (i + 2 < brett.length && j - 2 >= 0))) {
 				StartZiel[1] = brett[j - 2][i + 2];
-				//schlagen = true;
+				// schlagen = true;
 			}
 			// links unten schlagen
 			else if ((brett[j - 1][i - 1].getSpielfigur() != null && brett[j - 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j - 2][i - 2].getSpielfigur() == null && (i - 2 >= 0 && j - 2 >= 0))) {
 				StartZiel[1] = brett[j - 2][i - 2];
-				//schlagen = true;
+				// schlagen = true;
 			}
 
 			// rechts oben schlagen
 			else if ((brett[j + 1][i + 1].getSpielfigur() != null && brett[j + 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j + 2][i + 2].getSpielfigur() == null && (i + 2 < brett.length && j + 2 < brett.length))) {
 				StartZiel[1] = brett[j + 2][i + 2];
-				//schlagen = true;
+				// schlagen = true;
 			}
 			// links oben schlagen
 			else if ((brett[j + 1][i - 1].getSpielfigur() != null && brett[j + 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j + 2][i - 2].getSpielfigur() == null && (i - 2 >= 0 && j + 2 < brett.length))) {
 				StartZiel[1] = brett[j + 2][i - 2];
-				//schlagen = true;
+				// schlagen = true;
 			}
 
 			// sind rechts und links 2 Felder frei
 			// und kein Schlagen möglich, dann zufälliges Feld wählen
-			else if ((brett[j - 1][i + 1].getSpielfigur() == null && brett[j - 2][i + 2].getSpielfigur() == null) || (brett[j - 1][i - 1].getSpielfigur() == null && brett[j - 2][i - 2].getSpielfigur() == null) && (j - 2 >= 0 && i - 2 >= 0) && (i + 2 < brett.length && j + 2 < brett.length)) {
-				StartZiel[1] = brett[j + 1][i + lor[entscheide]];
+			else if (i + 1 < brett.length && j + 1 < brett.length) {
+				if ((brett[j - 1][i + 1].getSpielfigur() == null && brett[j - 2][i + 2].getSpielfigur() == null) || (brett[j - 1][i - 1].getSpielfigur() == null && brett[j - 2][i - 2].getSpielfigur() == null) && (j - 2 >= 0 && i - 2 >= 0)) {
+					StartZiel[1] = brett[j - 1][i + lor[entscheide]];
+				}
 			}
 
 			// for (int k = 0; k < brett.length; k++) {
