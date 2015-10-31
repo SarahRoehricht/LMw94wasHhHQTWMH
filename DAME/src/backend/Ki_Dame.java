@@ -142,6 +142,11 @@ public class Ki_Dame extends Ki {
 				StartZiel[1] = brett[j - 2][i - 2];
 				schlagen = true;
 			}
+			// sind rechts und links 2 Felder frei
+			// und kein Schlagen möglich, dann zufälliges Feld wählen
+			else if ((brett[j + 1][i + 1] == null && brett[j + 2][i + 2] == null) || (brett[j + 1][i - 1] == null && brett[j + 2][i - 2] == null) && (j - 2 >= 0 && i - 2 >= 0) && (i + 2 < brett.length && j + 2 < brett.length)) {
+				StartZiel[1] = brett[j + 1][i + lor[entscheide]];
+			}
 		}
 
 		/*************** SCHWARZ ******************/
@@ -159,18 +164,18 @@ public class Ki_Dame extends Ki {
 
 			// rechts oben schlagen
 			else if ((brett[j + 1][i + 1] != null && brett[j + 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j + 2][i + 2] == null && (i + 2 < brett.length && j + 2 < brett.length))) {
-				StartZiel[1] = brett[j - 2][i + 2];
+				StartZiel[1] = brett[j + 2][i + 2];
 				schlagen = true;
 			}
 			// links oben schlagen
 			else if ((brett[j + 1][i - 1] != null && brett[j + 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j + 2][i - 2] == null && (i - 2 >= 0 && j + 2 < brett.length))) {
-				StartZiel[1] = brett[j - 2][i - 2];
+				StartZiel[1] = brett[j + 2][i - 2];
 				schlagen = true;
 			}
 
 			// sind rechts und links 2 Felder frei
 			// und kein Schlagen möglich, dann zufälliges Feld wählen
-			else if ((brett[j - 1][i + 1] == null && brett[j - 2][i + 2] == null) || (brett[j - 1][i - 1] == null && brett[j - 2][i - 2] == null) && (j - 1 >= 0 && i - 1 >= 0) && i + 1 < brett.length - 1) {
+			else if ((brett[j - 1][i + 1] == null && brett[j - 2][i + 2] == null) || (brett[j - 1][i - 1] == null && brett[j - 2][i - 2] == null) && (j - 2 >= 0 && i - 2 >= 0) && (i + 2 < brett.length && j + 2 < brett.length)) {
 				StartZiel[1] = brett[j + 1][i + lor[entscheide]];
 			}
 
