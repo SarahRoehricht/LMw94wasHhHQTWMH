@@ -495,7 +495,7 @@ public class Spiel implements iBediener {
 		while (askdone == false) {
 			while (askdone == false) {
 				Spielfeld zielfeld;
-				if (player1.getKi() == null) {
+				//if (player1.getKi() == null) {
 					System.out.println(startfeld.getSchachNotation() + startfeld.getSpielfigur() + " kann noch einmal schlagen");
 					Scanner scanner = new Scanner(System.in);
 					System.out.println("Eingabe Zielfeld:");
@@ -516,8 +516,8 @@ public class Spiel implements iBediener {
 						break;
 					}
 
-				} else {
-					zielfeld = player1.getKi().actAgain(startfeld, spielbrett.getBrett()); // KI
+				//} else {
+					//zielfeld = player1.getKi().actAgain(startfeld, spielbrett.getBrett()); // KI
 																																									// actAgain
 																																									// noch
 																																									// zu
@@ -529,7 +529,7 @@ public class Spiel implements iBediener {
 																																									// nach
 																																									// einem
 																																									// Schlag.
-				}
+			//	}
 				if (startfeld.getSpielfigur().isDame() == false) {
 					if (doSchlagStein(player1, startfeld, zielfeld) == true) {
 
@@ -1342,19 +1342,23 @@ public class Spiel implements iBediener {
 						System.out.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
-					Spielfeld zielfeld = EingabeSpielfeld(feld);
-					if (moeglichkeit1.equals(zielfeld)) {
-						removeSpielfigur(moeglichkeit1);
-						askdone = true;
-					} else if (moeglichkeit2.equals(zielfeld)) {
-						removeSpielfigur(moeglichkeit2);
-						askdone = true;
+					if (moeglichkeit1.getSchachNotation().equals(feld) || moeglichkeit2.getSchachNotation().equals(feld)) {
+						Spielfeld zielfeld = EingabeSpielfeld(feld);
+						if (moeglichkeit1.equals(zielfeld)) {
+							removeSpielfigur(moeglichkeit1);
+							askdone = true;
+						} else if (moeglichkeit2.equals(zielfeld)) {
+							removeSpielfigur(moeglichkeit2);
+							askdone = true;
+						} else {
+							System.out.println("Dieser Stein steht nicht zur Auswahl");
+							break;
+						}
 					} else {
-						System.out.println("Dieser Stein steht nicht zur Auswahl");
 						break;
 					}
 
-				}
+				askdone=true;}
 			}
 		}
 
@@ -1371,7 +1375,8 @@ public class Spiel implements iBediener {
 
 	}
 
-	/**Promoted Spielfigur welche noch keine Dame ist, zur Dame
+	/**
+	 * Promoted Spielfigur welche noch keine Dame ist, zur Dame
 	 * 
 	 * @param spielfeld
 	 */
