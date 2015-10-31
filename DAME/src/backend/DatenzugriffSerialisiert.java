@@ -8,6 +8,11 @@ import java.io.ObjectOutputStream;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * 
+ * @author A-2
+ *
+ */
 public class DatenzugriffSerialisiert implements iDatenzugriff {
 
 	ObjectInputStream is;
@@ -15,41 +20,42 @@ public class DatenzugriffSerialisiert implements iDatenzugriff {
 
 	@Override
 	public void open(Properties prop) throws IOException {
+
 		String filename = prop.getProperty("modus");
-		if(filename == null){
+		if (filename == null) {
 			throw new IOException("Datei nicht gefunden!");
-		}
-		else{
-			if("s".equals(prop.getProperty("modus"))){
+		} else {
+			if ("s".equals(prop.getProperty("modus"))) {
 				os = new ObjectOutputStream(new FileOutputStream(filename));
-			}
-			else if("l".equals(prop.getProperty("modus"))){
+			} else if ("l".equals(prop.getProperty("modus"))) {
 				is = new ObjectInputStream(new FileInputStream(filename));
-			}
-			else{
+			} else {
 				throw new IOException("modus nicht vorhanden");
 			}
 		}
 	}
-	
+
 	@Override
 	public void writeObject(Object obj) {
 		try {
-			os = new ObjectOutputStream(new FileOutputStream("data.bin"));
-			os.writeObject(obj);
-			os.close();
+			if (os == null) {
+				throw new IOException("OuputStream nicht geöffnet.");
+			} else {
+				os.writeObject(obj);
+				os.close();
+			}
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
 			System.out.println("Serialisierung fehlgeschlagen!");
 			System.out.println(e.getMessage());
 		}
-		System.out.println("Spielstand wurde gespeichert!");	
+		System.out.println("Spielstand wurde gespeichert!");
 	}
-	
+
 	@Override
 	public Object readObject() {
-		
+
 		try {
 			is = new ObjectInputStream(new FileInputStream("data.bin"));
 			Object obj = is.readObject();
@@ -64,19 +70,19 @@ public class DatenzugriffSerialisiert implements iDatenzugriff {
 			System.out.println(e.getMessage());
 		}
 		return null;
-		
+
 	}
-	
+
 	@Override
 	public void close() throws IOException {
-		if(is != null){
+		if (is != null) {
 			is.close();
 			is = null;
-		}else if(os != null){
+		} else if (os != null) {
 			os.close();
-			os =null;
+			os = null;
 		}
-		
+
 	}
 
 }

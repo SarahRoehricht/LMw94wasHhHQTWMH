@@ -97,7 +97,7 @@ public class Spieler implements Serializable {
 
 
 	public String generiereCSV(){
-		return "" + getClass() + ":(name=" + this.getName() + "; farbe=" + this.getFarbe() + ")\n";
+		return "" + getClass() + ":name=" + this.getName() + ", farbe=" + this.getFarbe() + ";";
 	}
 	
 	/**
