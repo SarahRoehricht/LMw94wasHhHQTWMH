@@ -48,7 +48,8 @@ public class Ki_Dame extends Ki {
 
 		// Weiße KI
 		if (farbe == FarbEnum.weiß) {
-			for (int i = brett.length - 1; i >= 0; i--) {
+			// for (int i = brett.length - 1; i >= 0; i--) {
+			for (int i = 0; i < brett.length; i++) {
 				for (int j = 0; j < brett[i].length; j++) {
 					if (brett[j][i].getSpielfigur() != null) {
 
@@ -63,15 +64,27 @@ public class Ki_Dame extends Ki {
 						}
 
 						// Damen weiß
-						if (brett[i][11].getSpielfigur() != null && brett[i][11].getSpielfigur().getFarbe() == FarbEnum.weiß) {
-							brett[i][11].getSpielfigur().setDame(true);
+						// if (brett[i][11].getSpielfigur() != null &&
+						// brett[i][11].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						// brett[i][11].getSpielfigur().setDame(true);
+						// // damenWeiß.add(brett[i][j]);
+						// figurenWeiß.add(brett[j][i]);
+						// }
+						if (brett[11][i].getSpielfigur() != null && brett[11][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+							brett[11][i].getSpielfigur().setDame(true);
 							// damenWeiß.add(brett[i][j]);
 							figurenWeiß.add(brett[j][i]);
 						}
 
 						// Damen schwarz
-						if (brett[i][11].getSpielfigur() != null && brett[i][11].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-							brett[i][11].getSpielfigur().setDame(true);
+						// if (brett[i][11].getSpielfigur() != null &&
+						// brett[i][11].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						// brett[i][11].getSpielfigur().setDame(true);
+						// // damenSchwarz.add(brett[i][j]);
+						// figurenSchwarz.add(brett[j][i]);
+						// }
+						if (brett[11][i].getSpielfigur() != null && brett[11][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+							brett[11][i].getSpielfigur().setDame(true);
 							// damenSchwarz.add(brett[i][j]);
 							figurenSchwarz.add(brett[j][i]);
 						}
@@ -97,7 +110,8 @@ public class Ki_Dame extends Ki {
 
 		// schwarze KI
 		if (farbe == FarbEnum.schwarz) {
-			for (int i = brett.length - 1; i >= 0; i--) {
+			// for (int i = brett.length - 1; i >= 0; i--) {
+			for (int i = 0; i < brett.length; i++) {
 				for (int j = 0; j < brett[i].length; j++) {
 					if (brett[j][i].getSpielfigur() != null) {
 
@@ -113,15 +127,27 @@ public class Ki_Dame extends Ki {
 						}
 
 						// Damen weiß
-						if (brett[i][11].getSpielfigur() != null && brett[i][11].getSpielfigur().getFarbe() == FarbEnum.weiß) {
-							brett[i][11].getSpielfigur().setDame(true);
+						// if (brett[i][11].getSpielfigur() != null &&
+						// brett[i][11].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						// brett[i][11].getSpielfigur().setDame(true);
+						// // damenWeiß.add(brett[i][j]);
+						// figurenWeiß.add(brett[j][i]);
+						// }
+						if (brett[11][i].getSpielfigur() != null && brett[11][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+							brett[11][i].getSpielfigur().setDame(true);
 							// damenWeiß.add(brett[i][j]);
 							figurenWeiß.add(brett[j][i]);
 						}
 
 						// Damen schwarz
-						if (brett[i][11].getSpielfigur() != null && brett[i][11].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-							brett[i][11].getSpielfigur().setDame(true);
+						// if (brett[i][11].getSpielfigur() != null &&
+						// brett[i][11].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						// brett[i][11].getSpielfigur().setDame(true);
+						// // damenSchwarz.add(brett[i][j]);
+						// figurenSchwarz.add(brett[j][i]);
+						// }
+						if (brett[11][i].getSpielfigur() != null && brett[11][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+							brett[11][i].getSpielfigur().setDame(true);
 							// damenSchwarz.add(brett[i][j]);
 							figurenSchwarz.add(brett[j][i]);
 						}
@@ -130,7 +156,7 @@ public class Ki_Dame extends Ki {
 			}
 			Random schwarz = new Random();
 			int steinSchwarzZufall = schwarz.nextInt(figurenSchwarz.size());
-			int dameSchwarzZufall = schwarz.nextInt(damenSchwarz.size());
+			//int dameSchwarzZufall = schwarz.nextInt(damenSchwarz.size());
 
 			kiRadar(brett, figurenSchwarz.get(steinSchwarzZufall).getPosY(), figurenSchwarz.get(steinSchwarzZufall).getPosX());
 
@@ -161,7 +187,7 @@ public class Ki_Dame extends Ki {
 				StartZiel[1] = brett[j + 2][i + 2];
 			}
 			// links oben schlagen
-			else if ((brett[j + 1][i - 1].getSpielfigur() != null && brett[j + 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) && (brett[j + 2][i - 2].getSpielfigur() == null && i >= 2 && j <= brett.length - 3)) {
+			else if ((brett[j + 1][i - 1].getSpielfigur() != null && brett[j + 1][i - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) && (brett[j + 2][i - 2].getSpielfigur() == null && i >= 3 && j <= brett.length - 3)) {
 				StartZiel[1] = brett[j + 2][i - 2];
 			}
 
@@ -199,11 +225,9 @@ public class Ki_Dame extends Ki {
 
 		/*************** SCHWARZ ******************/
 
-		// NOCH ALLES PRÜFEN, MOMENTAN NUR COPY PASTE VON WEIß !!!!!!!!!!!!!!!!!
-
 		if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 			// rechts oben schlagen
-			if ((brett[j + 1][i + 1].getSpielfigur() != null && brett[j + 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j + 2][i + 2].getSpielfigur() == null && (i < brett.length - 3 && j <= brett.length - 3))) {
+			if ((brett[j + 1][i + 1].getSpielfigur() != null && brett[j + 1][i + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) && (brett[j + 2][i + 2].getSpielfigur() == null && (i <= brett.length - 3 && j <= brett.length - 3))) {
 				StartZiel[1] = brett[j + 2][i + 2];
 			}
 			// links oben schlagen
