@@ -502,42 +502,31 @@ public class Spiel implements iBediener {
 		while (askdone == false) {
 			while (askdone == false) {
 				Spielfeld zielfeld;
-				// if (player1.getKi() == null) {
-				System.out.println(startfeld.getSchachNotation() + startfeld.getSpielfigur() + " kann noch einmal schlagen");
-				Scanner scanner = new Scanner(System.in);
-				System.out.println("Eingabe Zielfeld:");
-				String coordb = scanner.nextLine();
-				if (checkLegitFeld(coordb) == false) {
-					System.out.println("Das ist kein Feld, versuche es erneut!");
-					break;
-				}
-				zielfeld = EingabeSpielfeld(coordb);
-				if (startfeld.equals(zielfeld)) {
-					System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
-					break;
+				if (player1.getKi() == null) {
+					System.out.println(startfeld.getSchachNotation() + startfeld.getSpielfigur() + " kann noch einmal schlagen");
+					Scanner scanner = new Scanner(System.in);
+					System.out.println("Eingabe Zielfeld:");
+					String coordb = scanner.nextLine();
+					if (checkLegitFeld(coordb) == false) {
+						System.out.println("Das ist kein Feld, versuche es erneut!");
+						break;
+					}
+					zielfeld = EingabeSpielfeld(coordb);
+					if (startfeld.equals(zielfeld)) {
+						System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
+						break;
+
+					}
+
+					if (zielfeld.getSpielfigur() != null) {
+						System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
+						break;
+					}
+
+				} else {
+					zielfeld = player1.getKi().actAgain(startfeld, spielbrett.getBrett()); // KI
 
 				}
-
-				if (zielfeld.getSpielfigur() != null) {
-					System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
-					break;
-				}
-
-				// } else {
-				// zielfeld = player1.getKi().actAgain(startfeld,
-				// spielbrett.getBrett()); // KI
-				// actAgain
-				// noch
-				// zu
-				// implementieren
-				// fuer
-				// den
-				// weiteren
-				// Schlag
-				// nach
-				// einem
-				// Schlag.
-				// }
 				if (startfeld.getSpielfigur().isDame() == false) {
 					if (doSchlagStein(player1, startfeld, zielfeld) == true) {
 
@@ -1089,6 +1078,7 @@ public class Spiel implements iBediener {
 			}
 			System.out.println(player2 + " ist am Zug!");
 			act(player2);
+			checkAndGetDame(player2);
 			if (checkSiegkondition(player1) == true) {
 				i = 1;
 			}
@@ -1127,7 +1117,7 @@ public class Spiel implements iBediener {
 	}
 
 	/**
-	 * Schaut ob player1 eine Dame nach seinem Zug bekommen sollte, falls ja wird
+	 * Schaut ob player eine Dame nach seinem Zug bekommen sollte, falls ja wird
 	 * wirdDame mit dem passenden Spielfeld aufgerufen.
 	 * 
 	 * @param player1
@@ -1168,9 +1158,9 @@ public class Spiel implements iBediener {
 		}
 		if (AnyMovesLeft(player) == false) {
 			return true;
-		}
+		}else{
 		return false;
-
+		}
 	}
 
 	/**
@@ -1280,9 +1270,10 @@ public class Spiel implements iBediener {
 		//
 		posxy.setSpielfigur(stein1.getSpielfigur());// Setzt Spielfigur auf
 																								// Zielfeld.
-		stein1.setSpielfigur(null); // Setzt Spielfigur auf Startfeld auf null.
+		// Setzt Spielfigur auf Startfeld auf null.
 
 		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
+		stein1.setSpielfigur(null);
 		System.out.println(spielbrett);
 
 	}

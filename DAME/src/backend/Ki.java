@@ -1,7 +1,7 @@
 package backend;
 
 public abstract class Ki {
-
+private FarbEnum farbe;
 	
 	Ki(FarbEnum farbe){
 		this.setFarbe(farbe);
@@ -9,5 +9,7 @@ public abstract class Ki {
 	public abstract void setFarbe(FarbEnum farbe);
 	public abstract Spielfeld[] kiAct(Spielfeld[][] brett);
 
-	public abstract void move(Spielfeld start, Spielfeld ziel);
-}
+	public abstract Spielfeld actAgain(Spielfeld startfeld, Spielfeld[][] brett);
+
+	}
+
