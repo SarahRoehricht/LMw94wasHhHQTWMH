@@ -117,11 +117,11 @@ public class Spiel implements iBediener {
 					String szeingabe = scanner.nextLine();
 					String[] startZiel = new String[2];
 					startZiel = szeingabe.split("-", 2);
-					if (startZiel[0] == null){
+					if (startZiel[0] == null) {
 						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
 						break;
 					}
-					if(startZiel.length==1) {
+					if (startZiel.length == 1) {
 						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
 						break;
 					}
