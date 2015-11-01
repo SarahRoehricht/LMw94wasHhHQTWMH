@@ -54,12 +54,12 @@ public class Ki_Dame extends Ki {
 					if (brett[j][i].getSpielfigur() != null) {
 
 						// weiße Steine zu ArrayList hinzufügen
-						if (brett[j][i].getSpielfigur() != null && brett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 							figurenWeiß.add(brett[j][i]);
 						}
 
 						// schwarze Steine zu ArrayList hinzufügen
-						if (brett[j][i].getSpielfigur() != null && brett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 							figurenSchwarz.add(brett[j][i]);
 						}
 
@@ -116,13 +116,13 @@ public class Ki_Dame extends Ki {
 					if (brett[j][i].getSpielfigur() != null) {
 
 						// weiße Steine zu ArrayList hinzufügen
-						if (brett[j][i].getSpielfigur() != null && brett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
 							figurenWeiß.add(brett[j][i]);
 							System.out.println("weißer Stein: " + brett[j][i]);
 						}
 
 						// schwarze Steine zu ArrayList hinzufügen
-						if (brett[j][i].getSpielfigur() != null && brett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						if (brett[j][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 							figurenSchwarz.add(brett[j][i]);
 						}
 
