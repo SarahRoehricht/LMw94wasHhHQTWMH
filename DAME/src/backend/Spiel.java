@@ -37,26 +37,16 @@ public class Spiel implements iBediener {
 		System.out.println("Name Spieler 1:");
 		String name1 = scanner.next();
 		System.out.println("KI? - y/n");
+		while (!scanner.hasNext("[yn]")) {
+			System.out.println("KI? - y/n");
+			scanner.next();
+		}
 		String ki1 = scanner.next();
 		boolean ki1erstellen = false;
+
 		if (ki1.equals("y")) {
 			ki1erstellen = true;
 		}
-
-		// boolean kidone = false;
-		// while (kidone == false) {
-		// if (ki1 == kiabfrage) {
-		//
-		// ki1erstellen = true;
-		// kidone = true;
-		// }
-		// if (ki1 == kiabfrageno) {
-		// ki1erstellen = false;
-		// kidone = true;
-		// }
-		// System.out.println("KI? - y/n");
-		// ki1 = scanner.next();
-		// }
 
 		Spieler player1 = new Spieler(name1, FarbEnum.weiß, ki1erstellen);
 
@@ -65,6 +55,10 @@ public class Spiel implements iBediener {
 		System.out.println("Name Spieler 2:");
 		String name2 = scanner.next();
 		System.out.println("KI? - y/n");
+		while (!scanner.hasNext("[yn]")) {
+			System.out.println("KI? - y/n");
+			scanner.next();
+		}
 		String ki2 = scanner.next();
 		boolean ki2erstellen = false;
 		if (ki2.equals("y")) {
@@ -93,6 +87,7 @@ public class Spiel implements iBediener {
 		System.out.println(player1.getName() + " - " + "'" + player1.getFarbe() + "'" + " faengt an!");
 		scanner.reset();
 		playerRotation(player1, player2);
+
 	}
 
 	/**
@@ -118,8 +113,20 @@ public class Spiel implements iBediener {
 				while (actdone != true) {
 					Scanner scanner = new Scanner(System.in);
 
-					System.out.println("Eingabe Startfeld:");
-					String coorda = scanner.nextLine();
+					System.out.println("Eingabe Start, Ziel getrennt mit '-'");
+					String szeingabe = scanner.nextLine();
+					String[] startZiel = new String[2];
+					startZiel = szeingabe.split("-", 2);
+					if (startZiel[0] == null){
+						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
+						break;
+					}
+					if(startZiel.length==1) {
+						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
+						break;
+					}
+					System.out.println(startZiel[0] + startZiel[1]);
+					String coorda = startZiel[0];
 					if (checkLegitFeld(coorda) == false) {
 						System.out.println("Das ist kein Feld, versuche es erneut!");
 						break;
@@ -136,9 +143,9 @@ public class Spiel implements iBediener {
 							break;
 						}
 					}
-
-					System.out.println("Eingabe Zielfeld:");
-					String coordb = scanner.nextLine();
+					String coordb = startZiel[1];
+					// System.out.println("Eingabe Zielfeld:");
+					// String coordb = scanner.nextLine();
 					if (checkLegitFeld(coordb) == false) {
 						System.out.println("Das ist kein Feld, versuche es erneut!");
 						break;
@@ -495,41 +502,42 @@ public class Spiel implements iBediener {
 		while (askdone == false) {
 			while (askdone == false) {
 				Spielfeld zielfeld;
-				//if (player1.getKi() == null) {
-					System.out.println(startfeld.getSchachNotation() + startfeld.getSpielfigur() + " kann noch einmal schlagen");
-					Scanner scanner = new Scanner(System.in);
-					System.out.println("Eingabe Zielfeld:");
-					String coordb = scanner.nextLine();
-					if (checkLegitFeld(coordb) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
-						break;
-					}
-					zielfeld = EingabeSpielfeld(coordb);
-					if (startfeld.equals(zielfeld)) {
-						System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
-						break;
+				// if (player1.getKi() == null) {
+				System.out.println(startfeld.getSchachNotation() + startfeld.getSpielfigur() + " kann noch einmal schlagen");
+				Scanner scanner = new Scanner(System.in);
+				System.out.println("Eingabe Zielfeld:");
+				String coordb = scanner.nextLine();
+				if (checkLegitFeld(coordb) == false) {
+					System.out.println("Das ist kein Feld, versuche es erneut!");
+					break;
+				}
+				zielfeld = EingabeSpielfeld(coordb);
+				if (startfeld.equals(zielfeld)) {
+					System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
+					break;
 
-					}
+				}
 
-					if (zielfeld.getSpielfigur() != null) {
-						System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
-						break;
-					}
+				if (zielfeld.getSpielfigur() != null) {
+					System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
+					break;
+				}
 
-				//} else {
-					//zielfeld = player1.getKi().actAgain(startfeld, spielbrett.getBrett()); // KI
-																																									// actAgain
-																																									// noch
-																																									// zu
-																																									// implementieren
-																																									// fuer
-																																									// den
-																																									// weiteren
-																																									// Schlag
-																																									// nach
-																																									// einem
-																																									// Schlag.
-			//	}
+				// } else {
+				// zielfeld = player1.getKi().actAgain(startfeld,
+				// spielbrett.getBrett()); // KI
+				// actAgain
+				// noch
+				// zu
+				// implementieren
+				// fuer
+				// den
+				// weiteren
+				// Schlag
+				// nach
+				// einem
+				// Schlag.
+				// }
 				if (startfeld.getSpielfigur().isDame() == false) {
 					if (doSchlagStein(player1, startfeld, zielfeld) == true) {
 
@@ -1286,7 +1294,7 @@ public class Spiel implements iBediener {
 	 * @return boolean
 	 */
 	private boolean doCheckPusten(Spielfeld stein1) {
-		Spielfeld[] pustenarr = new Spielfeld[2];
+		Spielfeld[] pustenarr = new Spielfeld[3];
 		int z = 0;
 		for (int i = 0; i < spielbrett.getBrett().length; i++) {
 			for (int j = 0; j < spielbrett.getBrett()[i].length; j++) {
@@ -1329,7 +1337,7 @@ public class Spiel implements iBediener {
 		if (pustenarr[1] == null) {
 			System.out.println("Spielstein an Stelle " + moeglichkeit1.getSchachNotation() + "(" + moeglichkeit1.getSpielfigur() + ") wird geloescht.");
 			removeSpielfigur(moeglichkeit1);
-		} else {
+		} else if (pustenarr[2] == null) {
 			Spielfeld moeglichkeit2 = pustenarr[1];
 			boolean askdone = false;
 			while (askdone == false) {
@@ -1358,7 +1366,44 @@ public class Spiel implements iBediener {
 						break;
 					}
 
-				askdone=true;}
+					askdone = true;
+				}
+			}
+		} else {
+			boolean askdone = false;
+			while (askdone == false) {
+				while (askdone == false) {
+					Spielfeld moeglichkeit2 = pustenarr[1];
+					Spielfeld moeglichkeit3 = pustenarr[2];
+					Scanner scanner = new Scanner(System.in);
+					System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
+					System.out.println(moeglichkeit1.getSpielfigur() + " auf Feld: " + moeglichkeit1.getSchachNotation() + " , " + moeglichkeit2.getSpielfigur() + " auf Feld: " + moeglichkeit2.getSchachNotation() + " oder , " + moeglichkeit3.getSpielfigur() + " auf Feld: " + moeglichkeit3.getSchachNotation()
+							+ "?");
+					String feld = scanner.nextLine();
+					if (checkLegitFeld(feld) == false) {
+						System.out.println("Das ist kein Feld, versuche es erneut!");
+						break;
+					}
+					if (moeglichkeit1.getSchachNotation().equals(feld) || moeglichkeit2.getSchachNotation().equals(feld) || moeglichkeit3.getSchachNotation().equals(feld)) {
+						Spielfeld zielfeld = EingabeSpielfeld(feld);
+						if (moeglichkeit1.equals(zielfeld)) {
+							removeSpielfigur(moeglichkeit1);
+							askdone = true;
+						} else if (moeglichkeit2.equals(zielfeld)) {
+							removeSpielfigur(moeglichkeit2);
+							askdone = true;
+						} else if (moeglichkeit3.equals(zielfeld)) {
+						} else {
+
+							System.out.println("Dieser Stein steht nicht zur Auswahl");
+							break;
+						}
+					} else {
+						break;
+					}
+
+					askdone = true;
+				}
 			}
 		}
 
