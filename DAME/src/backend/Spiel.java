@@ -11,7 +11,7 @@ public class Spiel implements iBediener {
 	private static final int spielerMax = 2;
 
 	private Spieler[] spieler = new Spieler[spielerMax];
-	private int spielerBisher = 0;
+	
 
 	/**
 	 * Konstruktor, ruft SpielBrett Konstruktor auf, und ruft
@@ -496,7 +496,7 @@ public class Spiel implements iBediener {
 	 * @param player1
 	 * @param startfeld
 	 */
-	private void askSchlagen(Spieler player1, Spielfeld startfeld) {
+	public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 
 		boolean askdone = false;
 		while (askdone == false) {
@@ -1239,20 +1239,10 @@ public class Spiel implements iBediener {
 	 *          s1
 	 */
 	public void add(Spieler s1) {
-		if (spielerBisher >= 2) {
-			throw new RuntimeException("Maximale Spieleranzahl erreicht!");
-		} else if (spielerBisher == 0) {
+		if(spieler[0]==null){
 			spieler[0] = s1;
-			this.setSpielerBisher(++spielerBisher);
-		} else {
+		}else{
 			spieler[1] = s1;
-			this.setSpielerBisher(++spielerBisher);
-		}
-		if (spielerBisher == 2) {// überprüft, dass keine zwei identischen Namen
-															// vergeben wurden
-			if (spieler[0].getName().equals(spieler[1].getName())) {
-				throw new RuntimeException("Dieser Name ist bereits vergeben!");
-			}
 		}
 	}
 
@@ -1424,13 +1414,6 @@ public class Spiel implements iBediener {
 		}
 	}
 
-	public int getSpielerBisher() {
-		return spielerBisher;
-	}
-
-	public void setSpielerBisher(int spielerBisher) {
-		this.spielerBisher = spielerBisher;
-	}
 
 	public SpielBrett getSpielbrett() {
 		return spielbrett;

@@ -9,27 +9,22 @@ public class Ki_Carsten extends Ki {
 
 	private Spielfeld[][] spielbrett;
 
-	public Spielfeld[][] getSpielbrett() {
-		return spielbrett;
-	}
-
-	public void setSpielbrett(Spielfeld[][] spielbrett) {
-		this.spielbrett = spielbrett;
-	}
-
-	public FarbEnum getFarbe() {
-		return farbe;
-	}
-
+	/**
+	 * Konstruktor ruft Super-Konstruktor auf um Farbe zu setzen.
+	 * 
+	 * @param farbe
+	 */
 	Ki_Carsten(FarbEnum farbe) {
 		super(farbe);
-		// this.setFarbe(farbe);
+
 	}
 
-	public void setFarbe(FarbEnum farbe) {
-		this.farbe = farbe;
-	}
-
+	/**
+	 * Wird von Spiel act aufgerufen, und kriegt das 2-D Spielfeld Array
+	 * uebergeben, liefert 2Spielfelder im Array zurueck.
+	 * 
+	 * @return Spielfeld[2] mit Start und Zielfeld
+	 */
 	public Spielfeld[] kiAct(Spielfeld[][] brett) {
 		this.setSpielbrett(brett);
 		Spielfeld[] startZiel = new Spielfeld[2];
@@ -51,6 +46,13 @@ public class Ki_Carsten extends Ki {
 
 	}
 
+	/**
+	 * Geht ueber das ganze Spielbrett und fuegt die Spielfeld[]'s einer ArrayList
+	 * hinzu. Indem es moveMoeglichStartziel aufruft
+	 * 
+	 * @return ArrayList<Spielfeld[]> mit den MoveMoeglichkeiten in Form von einem
+	 *         Spielfeld[]
+	 */
 	private ArrayList<Spielfeld[]> moveMoeglichkeitenSpieler() {
 		ArrayList<Spielfeld[]> startZielListMove = new ArrayList<Spielfeld[]>();
 		for (int i = 0; i < this.getSpielbrett().length; i++) {
@@ -83,6 +85,13 @@ public class Ki_Carsten extends Ki {
 		return startZielListMove;
 	}
 
+	/**
+	 * Findet moves die moeglich sind an Stelle Startfeld, und gibt einen
+	 * moeglichen Move zurueck oder null.
+	 * 
+	 * @param startfeld
+	 * @return Spielfeld[2]
+	 */
 	private Spielfeld[] moveMoeglichStartZiel(Spielfeld startfeld) {
 		Spielfeld[] moveStartZiel = new Spielfeld[2];
 
@@ -186,6 +195,13 @@ public class Ki_Carsten extends Ki {
 		return null;
 	}
 
+	/**
+	 * Findet heraus, ob ein Zug an dem gewissen Feld moeglich ist. Fuer einen
+	 * normalen Stein
+	 * 
+	 * @param startfeld
+	 * @return boolean
+	 */
 	private boolean moveMoeglich(Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() == null) {
 			return false;
@@ -242,6 +258,13 @@ public class Ki_Carsten extends Ki {
 		return false;
 	}
 
+	/**
+	 * Durchlaeuft das ganze Brett und ruft schlagMoeglichkeitenSpieler auf, falls
+	 * true, fuegt es spielfeld[2] der ArrayList hinzu ueber
+	 * schlagMoeglichDameStartZiel oder schlagMoeglichStartZiel
+	 * 
+	 * @return ArrayList in der Spielfeld[2]'s enthalten sind
+	 */
 	private ArrayList<Spielfeld[]> schlagMoeglichkeitenSpieler() {
 
 		ArrayList<Spielfeld[]> startZielListStein = new ArrayList<Spielfeld[]>();
@@ -279,9 +302,15 @@ public class Ki_Carsten extends Ki {
 		}
 	}
 
+	/**
+	 * Findet eine Schlagmoeglichkeit fuer die Dame, und gibt diese zurueck.
+	 * 
+	 * @param startfeld
+	 * @return Spielfeld[2]
+	 */
 	private Spielfeld[] schlagMoeglichDameStartZiel(Spielfeld startfeld) {
 		Spielfeld[] startZiel = new Spielfeld[2];
-
+		// Random falls mehrere Moeglichkeiten offen stehen.
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
@@ -349,6 +378,13 @@ public class Ki_Carsten extends Ki {
 		return null;
 	}
 
+	/**
+	 * Liefert Boolean zurueck falls an dem Feld eine schlagmoeglichkeit fuer
+	 * einen einfachen Stein besteht.
+	 * 
+	 * @param startfeld
+	 * @return boolean
+	 */
 	private boolean SchlagMoeglich(Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() != null) {
 			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
@@ -470,6 +506,13 @@ public class Ki_Carsten extends Ki {
 		return false;
 	}
 
+	/**
+	 * Liefert Spielfeld[2] mit start und Zielfeld im Array zurueck, nachdem es
+	 * eine schlagmoeglichkeit gefunden hat.
+	 * 
+	 * @param startfeld
+	 * @return Spielfeld[2]
+	 */
 	private Spielfeld[] schlagMoeglichStartZiel(Spielfeld startfeld) {
 		Spielfeld[] startZiel = new Spielfeld[2];
 		if (startfeld.getSpielfigur() != null) {
@@ -608,7 +651,14 @@ public class Ki_Carsten extends Ki {
 		return null;
 	}
 
+	/**
+	 * Findet Heraus, ob Dame an dieser Stelle schlagen kann oder nicht.
+	 * 
+	 * @param startfeld
+	 * @return boolean
+	 */
 	private boolean schlagMoeglichDame(Spielfeld startfeld) {
+
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
@@ -664,12 +714,50 @@ public class Ki_Carsten extends Ki {
 		return false;
 	}
 
+	/**
+	 * Aktualisiert Spielbrett und findet eine schlagmoeglichkeit fuer den Stein,
+	 * der noch einmal schlagen kann heraus, und gibt dieses Zielfeld zurueck.
+	 */
 	public Spielfeld actAgain(Spielfeld startfeld, Spielfeld[][] brett) {
 		this.setSpielbrett(brett);
 		Spielfeld[] startZiel = new Spielfeld[2];
-startZiel=schlagMoeglichStartZiel(startfeld);
+		startZiel = schlagMoeglichStartZiel(startfeld);
 		return startZiel[1];
 
 	}
 
+	/**
+	 * setter Farbe
+	 * 
+	 */
+	public void setFarbe(FarbEnum farbe) {
+		this.farbe = farbe;
+	}
+
+	/**
+	 * Getter Spielbrett
+	 * 
+	 * @return Spielfeld[][]
+	 */
+	public Spielfeld[][] getSpielbrett() {
+		return spielbrett;
+	}
+
+	/**
+	 * getter Farbe
+	 * 
+	 * @return farbe
+	 */
+	public FarbEnum getFarbe() {
+		return farbe;
+	}
+
+	/**
+	 * setter Spielbrett
+	 * 
+	 * @param spielbrett
+	 */
+	public void setSpielbrett(Spielfeld[][] spielbrett) {
+		this.spielbrett = spielbrett;
+	}
 }
