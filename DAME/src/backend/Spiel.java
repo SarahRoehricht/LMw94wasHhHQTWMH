@@ -12,6 +12,7 @@ public class Spiel implements iBediener {
 
 	private Spieler[] spieler = new Spieler[spielerMax];
 	
+	private Spieler activeSpieler;
 
 	/**
 	 * Konstruktor, ruft SpielBrett Konstruktor auf, und ruft
@@ -64,18 +65,7 @@ public class Spiel implements iBediener {
 		if (ki2.equals("y")) {
 			ki2erstellen = true;
 		}
-		// while (!ki2.equals(kiabfrage) || !ki2.equals(kiabfrageno)) {
-		// if (ki2.equals(kiabfrage)) { // Ki funktionsfaehig machen!
-		//
-		// ki2erstellen = true;
-		//
-		// } else {
-		//
-		// }
-		// System.out.println("KI? - y/n");
-		// ki2 = scanner.next();
-		// }
-
+		
 		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2erstellen);
 
 		add(player2);
@@ -144,8 +134,7 @@ public class Spiel implements iBediener {
 						}
 					}
 					String coordb = startZiel[1];
-					// System.out.println("Eingabe Zielfeld:");
-					// String coordb = scanner.nextLine();
+
 					if (checkLegitFeld(coordb) == false) {
 						System.out.println("Das ist kein Feld, versuche es erneut!");
 						break;
@@ -225,6 +214,13 @@ public class Spiel implements iBediener {
 	 * @return
 	 */
 	private boolean schlagMoeglichDame(Spielfeld startfeld) {
+
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+			announceWinner(this.getSpieler()[1]);
+		}
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+			announceWinner(this.getSpieler()[0]);
+		}
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
@@ -717,6 +713,13 @@ public class Spiel implements iBediener {
 	 * @return
 	 */
 	private boolean moveMoeglich(Spieler player1, Spielfeld startfeld) {
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+			announceWinner(this.getSpieler()[1]);
+		}
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+			announceWinner(this.getSpieler()[0]);
+		}
+
 		if (startfeld.getSpielfigur() == null) {
 			return false;
 		}
@@ -1046,6 +1049,7 @@ public class Spiel implements iBediener {
 	 * @param LoeschSteinAufFeld
 	 */
 	private void schlagen(Spielfeld startfeld, Spielfeld zielfeld, Spielfeld LoeschSteinAufFeld) {
+
 		System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe() + ",(" + startfeld.getSpielfigur() + ") " + startfeld.getSchachNotation() + " -> " + zielfeld.getSchachNotation() + "   (" + LoeschSteinAufFeld.getSpielfigur() + ") auf Feld: " + LoeschSteinAufFeld.getSchachNotation()
 				+ " geschlagen");
 
@@ -1054,6 +1058,13 @@ public class Spiel implements iBediener {
 		LoeschSteinAufFeld.setSpielfigur(null);
 
 		System.out.println(spielbrett);
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+			announceWinner(this.getSpieler()[0]);
+		}
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+			announceWinner(this.getSpieler()[1]);
+		}
+
 	}
 
 	/**
@@ -1069,7 +1080,7 @@ public class Spiel implements iBediener {
 	private void playerRotation(Spieler player1, Spieler player2) {
 		int i = 0;
 		while (i == 0) {
-
+this.setActiveSpieler(player1);
 			System.out.println(player1 + " ist am Zug!");
 			act(player1);
 			checkAndGetDame(player1);
@@ -1077,6 +1088,7 @@ public class Spiel implements iBediener {
 				i = 2;
 			}
 			System.out.println(player2 + " ist am Zug!");
+			this.setActiveSpieler(player2);
 			act(player2);
 			checkAndGetDame(player2);
 			if (checkSiegkondition(player1) == true) {
@@ -1085,15 +1097,25 @@ public class Spiel implements iBediener {
 
 		}
 		if (i == 2) {
-			System.out.println(player1 + "hat gewonnen");
+			announceWinner(player1);
 		} // Schaut ob beim anderen Spieler keine
 		// Steine mehr uebrig sind, um zu gewinnen && ob noch Zuege moeglich sind.
 		if (i == 1) {
-			System.out.println(player2 + "hat gewonnen");
+			announceWinner(player2);
 
 		}
-		System.out.println("Spiel zuende!");
 
+	}
+
+	/**
+	 * Kuendigt den Gewinner an und fragt den Benutzer, ob ein neues Spiel
+	 * gestartet werden soll.
+	 * 
+	 * @param player1
+	 */
+	private void announceWinner(Spieler player1) {
+		System.out.println("Spiel zuende!");
+		System.out.println(player1 + "hat gewonnen.");
 		System.out.println("Neues Spiel? y/n?");
 		Scanner c = new Scanner(System.in);
 		String yesNo = c.nextLine();
@@ -1153,13 +1175,13 @@ public class Spiel implements iBediener {
 	private boolean checkSiegkondition(Spieler player) { // Siegkondition, kann
 																												// nicht
 		// mehr ziehen fehlt noch.
-		if (nochSteineaufBrett(player) == false) {
+		if (nochSteineaufBrettandererSpieler(player) == false) {
 			return true;
 		}
 		if (AnyMovesLeft(player) == false) {
 			return true;
-		}else{
-		return false;
+		} else {
+			return false;
 		}
 	}
 
@@ -1169,8 +1191,12 @@ public class Spiel implements iBediener {
 	 * @param player
 	 * @return
 	 */
-	private boolean nochSteineaufBrett(Spieler player) {
-
+	private boolean nochSteineaufBrettandererSpieler(Spieler player) {
+		if (player.equals(this.getSpieler()[0])) {
+			player = this.getSpieler()[1];
+		} else if (player.equals(this.getSpieler()[1])) {
+			player = this.getSpieler()[0];
+		}
 		Spielfeld[][] spielfelder = spielbrett.getBrett();
 		if (player.getFarbe() == FarbEnum.weiß) {
 			for (int i = 0; i < spielfelder.length - 1; i++) {
@@ -1239,9 +1265,9 @@ public class Spiel implements iBediener {
 	 *          s1
 	 */
 	public void add(Spieler s1) {
-		if(spieler[0]==null){
+		if (spieler[0] == null) {
 			spieler[0] = s1;
-		}else{
+		} else {
 			spieler[1] = s1;
 		}
 	}
@@ -1414,7 +1440,6 @@ public class Spiel implements iBediener {
 		}
 	}
 
-
 	public SpielBrett getSpielbrett() {
 		return spielbrett;
 	}
@@ -1429,6 +1454,14 @@ public class Spiel implements iBediener {
 
 	public void setSpieler(Spieler[] spieler) {
 		this.spieler = spieler;
+	}
+
+	public Spieler getActiveSpieler() {
+		return activeSpieler;
+	}
+
+	public void setActiveSpieler(Spieler activeSpieler) {
+		this.activeSpieler = activeSpieler;
 	}
 
 }

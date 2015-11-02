@@ -141,7 +141,7 @@ public class Spielfeld {
 		//if(this.spielfigur!=null){
 		//return "" + d + c +spielfigur+"\t";	
 		if(this.spielfigur==null){
-			return "|_| \t";
+			return ">|_|< \t";
 		}else{
 		return spielfigur+"\t";			
 		}//	return spielfigur+"\t"; //Meinung? das hier vielleicht besser?

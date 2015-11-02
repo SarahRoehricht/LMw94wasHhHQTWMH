@@ -78,19 +78,19 @@ public class Spielfigur {
 	public String toString() {
 		if(farbe== FarbEnum.weiß){
 			if(this.dame==false){
-			return "|O|";
+			return ">|O|<";
 			}
 			if(this.dame==true){
-				return "|LOL|";
+				return ">|LOL|<";
 			}
 		}
 		if(farbe==FarbEnum.schwarz){
 			if(this.dame==false){
 				
 			
-			return "|X|";	
+			return ">|X|<";	
 		}if(this.dame==true){
-		return "|OXO|";	
+		return ">|XXX|<";	
 		}
 		}
 			return "|_DASD|";
