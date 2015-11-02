@@ -68,21 +68,124 @@ public class Ki_Dame extends Ki {
 								startZielListMove.add(abc);
 
 							}
+						} else {
+							if (MoveMoeglichDame(this.getSpielbrett()[j][i]) == true) {
+								Spielfeld[] abcd = new Spielfeld[2];
+								abcd[0] = this.getSpielbrett()[j][i];
+								ArrayList<Spielfeld> movesMoeglichDame = new ArrayList<Spielfeld>();
+								movesMoeglichDame = MovesMoeglichDame(this.getSpielbrett()[j][i]);
+								for (Spielfeld spielfeld : movesMoeglichDame) {
+									abcd[1] = spielfeld;
+									startZielListMove.add(abcd);
+								}
+
+								System.out.println(startZielListMove.toString());
+							}
 						}
-						// else {
-						// if (MoveMoeglichDame(this.getSpielbrett()[j][i]) == true) {
-						// Spielfeld[] abcd= new Spielfeld[2];
-						// abcd=schlagMoeglichDameStartZiel(this.getSpielbrett()[j][i]);
-						// startZielListMove.add(abcd);
-						// System.out.println(startZielListMove.toString());
-						// }
-						// }
 					}
 				}
 			}
 		}
 
 		return startZielListMove;
+	}
+
+	/**
+	 * Schaut ob die Dame sich generell noch mind. 1 Feld bewegen kann.
+	 * 
+	 * @param spielfeld
+	 * @return boolean
+	 */
+	private boolean MoveMoeglichDame(Spielfeld spielfeld) {
+		try {
+			if (this.getSpielbrett()[spielfeld.getPosY() + 1][spielfeld.getPosX() + 1].getSpielfigur() == null) {
+				return true;
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			if (this.getSpielbrett()[spielfeld.getPosY() - 1][spielfeld.getPosX() + 1].getSpielfigur() == null) {
+				return true;
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			if (this.getSpielbrett()[spielfeld.getPosY() + 1][spielfeld.getPosX() - 1].getSpielfigur() == null) {
+				return true;
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			if (this.getSpielbrett()[spielfeld.getPosY() - 1][spielfeld.getPosX() - 1].getSpielfigur() == null) {
+				return true;
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		return false;
+	}
+
+	/**
+	 * Gibt ArrayList einzelner Spielfelder(Zielfelder) zurueck, auf die man
+	 * ziehen kann.
+	 * 
+	 * @param spielfeld
+	 * @return
+	 */
+	private ArrayList<Spielfeld> MovesMoeglichDame(Spielfeld spielfeld) {
+		ArrayList<Spielfeld> movesMoeglichDame = new ArrayList<Spielfeld>();
+		try {
+			for (int i = 0; i < spielbrett.length - 1; i++) {
+				if (this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() + i].getSpielfigur() != null) {
+					break;
+				}
+				if (this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() + i].getSpielfigur() == null) {
+					movesMoeglichDame.add(this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() + i]);
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			for (int i = 0; i < spielbrett.length - 1; i++) {
+				if (this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() + i].getSpielfigur() != null) {
+					break;
+				}
+				if (this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() + i].getSpielfigur() == null) {
+					movesMoeglichDame.add(this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() + i]);
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			for (int i = 0; i < spielbrett.length - 1; i++) {
+				if (this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() - i].getSpielfigur() != null) {
+					break;
+				}
+				if (this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() - i].getSpielfigur() == null) {
+					movesMoeglichDame.add(this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() - i]);
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		try {
+			for (int i = 0; i < spielbrett.length - 1; i++) {
+				if (this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() - i].getSpielfigur() != null) {
+					break;
+				}
+				if (this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() - i].getSpielfigur() == null) {
+					movesMoeglichDame.add(this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() - i]);
+				}
+			}
+		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+		}
+		return movesMoeglichDame;
 	}
 
 	/**
@@ -280,17 +383,17 @@ public class Ki_Dame extends Ki {
 
 								abc = schlagMoeglichStartZiel(this.getSpielbrett()[j][i]);
 								startZielListStein.add(abc);
-							
+
 							}
-						} else if(this.getSpielbrett()[j][i].getSpielfigur().isDame() == true) {
-						if((schlagMoeglichDame(this.getSpielbrett()[j][i]) == true)) {
+						} else if (this.getSpielbrett()[j][i].getSpielfigur().isDame() == true) {
+							if ((schlagMoeglichDame(this.getSpielbrett()[j][i]) == true)) {
 								Spielfeld[] abcd = new Spielfeld[2];
 								abcd = schlagMoeglichDameStartZiel(this.getSpielbrett()[j][i]);
 								startZielListDame.add(abcd);
 								System.out.println(startZielListDame.toString());
 								System.out.println(abcd[0].getSchachNotation());
 								System.out.println(abcd[1].getSchachNotation());
-						}
+							}
 						}
 					}
 				}
@@ -316,76 +419,84 @@ public class Ki_Dame extends Ki {
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
-							startZiel[0] = startfeld;
-							startZiel[1] = this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1];
-							return startZiel;
+					if (this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						startZiel[0] = startfeld;
+						startZiel[1] = this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1];
+						return startZiel;
 
-						}
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
-							startZiel[0] = startfeld;
-							startZiel[1] = this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1];
-							return startZiel;
+					if (this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						startZiel[0] = startfeld;
+						startZiel[1] = this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1];
+						return startZiel;
 
-						}
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
-							startZiel[0] = startfeld;
-							startZiel[1] = this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1];
-							return startZiel;
+					if (this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+						startZiel[0] = startfeld;
+						startZiel[1] = this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1];
+						return startZiel;
 
-						}
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
-							startZiel[0] = startfeld;
-							startZiel[1] = this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1];
-							return startZiel;
+					if (this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+						startZiel[0] = startfeld;
+						startZiel[1] = this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1];
+						return startZiel;
 
-						}
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
@@ -676,68 +787,72 @@ public class Ki_Dame extends Ki {
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
 					if (this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
-						break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
-							return true;
-						}
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						return true;
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
 					if (this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
-						break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
-							return true;
-						}
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						return true;
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() +i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
 					if (this.getSpielbrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
-						break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
-							return true;
-						}
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+						return true;
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
 		try {
 			for (int i = 1; i < this.getSpielbrett().length - 2; i++) {
 				if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()){
+					if (this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == this.getSpielbrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
 					if (this.getSpielbrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
-						break;}
-						if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
-							return true;
-						}
+						break;
+					}
+					if (startfeld.getSpielfigur().getFarbe() != this.getSpielbrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+						return true;
 					}
 				}
-			
+			}
+
 		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 
 		}
@@ -751,11 +866,10 @@ public class Ki_Dame extends Ki {
 	public Spielfeld actAgain(Spielfeld startfeld, Spielfeld[][] brett) {
 		this.setSpielbrett(brett);
 		Spielfeld[] startZiel = new Spielfeld[2];
-		if(startfeld.getSpielfigur().isDame()==false){
-		startZiel = schlagMoeglichStartZiel(startfeld);
-		}
-		else{
-			startZiel=schlagMoeglichDameStartZiel(startfeld);
+		if (startfeld.getSpielfigur().isDame() == false) {
+			startZiel = schlagMoeglichStartZiel(startfeld);
+		} else {
+			startZiel = schlagMoeglichDameStartZiel(startfeld);
 		}
 		System.out.println(startZiel[0].getSchachNotation());
 		System.out.println(startZiel[1].getSchachNotation());
@@ -792,7 +906,8 @@ public class Ki_Dame extends Ki {
 	/**
 	 * setter Spielbrett
 	 * 
-	 * @param spielbrett set
+	 * @param spielbrett
+	 *          set
 	 */
 	public void setSpielbrett(Spielfeld[][] spielbrett) {
 		this.spielbrett = spielbrett;

@@ -31,7 +31,6 @@ public class ZZSpielTest {
 		s3=new Spieler("Heinrich", FarbEnum.schwarz);
 		spiel.add(s1);
 		spiel.add(s2);
-		spiel.add(s3);
 	}
 	
 	
@@ -40,7 +39,7 @@ public class ZZSpielTest {
 	public void testSpieleradd1(){
 		spiel=new Spiel();
 		spiel.add(s1);
-		assertTrue(spiel.getSpielerBisher()==1);
+		assertTrue(spiel.getSpieler()[0]!=null);
 	}
 	//Testet Spieler add Funktion
 	@Test
@@ -48,7 +47,7 @@ public class ZZSpielTest {
 		spiel=new Spiel();
 		spiel.add(s1);
 		spiel.add(s2);
-		assertTrue(spiel.getSpielerBisher()==2);
+		assertTrue(spiel.getSpieler()[0]!=null && spiel.getSpieler()[1]!=null);
 	}
 	// Testet Spieler auf unterschiedliche Farbe
 	@Test
