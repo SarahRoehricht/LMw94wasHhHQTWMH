@@ -203,7 +203,7 @@ private void continueEnter(String message) {
 	 * @param zielfeld
 	 * @return
 	 */
-	private boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (startfeld.getSpielfigur().isDame() == true) {
 			if (moveDameLegit(player1, startfeld, zielfeld) == true) {
 				move(startfeld, zielfeld);
@@ -1180,7 +1180,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 	 */
 	private void announceWinner(Spieler player1) {
 		System.out.println("Spiel zuende!");
-		System.out.println(player1 + "hat gewonnen.");
+		System.out.println(player1 + " hat gewonnen.");
 		System.out.println("Neues Spiel? y/n?");
 		Scanner c = new Scanner(System.in);
 		String yesNo = c.nextLine();
