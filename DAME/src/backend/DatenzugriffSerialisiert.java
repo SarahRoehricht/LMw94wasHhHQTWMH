@@ -19,7 +19,9 @@ public class DatenzugriffSerialisiert implements iDatenzugriff , Serializable{
 
 	ObjectInputStream is;
 	ObjectOutputStream os;
-
+/**
+ * wird von saveSerialize() aufgerufen
+ */
 	@Override
 	public void writeObject(Object obj,String filename) {
 		try {
@@ -38,7 +40,9 @@ public class DatenzugriffSerialisiert implements iDatenzugriff , Serializable{
 		}
 		System.out.println("Spielstand wurde gespeichert!");
 	}
-
+/**
+ * wird von loadSerialize() aufgerufen
+ */
 	@Override
 	public Object readObject(String name) {
 		try {
