@@ -116,7 +116,10 @@ System.out.print(d+"\t");
 		return "" ;
 	}
 	
-	
+	/**
+	 * Setzt String für die CSV Speicherung zusammen. Alles durch ";" getrennt.
+	 * @return zusammengestzten String
+	 */
 	public String generiereCSV() {
 		String res = "";
 		for (Spielfeld[] s : Brett) {

@@ -165,7 +165,7 @@ public class Spiel implements iBediener, Serializable {
 
 				System.out.println("Eingabe Start, Ziel getrennt mit '-'");
 				String szeingabe = scanner.nextLine();
-				
+
 				if ("s".equals(szeingabe) == true) {
 					System.out.println("Dateinamen eingeben");
 					String filename = scanner.nextLine();
@@ -176,57 +176,56 @@ public class Spiel implements iBediener, Serializable {
 				}
 
 				else {
-				
-					
-				String[] startZiel = new String[2];
-				startZiel = szeingabe.split("-", 2);
-				if (startZiel[0] == null) {
-					System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
-					break;
-				}
-				if (startZiel.length == 1) {
-					System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
-					break;
-				}
-				System.out.println(startZiel[0] + startZiel[1]);
-				String coorda = startZiel[0];
-				if (checkLegitFeld(coorda) == false) {
-					System.out.println("Das ist kein Feld, versuche es erneut!");
-					break;
-				}
-				Spielfeld startfeld = EingabeSpielfeld(coorda);
-				if (startfeld.getSpielfigur() == null) {
-					System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
-					break;
-				}
 
-				if (startfeld.getSpielfigur() != null) {
-					while (!startfeld.getSpielfigur().getFarbe().equals(player1.getFarbe())) {
-						System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
+					String[] startZiel = new String[2];
+					startZiel = szeingabe.split("-", 2);
+					if (startZiel[0] == null) {
+						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
 						break;
 					}
-				}
-				String coordb = startZiel[1];
+					if (startZiel.length == 1) {
+						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
+						break;
+					}
+					System.out.println(startZiel[0] + startZiel[1]);
+					String coorda = startZiel[0];
+					if (checkLegitFeld(coorda) == false) {
+						System.out.println("Das ist kein Feld, versuche es erneut!");
+						break;
+					}
+					Spielfeld startfeld = EingabeSpielfeld(coorda);
+					if (startfeld.getSpielfigur() == null) {
+						System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
+						break;
+					}
 
-				if (checkLegitFeld(coordb) == false) {
-					System.out.println("Das ist kein Feld, versuche es erneut!");
-					break;
-				}
-				Spielfeld zielfeld = EingabeSpielfeld(coordb);
-				if (startfeld.equals(zielfeld)) {
-					System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
-					break;
+					if (startfeld.getSpielfigur() != null) {
+						while (!startfeld.getSpielfigur().getFarbe().equals(player1.getFarbe())) {
+							System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
+							break;
+						}
+					}
+					String coordb = startZiel[1];
 
-				}
+					if (checkLegitFeld(coordb) == false) {
+						System.out.println("Das ist kein Feld, versuche es erneut!");
+						break;
+					}
+					Spielfeld zielfeld = EingabeSpielfeld(coordb);
+					if (startfeld.equals(zielfeld)) {
+						System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
+						break;
 
-				if (zielfeld.getSpielfigur() != null) {
-					System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
-					break;
-				}
-				spielerFeldArray[0] = startfeld;
-				spielerFeldArray[1] = zielfeld;
-				actdone = true;
-				return spielerFeldArray;
+					}
+
+					if (zielfeld.getSpielfigur() != null) {
+						System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
+						break;
+					}
+					spielerFeldArray[0] = startfeld;
+					spielerFeldArray[1] = zielfeld;
+					actdone = true;
+					return spielerFeldArray;
 				}
 			}
 		}
@@ -1591,21 +1590,32 @@ public class Spiel implements iBediener, Serializable {
 		this.activeSpieler = activeSpieler;
 	}
 
+	/**
+	 * Allgemeine Speicherfunktion. Über die Eingabe wird der Speichertyp
+	 * ausgewählt.
+	 *
+	 * @param pfad
+	 *          , dateiname, typ
+	 */
 	@Override
 	public void speichern(String pfad, String dateiname, String typ) {
 		typ = typ.toLowerCase();
 		switch (typ) {
 		case ("csv"):
 			saveCSV(pfad + dateiname + "." + typ);
-		break;
+			break;
 		case ("ser"):
 			saveSerialize(pfad + dateiname + "." + typ);
-		break;
+			break;
 		default:
 			throw new RuntimeException("Dateityp " + typ + " nicht existent");
 		}
 	}
 
+	/**
+	 * wird von speichern() aufgerufen
+	 * @param filename
+	 */
 	private void saveCSV(String filename) {
 		iDatenzugriff csv = new DatenzugriffCSV();
 		String s = "";
@@ -1621,6 +1631,9 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
+	/**
+	 * Allgemeine Ladenfunktion. Über die Eingabe wird der Speichertyp ausgewählt.
+	 */
 	@Override
 	public void laden(String pfad, String dateiname, String typ) {
 		typ = typ.toLowerCase();
@@ -1636,6 +1649,10 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
+	/**
+	 * wird von laden() aufgerufen
+	 * @param filename
+	 */
 	private void ladenCSV(String filename) {
 		iDatenzugriff laden = new DatenzugriffCSV();
 		try {
@@ -1680,6 +1697,10 @@ public class Spiel implements iBediener, Serializable {
 
 	}
 
+	/**
+	 * wird von speichern() aufgerufen
+	 * @param filename
+	 */
 	public void saveSerialize(String filename) {
 		iDatenzugriff serial = new DatenzugriffSerialisiert();
 		try {
@@ -1695,21 +1716,22 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
-	// Änderungen im Code - Änderungen im Code - Änderungen im Code - Änderungen
-	// im Code - Änderungen im Code - Änderungen im Code
+	/**
+	 * wird von laden() aufgerufen
+	 * @param filename
+	 */
 	public void loadSerialize(String filename) {
 		iDatenzugriff serial = new DatenzugriffSerialisiert();
 		try {
 			Spiel spiel = (Spiel) serial.readObject(filename);
 			System.out.println("Spiel wurde geladen!");
 			System.out.println(spiel.getSpielbrett());
-			if(spiel.spieler[0]==spiel.getActiveSpieler()){
-				spiel.playerRotation(spiel.getActiveSpieler(),spiel.spieler[1]);
+			if (spiel.spieler[0] == spiel.getActiveSpieler()) {
+				spiel.playerRotation(spiel.getActiveSpieler(), spiel.spieler[1]);
+			} else {
+				spiel.playerRotation(spiel.getActiveSpieler(), spiel.spieler[0]);
 			}
-			else{
-				spiel.playerRotation(spiel.getActiveSpieler(),spiel.spieler[0]);
-			}
-			
+
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} finally {
@@ -1720,5 +1742,5 @@ public class Spiel implements iBediener, Serializable {
 			}
 		}
 	}
-	
+
 }
