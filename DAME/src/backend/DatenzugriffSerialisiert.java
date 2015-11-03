@@ -25,7 +25,7 @@ public class DatenzugriffSerialisiert implements iDatenzugriff , Serializable{
 	@Override
 	public void writeObject(Object obj,String filename) {
 		try {
-			os = new ObjectOutputStream(new FileOutputStream(filename + ".ser"));
+			os = new ObjectOutputStream(new FileOutputStream(filename));
 			if(os == null) {
 				throw new IOException("OuputStream nicht geÃ¶ffnet.");
 			} else {
@@ -46,7 +46,7 @@ public class DatenzugriffSerialisiert implements iDatenzugriff , Serializable{
 	@Override
 	public Object readObject(String name) {
 		try {
-			is = new ObjectInputStream(new FileInputStream(name +".ser"));
+			is = new ObjectInputStream(new FileInputStream(name));
 			Object obj = is.readObject();
 			is.close();
 			return obj;

@@ -51,7 +51,7 @@ public class DatenzugriffCSV implements iDatenzugriff, Serializable  {
 		try {
 			String line;
 			ArrayList<String> feld = new ArrayList<String>();
-			// hier wird die .txt Datei ganz eingelesen und in feld Ã¼bergeben
+			// hier wird die .csv Datei ganz eingelesen und in feld Ã¼bergeben
 			while ((line = br.readLine()) != null) {
 				feld.add(line);
 			}

@@ -1666,6 +1666,7 @@ public class Spiel implements iBediener, Serializable {
 			ArrayList<String> s = (ArrayList<String>) laden.readObject(filename);
 			for (int i = 0; i < s.size(); i++) {
 				String[] args = s.get(i).split(";");
+				//i an der Stelle 0 und 1 sind Spieler
 				if (i == 0 || i == 1) {
 					boolean istki = args[2].equals("1");
 					FarbEnum farbe;
@@ -1681,6 +1682,7 @@ public class Spiel implements iBediener, Serializable {
 				} else if (i == 2) {
 					// Boolean aktiver Spieler
 				} else {
+					//
 					if (args[1].equals("null")) {
 						spielbrett.getFeldById(args[0]).setSpielfigur(null);
 					} else {
