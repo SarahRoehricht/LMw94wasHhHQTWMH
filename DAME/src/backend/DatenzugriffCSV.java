@@ -40,6 +40,7 @@ public class DatenzugriffCSV implements iDatenzugriff, Serializable  {
 		} catch (IOException e) {
 			System.out.println(e.getMessage());
 		}
+		System.out.println("Spielstand wurde gespeichert!");
 	}
 
 	/**

@@ -1673,8 +1673,13 @@ public class Spiel implements iBediener, Serializable {
 			Spiel spiel = (Spiel) serial.readObject(filename);
 			System.out.println("Spiel wurde geladen!");
 			System.out.println(spiel.getSpielbrett());
-			// spiel.act(spiel.spieler[0]);
-			spiel.playerRotation(spiel.spieler[0], spiel.spieler[1]);
+			if(spiel.spieler[0]==spiel.getActiveSpieler()){
+				spiel.playerRotation(spiel.getActiveSpieler(),spiel.spieler[1]);
+			}
+			else{
+				spiel.playerRotation(spiel.getActiveSpieler(),spiel.spieler[0]);
+			}
+			
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		} finally {
