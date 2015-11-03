@@ -103,39 +103,44 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	@Override
 	public void act(Spieler player1) {
-		if(AnyMovesLeft(player1)==true){
-		if (player1.getKi() != null) {
-			continueEnter("Ki am Zug druecke Enter");
-			Spielfeld kiarray[] = new Spielfeld[2];
-			kiarray = player1.getKi().kiAct(spielbrett.getBrett());
-			Spielfeld startfeld = kiarray[0];
-			Spielfeld zielfeld = kiarray[1];
-			if (doTheMove(player1, startfeld, zielfeld) == false) {
-				System.out.println("ungueltiger Zug!");
-				throw new RuntimeErrorException(null, "KI BAUT MIST.");
-			}
-		} else {
-			Spielfeld spielerFeldArray[] = new Spielfeld[2];
-			spielerFeldArray = eingabeSpielfeldSpieler(player1);
-			Spielfeld startfeld = spielerFeldArray[0];
-			Spielfeld zielfeld = spielerFeldArray[1];
-			boolean zugdone = false;
-			while (zugdone == false) {
+		if (AnyMovesLeft(player1) == true) {
+			if (player1.getKi() != null) {
+				continueEnter("Ki am Zug druecke Enter");
+				Spielfeld kiarray[] = new Spielfeld[2];
+				kiarray = player1.getKi().kiAct(spielbrett.getBrett());
+				Spielfeld startfeld = kiarray[0];
+				Spielfeld zielfeld = kiarray[1];
 				if (doTheMove(player1, startfeld, zielfeld) == false) {
 					System.out.println("ungueltiger Zug!");
-
+					throw new RuntimeErrorException(null, "KI BAUT MIST.");
 				}
-				zugdone = true;
+			} else {
+				Spielfeld spielerFeldArray[] = new Spielfeld[2];
+				spielerFeldArray = eingabeSpielfeldSpieler(player1);
+				Spielfeld startfeld = spielerFeldArray[0];
+				Spielfeld zielfeld = spielerFeldArray[1];
+				boolean zugdone = false;
+				while (zugdone == false) {
+					if (doTheMove(player1, startfeld, zielfeld) == false) {
+						System.out.println("ungueltiger Zug!");
+
+					}
+					zugdone = true;
+				}
+
 			}
 
-		}
+		} else {
+			if (player1.equals(this.getSpieler()[0])) {
 
-		}if (player1.equals(this.getSpieler()[0])) {
-			announceWinner(this.getSpieler()[0]);
-		} // Schaut ob beim anderen Spieler keine
-		//  noch Zuege moeglich sind.
-		else{
-			announceWinner(this.getSpieler()[1]);}}
+				announceWinner(this.getSpieler()[0]);
+			} // Schaut ob beim anderen Spieler keine
+			// noch Zuege moeglich sind.
+			else {
+				announceWinner(this.getSpieler()[1]);
+			}
+		}
+	}
 
 	/**
 	 * Will "Enter" zum fortfahren.
@@ -350,7 +355,7 @@ public class Spiel implements iBediener, Serializable {
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() -i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
 					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
@@ -1614,6 +1619,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * wird von speichern() aufgerufen
+	 * 
 	 * @param filename
 	 */
 	private void saveCSV(String filename) {
@@ -1651,6 +1657,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * wird von laden() aufgerufen
+	 * 
 	 * @param filename
 	 */
 	private void ladenCSV(String filename) {
@@ -1699,6 +1706,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * wird von speichern() aufgerufen
+	 * 
 	 * @param filename
 	 */
 	public void saveSerialize(String filename) {
@@ -1718,6 +1726,7 @@ public class Spiel implements iBediener, Serializable {
 
 	/**
 	 * wird von laden() aufgerufen
+	 * 
 	 * @param filename
 	 */
 	public void loadSerialize(String filename) {
