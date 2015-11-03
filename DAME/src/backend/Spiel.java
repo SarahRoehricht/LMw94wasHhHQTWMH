@@ -844,10 +844,10 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	private boolean moveMoeglich(Spieler player1, Spielfeld startfeld) {
 		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
-			announceWinner(this.getSpieler()[1]);
+			announceWinner(this.getSpieler()[0]);
 		}
 		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
-			announceWinner(this.getSpieler()[0]);
+			announceWinner(this.getSpieler()[1]);
 		}
 
 		if (startfeld.getSpielfigur() == null) {
