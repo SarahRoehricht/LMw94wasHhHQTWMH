@@ -37,12 +37,13 @@ public class Ki_Dame extends Ki implements Serializable {
 			moveMoeglichkeiten = moveMoeglichkeitenSpieler();
 			Collections.shuffle(moveMoeglichkeiten);
 			startZiel = moveMoeglichkeiten.get(0);
+			System.out.println(startZiel[0]);
+			System.out.println(startZiel[1]);
 		} else {
 			Collections.shuffle(schlagMoeglichkeiten);
 			startZiel = schlagMoeglichkeiten.get(0);
 		}
-		System.out.println(startZiel[0].getSchachNotation());
-		System.out.println(startZiel[1].getSchachNotation());
+	
 		return startZiel;
 
 	}
@@ -80,7 +81,7 @@ public class Ki_Dame extends Ki implements Serializable {
 									startZielListMove.add(abcd);
 								}
 
-								System.out.println(startZielListMove.toString());
+								
 							}
 						}
 					}
@@ -391,9 +392,7 @@ public class Ki_Dame extends Ki implements Serializable {
 								Spielfeld[] abcd = new Spielfeld[2];
 								abcd = schlagMoeglichDameStartZiel(this.getSpielbrett()[j][i]);
 								startZielListDame.add(abcd);
-								System.out.println(startZielListDame.toString());
-								System.out.println(abcd[0].getSchachNotation());
-								System.out.println(abcd[1].getSchachNotation());
+								
 							}
 						}
 					}
@@ -872,8 +871,7 @@ public class Ki_Dame extends Ki implements Serializable {
 		} else {
 			startZiel = schlagMoeglichDameStartZiel(startfeld);
 		}
-		System.out.println(startZiel[0].getSchachNotation());
-		System.out.println(startZiel[1].getSchachNotation());
+		
 		return startZiel[1];
 
 	}

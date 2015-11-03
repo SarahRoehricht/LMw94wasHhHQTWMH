@@ -103,6 +103,7 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	@Override
 	public void act(Spieler player1) {
+		if(AnyMovesLeft(player1)==true){
 		if (player1.getKi() != null) {
 			continueEnter("Ki am Zug druecke Enter");
 			Spielfeld kiarray[] = new Spielfeld[2];
@@ -129,7 +130,12 @@ public class Spiel implements iBediener, Serializable {
 
 		}
 
-	}
+		}if (player1.equals(this.getSpieler()[0])) {
+			announceWinner(this.getSpieler()[0]);
+		} // Schaut ob beim anderen Spieler keine
+		//  noch Zuege moeglich sind.
+		else{
+			announceWinner(this.getSpieler()[1]);}}
 
 	/**
 	 * Will "Enter" zum fortfahren.
@@ -288,6 +294,12 @@ public class Spiel implements iBediener, Serializable {
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+						break;
+					}
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+						break;
+					}
 					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() == null) {
 						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
 							return true;
@@ -301,6 +313,12 @@ public class Spiel implements iBediener, Serializable {
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+						break;
+					}
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+						break;
+					}
 					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() == null) {
 						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
 							return true;
@@ -314,6 +332,12 @@ public class Spiel implements iBediener, Serializable {
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+						break;
+					}
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+						break;
+					}
 					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() == null) {
 						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
 							return true;
@@ -327,6 +351,12 @@ public class Spiel implements iBediener, Serializable {
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() -i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+						break;
+					}
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+						break;
+					}
 					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() == null) {
 						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
 							return true;
@@ -1243,7 +1273,7 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	private void checkAndGetDame(Spieler player1) {
 		if (player1.getFarbe() == FarbEnum.weiss) {
-			for (int i = 0; i < spielbrett.getBrett().length - 1; i++) {
+			for (int i = 0; i < spielbrett.getBrett().length; i++) {
 				if (spielbrett.getBrett()[11][i].getSpielfigur() != null && spielbrett.getBrett()[11][i].getSpielfigur().isDame() == false) {
 					if (spielbrett.getBrett()[11][i].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 						wirdDame(spielbrett.getBrett()[11][i]);
@@ -1252,7 +1282,7 @@ public class Spiel implements iBediener, Serializable {
 			}
 		}
 		if (player1.getFarbe() == FarbEnum.schwarz) {
-			for (int i = 0; i < spielbrett.getBrett().length - 1; i++) {
+			for (int i = 0; i < spielbrett.getBrett().length; i++) {
 				if (spielbrett.getBrett()[0][i].getSpielfigur() != null && spielbrett.getBrett()[0][i].getSpielfigur().isDame() == false) {
 					if (spielbrett.getBrett()[0][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 						wirdDame(spielbrett.getBrett()[0][i]);
