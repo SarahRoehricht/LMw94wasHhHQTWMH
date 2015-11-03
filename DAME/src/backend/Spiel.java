@@ -1,10 +1,13 @@
 package backend;
 
+import java.io.IOException;
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import javax.management.RuntimeErrorException;
 
-public class Spiel implements iBediener {
+public class Spiel implements iBediener, Serializable {
 
 	private SpielBrett spielbrett;
 
@@ -36,49 +39,61 @@ public class Spiel implements iBediener {
 	@Override
 	public void welcome() {
 		Scanner scanner = new Scanner(System.in);
-		System.out.println("Name Spieler 1:");
-		String name1 = scanner.next();
-		System.out.println("KI? - y/n");
-		while (!scanner.hasNext("[yn]")) {
+
+		System.out.println("Spiel laden [L] oder neues Spiel spielen [n].\n" + "Der aktuelle Spielstand kann jederzeit über die Eingabe [s] gespeichert werden");
+		String eingabe = scanner.nextLine();
+		if ("l".equals(eingabe) == true) {
+			System.out.println("Dateinamen eingeben.");
+			String filename = scanner.nextLine();
+			System.out.println("Speichertyp [csv] oder [ser] eingeben.");
+			String typ = scanner.nextLine();
+			this.laden("", filename, typ);
+
+		} else if ("n".equals(eingabe) == true) {
+
+			System.out.println("Name Spieler 1:");
+			String name1 = scanner.next();
 			System.out.println("KI? - y/n");
-			scanner.next();
-		}
-		String ki1 = scanner.next();
-		boolean ki1erstellen = false;
+			while (!scanner.hasNext("[yn]")) {
+				System.out.println("KI? - y/n");
+				scanner.next();
+			}
+			String ki1 = scanner.next();
+			boolean ki1erstellen = false;
 
-		if (ki1.equals("y")) {
-			ki1erstellen = true;
-		}
+			if (ki1.equals("y")) {
+				ki1erstellen = true;
+			}
 
-		Spieler player1 = new Spieler(name1, FarbEnum.weiß, ki1erstellen);
+			Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1erstellen);
 
-		add(player1);
-		System.out.println(player1 + " hinzugefuegt!");
-		System.out.println("Name Spieler 2:");
-		String name2 = scanner.next();
-		System.out.println("KI? - y/n");
-		while (!scanner.hasNext("[yn]")) {
+			add(player1);
+			System.out.println(player1 + " hinzugefuegt!");
+			System.out.println("Name Spieler 2:");
+			String name2 = scanner.next();
 			System.out.println("KI? - y/n");
-			scanner.next();
+			while (!scanner.hasNext("[yn]")) {
+				System.out.println("KI? - y/n");
+				scanner.next();
+			}
+			String ki2 = scanner.next();
+			boolean ki2erstellen = false;
+			if (ki2.equals("y")) {
+				ki2erstellen = true;
+			}
+
+			Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2erstellen);
+
+			add(player2);
+			System.out.println(player2 + " hinzugefuegt!");
+
+			System.out.println("Moege das Spiel beginnen!");
+
+			System.out.println(spielbrett);
+			System.out.println(player1.getName() + " - " + "'" + player1.getFarbe() + "'" + " faengt an!");
+			scanner.reset();
+			playerRotation(player1, player2);
 		}
-		String ki2 = scanner.next();
-		boolean ki2erstellen = false;
-		if (ki2.equals("y")) {
-			ki2erstellen = true;
-		}
-
-		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2erstellen);
-
-		add(player2);
-		System.out.println(player2 + " hinzugefuegt!");
-
-		System.out.println("Moege das Spiel beginnen!");
-
-		System.out.println(spielbrett);
-		System.out.println(player1.getName() + " - " + "'" + player1.getFarbe() + "'" + " faengt an!");
-		scanner.reset();
-		playerRotation(player1, player2);
-
 	}
 
 	/**
@@ -100,48 +115,63 @@ public class Spiel implements iBediener {
 			}
 		} else {
 			Spielfeld spielerFeldArray[] = new Spielfeld[2];
-			spielerFeldArray =eingabeSpielfeldSpieler(player1);
-			Spielfeld startfeld=spielerFeldArray[0];
-			Spielfeld zielfeld=spielerFeldArray[1];
-			boolean zugdone=false;
-while(zugdone==false){
-					if (doTheMove(player1, startfeld, zielfeld) == false) {
-						System.out.println("ungueltiger Zug!");
-						
-					}zugdone=true;
-					}
+			spielerFeldArray = eingabeSpielfeldSpieler(player1);
+			Spielfeld startfeld = spielerFeldArray[0];
+			Spielfeld zielfeld = spielerFeldArray[1];
+			boolean zugdone = false;
+			while (zugdone == false) {
+				if (doTheMove(player1, startfeld, zielfeld) == false) {
+					System.out.println("ungueltiger Zug!");
 
-					
 				}
-
+				zugdone = true;
 			}
-		
-	/**
-	 * Will "Enter" zum fortfahren.
-	 * @param message
-	 */
-private void continueEnter(String message) {
-	System.out.println(message);
-	Scanner keyboard = new Scanner(System.in);
-	keyboard.nextLine();
+
+		}
+
 	}
 
-/**
- * Fragt Spieler nach dem Start und Zielfeld ab
- * @param player1
- * @return Spielfeld[2] Start/Zielfeld
- */
-@Override
+	/**
+	 * Will "Enter" zum fortfahren.
+	 * 
+	 * @param message
+	 */
+	private void continueEnter(String message) {
+		System.out.println(message);
+		Scanner keyboard = new Scanner(System.in);
+		keyboard.nextLine();
+	}
+
+	/**
+	 * Fragt Spieler nach dem Start und Zielfeld ab
+	 * 
+	 * @param player1
+	 * @return Spielfeld[2] Start/Zielfeld
+	 */
+	@Override
 	public Spielfeld[] eingabeSpielfeldSpieler(Spieler player1) {
 		boolean actdone = false;
 		while (actdone != true) {// doppelte While-Schleife fuer breaks;
 			while (actdone != true) {
 				Spielfeld spielerFeldArray[] = new Spielfeld[2];
-			
+
 				Scanner scanner = new Scanner(System.in);
 
 				System.out.println("Eingabe Start, Ziel getrennt mit '-'");
 				String szeingabe = scanner.nextLine();
+				
+				if ("s".equals(szeingabe) == true) {
+					System.out.println("Dateinamen eingeben");
+					String filename = scanner.nextLine();
+					System.out.println("Speichertyp [csv] oder [ser] eingeben.");
+					String typ = scanner.nextLine();
+					this.speichern("", filename, typ);
+
+				}
+
+				else {
+				
+					
 				String[] startZiel = new String[2];
 				startZiel = szeingabe.split("-", 2);
 				if (startZiel[0] == null) {
@@ -187,12 +217,15 @@ private void continueEnter(String message) {
 					System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
 					break;
 				}
-				spielerFeldArray[0]=startfeld;
-				spielerFeldArray[1]=zielfeld;
+				spielerFeldArray[0] = startfeld;
+				spielerFeldArray[1] = zielfeld;
 				actdone = true;
 				return spielerFeldArray;
-				
-			}}return null;}
+				}
+			}
+		}
+		return null;
+	}
 
 	/**
 	 * bekommt Spieler/Startfeld Zielfeld und ruft entsprechende move/schlag
@@ -547,8 +580,8 @@ private void continueEnter(String message) {
 	 * @param player1
 	 * @param startfeld
 	 */
-@Override	
-public void askSchlagen(Spieler player1, Spielfeld startfeld) {
+	@Override
+	public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 
 		boolean askdone = false;
 		while (askdone == false) {
@@ -617,9 +650,9 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 	 */
 	private boolean SchlagMoeglich(Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() != null) {
-			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
 					try {
 						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
 							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
@@ -680,7 +713,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 
 				try {
 					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2] != null) {
 								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
 									return true;
@@ -693,7 +726,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 				}
 				try {
 					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2] != null) {
 								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
 									return true;
@@ -706,7 +739,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 				}
 				try {
 					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2] != null) {
 								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
 									return true;
@@ -719,7 +752,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 				}
 				try {
 					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2] != null) {
 								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
 									return true;
@@ -786,7 +819,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() == null) {
 			return false;
 		}
-		if (player1.getFarbe() == FarbEnum.weiß) {
+		if (player1.getFarbe() == FarbEnum.weiss) {
 			try {
 				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
 					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() == null) {
@@ -849,9 +882,9 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 	 * @return boolean
 	 */
 	private boolean doSchlagStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
-		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-			if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+			if (player1.getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
 				if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
 					// right
 					// 1
@@ -909,7 +942,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
 					return true;
 				} else {
@@ -921,7 +954,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
 					return true;
 				} else {
@@ -933,7 +966,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
 					return true;
 				} else {
@@ -945,7 +978,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
 					return true;
 				} else {
@@ -969,9 +1002,9 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 	 * @return boolean
 	 */
 	private boolean doMoveStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
-		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-			if (player1.getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+			if (player1.getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
 				if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
 					// move
 					// right
@@ -1141,8 +1174,7 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 	 *          player1, player2
 	 */
 	private void playerRotation(Spieler player1, Spieler player2) {
-		
-		
+
 		int i = 0;
 		while (i == 0) {
 			this.setActiveSpieler(player1);
@@ -1210,10 +1242,10 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 	 * @param player1
 	 */
 	private void checkAndGetDame(Spieler player1) {
-		if (player1.getFarbe() == FarbEnum.weiß) {
+		if (player1.getFarbe() == FarbEnum.weiss) {
 			for (int i = 0; i < spielbrett.getBrett().length - 1; i++) {
 				if (spielbrett.getBrett()[11][i].getSpielfigur() != null && spielbrett.getBrett()[11][i].getSpielfigur().isDame() == false) {
-					if (spielbrett.getBrett()[11][i].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+					if (spielbrett.getBrett()[11][i].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 						wirdDame(spielbrett.getBrett()[11][i]);
 					}
 				}
@@ -1263,11 +1295,11 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 			player = this.getSpieler()[0];
 		}
 		Spielfeld[][] spielfelder = spielbrett.getBrett();
-		if (player.getFarbe() == FarbEnum.weiß) {
+		if (player.getFarbe() == FarbEnum.weiss) {
 			for (int i = 0; i < spielfelder.length - 1; i++) {
 				for (int j = 0; j < spielfelder[i].length; j++) {
 					if (spielfelder[i][j].getSpielfigur() == null) {
-					} else if (spielfelder[i][j].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+					} else if (spielfelder[i][j].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 						return true;
 					}
 				}
@@ -1529,4 +1561,129 @@ public void askSchlagen(Spieler player1, Spielfeld startfeld) {
 		this.activeSpieler = activeSpieler;
 	}
 
+	@Override
+	public void speichern(String pfad, String dateiname, String typ) {
+		typ = typ.toLowerCase();
+		switch (typ) {
+		case ("csv"):
+			saveCSV(pfad + dateiname + "." + typ);
+		break;
+		case ("ser"):
+			saveSerialize(pfad + dateiname + "." + typ);
+		break;
+		default:
+			throw new RuntimeException("Dateityp " + typ + " nicht existent");
+		}
+	}
+
+	private void saveCSV(String filename) {
+		iDatenzugriff csv = new DatenzugriffCSV();
+		String s = "";
+		s += spieler[0].generiereCSV() + "\n";
+		s += spieler[1].generiereCSV() + "\n";
+		// Aktiver Spieler boolean
+		s += "true\n";
+		s += spielbrett.generiereCSV();
+		try {
+			csv.writeObject(s, filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	@Override
+	public void laden(String pfad, String dateiname, String typ) {
+		typ = typ.toLowerCase();
+		switch (typ) {
+		case ("csv"):
+			ladenCSV(pfad + dateiname + "." + typ);
+			break;
+		case ("ser"):
+			loadSerialize(pfad + dateiname + "." + typ);
+			break;
+		default:
+			throw new RuntimeException("Dateityp nicht existent");
+		}
+	}
+
+	private void ladenCSV(String filename) {
+		iDatenzugriff laden = new DatenzugriffCSV();
+		try {
+			ArrayList<String> s = (ArrayList<String>) laden.readObject(filename);
+			for (int i = 0; i < s.size(); i++) {
+				String[] args = s.get(i).split(";");
+				if (i == 0 || i == 1) {
+					boolean istki = args[2].equals("1");
+					FarbEnum farbe;
+					if (args[1].equals("schwarz")) {
+						farbe = FarbEnum.schwarz;
+					} else {
+						farbe = FarbEnum.weiss;
+
+					}
+					Spieler s1 = new Spieler(args[0], farbe, istki);
+					this.add(s1);
+					;
+				} else if (i == 2) {
+					// Boolean aktiver Spieler
+				} else {
+					if (args[1].equals("null")) {
+						spielbrett.getFeldById(args[0]).setSpielfigur(null);
+					} else {
+						FarbEnum farbe;
+						boolean b = args[2].equals("true");
+						if (args[1].equals("schwarz")) {
+							farbe = FarbEnum.schwarz;
+						} else {
+							farbe = FarbEnum.weiss;
+
+						}
+						Spielfigur f = new Spielfigur(farbe, b);
+
+						spielbrett.getFeldById(args[0]).setSpielfigur(f);
+					}
+				}
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void saveSerialize(String filename) {
+		iDatenzugriff serial = new DatenzugriffSerialisiert();
+		try {
+			serial.writeObject(this, filename);
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			try {
+				serial.close();
+			} catch (IOException fehler) {
+				System.err.println(fehler.getMessage());
+			}
+		}
+	}
+
+	// Änderungen im Code - Änderungen im Code - Änderungen im Code - Änderungen
+	// im Code - Änderungen im Code - Änderungen im Code
+	public void loadSerialize(String filename) {
+		iDatenzugriff serial = new DatenzugriffSerialisiert();
+		try {
+			Spiel spiel = (Spiel) serial.readObject(filename);
+			System.out.println("Spiel wurde geladen!");
+			System.out.println(spiel.getSpielbrett());
+			// spiel.act(spiel.spieler[0]);
+			spiel.playerRotation(spiel.spieler[0], spiel.spieler[1]);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		} finally {
+			try {
+				serial.close();
+			} catch (IOException fehler) {
+				System.out.println(fehler.getMessage());
+			}
+		}
+	}
+	
 }

@@ -11,7 +11,7 @@ import java.util.Properties;
  * @Version 0.0.1
  *
  */
-public class Spieler {
+public class Spieler implements Serializable{
 	private String name; // Der Name des Spieler
 	private Ki ki;			// Das Objekt KI, welches definiert werden muss.
 	private FarbEnum farbe; //Farbe(schwarz, weiss aus FarbEnum
@@ -91,7 +91,14 @@ public class Spieler {
 	}
 
 	public String generiereCSV(){
-		return "" + getClass() + ":name=" + this.getName() + ", farbe=" + this.getFarbe() + ";";
+		String ki = "";
+		if(this.ki==null){
+			ki="0";
+		}
+		else{
+			ki="1";
+		}
+		return "" + name + ";" + farbe + ";" +ki;
 	}
 	
 	/**

@@ -1,12 +1,14 @@
 package backend;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author A2
  *
  */
 
-public class Spielfigur {
+public class Spielfigur implements Serializable{
 	
 	private FarbEnum farbe;
 //	private Spielfeld position; //noch noetig?
@@ -76,7 +78,7 @@ public class Spielfigur {
 	 */
 	@Override
 	public String toString() {
-		if(farbe== FarbEnum.weiß){
+		if(farbe== FarbEnum.weiss){
 			if(this.dame==false){
 			return ">|O|<";
 			}

@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.Properties;
 
 /**
@@ -13,33 +14,18 @@ import java.util.Properties;
  * @author A-2
  *
  */
-public class DatenzugriffSerialisiert implements iDatenzugriff {
+public class DatenzugriffSerialisiert implements iDatenzugriff , Serializable{
+
 
 	ObjectInputStream is;
 	ObjectOutputStream os;
 
 	@Override
-	public void open(Properties prop) throws IOException {
-
-		String filename = prop.getProperty("modus");
-		if (filename == null) {
-			throw new IOException("Datei nicht gefunden!");
-		} else {
-			if ("s".equals(prop.getProperty("modus"))) {
-				os = new ObjectOutputStream(new FileOutputStream(filename));
-			} else if ("l".equals(prop.getProperty("modus"))) {
-				is = new ObjectInputStream(new FileInputStream(filename));
-			} else {
-				throw new IOException("modus nicht vorhanden");
-			}
-		}
-	}
-
-	@Override
-	public void writeObject(Object obj) {
+	public void writeObject(Object obj,String filename) {
 		try {
-			if (os == null) {
-				throw new IOException("OuputStream nicht geöffnet.");
+			os = new ObjectOutputStream(new FileOutputStream(filename + ".ser"));
+			if(os == null) {
+				throw new IOException("OuputStream nicht geÃ¶ffnet.");
 			} else {
 				os.writeObject(obj);
 				os.close();
@@ -54,14 +40,12 @@ public class DatenzugriffSerialisiert implements iDatenzugriff {
 	}
 
 	@Override
-	public Object readObject() {
-
+	public Object readObject(String name) {
 		try {
-			is = new ObjectInputStream(new FileInputStream("data.bin"));
+			is = new ObjectInputStream(new FileInputStream(name +".ser"));
 			Object obj = is.readObject();
 			is.close();
 			return obj;
-
 		} catch (FileNotFoundException e) {
 			System.out.println(e.getMessage());
 		} catch (IOException e) {
@@ -84,5 +68,6 @@ public class DatenzugriffSerialisiert implements iDatenzugriff {
 		}
 
 	}
+
 
 }

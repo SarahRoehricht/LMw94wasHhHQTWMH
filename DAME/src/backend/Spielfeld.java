@@ -1,11 +1,13 @@
 package backend;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author A2
  *
  */
-public class Spielfeld {
+public class Spielfeld implements Serializable{
 
 	private int posX, posY;
 	private Spielfigur spielfigur;
@@ -39,7 +41,7 @@ public class Spielfeld {
 		this.setFarbe(farbe);
 		
 		if(this.getPosY()<5 && this.getFarbe()==FarbEnum.schwarz){
-			this.setSpielfigur(new Spielfigur(FarbEnum.weiß, false));
+			this.setSpielfigur(new Spielfigur(FarbEnum.weiss, false));
 			
 		}
 		else if(this.getPosY()>6 && this.getFarbe()==FarbEnum.schwarz){

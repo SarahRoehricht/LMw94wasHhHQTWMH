@@ -1,10 +1,11 @@
 package backend;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
 
-public class Ki_Dame extends Ki {
+public class Ki_Dame extends Ki implements Serializable {
 	private FarbEnum farbe;
 
 	private Spielfeld[][] spielbrett;
@@ -198,7 +199,7 @@ public class Ki_Dame extends Ki {
 	private Spielfeld[] moveMoeglichStartZiel(Spielfeld startfeld) {
 		Spielfeld[] moveStartZiel = new Spielfeld[2];
 
-		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 			int w = 0;
 			try {
 				if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
@@ -309,7 +310,7 @@ public class Ki_Dame extends Ki {
 		if (startfeld.getSpielfigur() == null) {
 			return false;
 		}
-		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 			try {
 				if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
 					if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() == null) {
@@ -512,9 +513,9 @@ public class Ki_Dame extends Ki {
 	 */
 	private boolean SchlagMoeglich(Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() != null) {
-			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
 					try {
 						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
 							if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
@@ -575,7 +576,7 @@ public class Ki_Dame extends Ki {
 
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
 									return true;
@@ -588,7 +589,7 @@ public class Ki_Dame extends Ki {
 				}
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
 									return true;
@@ -601,7 +602,7 @@ public class Ki_Dame extends Ki {
 				}
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
 									return true;
@@ -614,7 +615,7 @@ public class Ki_Dame extends Ki {
 				}
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
 									return true;
@@ -641,9 +642,9 @@ public class Ki_Dame extends Ki {
 	private Spielfeld[] schlagMoeglichStartZiel(Spielfeld startfeld) {
 		Spielfeld[] startZiel = new Spielfeld[2];
 		if (startfeld.getSpielfigur() != null) {
-			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß) {
+			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiß && startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
 					try {
 						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
 							if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
@@ -712,7 +713,7 @@ public class Ki_Dame extends Ki {
 
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
 									startZiel[0] = startfeld;
@@ -727,7 +728,7 @@ public class Ki_Dame extends Ki {
 				}
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
 									startZiel[0] = startfeld;
@@ -742,7 +743,7 @@ public class Ki_Dame extends Ki {
 				}
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
 									startZiel[0] = startfeld;
@@ -757,7 +758,7 @@ public class Ki_Dame extends Ki {
 				}
 				try {
 					if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
-						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiß) {
+						if (this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && this.getSpielbrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 							if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2] != null) {
 								if (this.getSpielbrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
 									startZiel[0] = startfeld;

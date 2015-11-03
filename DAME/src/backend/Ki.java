@@ -1,6 +1,8 @@
 package backend;
 
-public abstract class Ki {
+import java.io.Serializable;
+
+public abstract class Ki implements Serializable{
 private FarbEnum farbe;
 	
 	Ki(FarbEnum farbe){

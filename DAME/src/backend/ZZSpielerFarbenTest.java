@@ -38,7 +38,7 @@ public class ZZSpielerFarbenTest {
 	@Test
 	public void SpielerFarbe2() {
 	FarbEnum erg=s.getFarbe();
-		assertTrue(erg!=FarbEnum.weiß);
+		assertTrue(erg!=FarbEnum.weiss);
 	}
 
 }

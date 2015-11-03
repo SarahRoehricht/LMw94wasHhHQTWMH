@@ -1,11 +1,13 @@
 package backend;
 
+import java.io.Serializable;
+
 /**
  * 
  * @author A-2
  * @version 0.0.3
  */
-public class SpielBrett {
+public class SpielBrett implements Serializable {
 	private Spielfeld[][] Brett;
 	public static final int groesse = 12; // Setze nach Aufgabenstellung Größe auf
 																				// 12
@@ -21,6 +23,20 @@ public class SpielBrett {
 		this.fillBrett(); 
 	}
 
+	
+	public Spielfeld getFeldById(String id){
+		for (int i = 0; i < Brett.length; i++) {
+			for (int j = 0; j < Brett[i].length; j++) {
+				if(Brett[i][j].getSchachNotation().equals(id)){
+					return Brett[i][j];
+				}
+			}
+		}
+		return null;
+	}
+	
+	
+	
 	/**
 	 * sets Spielfeld into Spielfeld array
 	 * 
@@ -39,7 +55,7 @@ public class SpielBrett {
 					
 				}
 				else{
-					Brett[i][j] = new Spielfeld(j, i, FarbEnum.weiß);
+					Brett[i][j] = new Spielfeld(j, i, FarbEnum.weiss);
 					
 				}
 
@@ -99,6 +115,26 @@ System.out.print(d+"\t");
 		}
 		return "" ;
 	}
+	
+	
+	public String generiereCSV() {
+		String res = "";
+		for (Spielfeld[] s : Brett) {
+			for (Spielfeld sf : s) {
+				res += sf.getSchachNotation() + ";";
+				Spielfigur f = sf.getSpielfigur();
+				if (f != null) {
+					res += f.getFarbe() + ";" + f.isDame();
+				} else {
+					res += f;
+				}
+				res += "\n";
+			}
+		}
+		return res;
+	}
+	
+	
 /**Funktion printBrett wird aufgerufen
  * @return this.printBrett 
  */

@@ -22,7 +22,7 @@ public class ZZSpielTest {
 	@Before
 	public void vorTest(){
 		s2= new Spieler("Harald", FarbEnum.schwarz);
-		s1= new Spieler("Egon", FarbEnum.weiß);
+		s1= new Spieler("Egon", FarbEnum.weiss);
 		spielbrett= new SpielBrett();
 		brett=spielbrett.getBrett();
 		
@@ -58,21 +58,21 @@ public class ZZSpielTest {
 	@Test
 	public void testFarbeFeld5(){
 		
-		FarbEnum farbe= FarbEnum.weiß;
+		FarbEnum farbe= FarbEnum.weiss;
 			FarbEnum farbe2	= brett[3][8].getFarbe();
 		assertTrue(farbe.equals(farbe2));
 	}
 	@Test
 	public void testFarbeFeld6(){
 		
-		FarbEnum farbe= FarbEnum.weiß;
+		FarbEnum farbe= FarbEnum.weiss;
 			FarbEnum farbe2	= brett[7][10].getFarbe();
 		assertTrue(farbe.equals(farbe2));
 	}
 	@Test
 	public void testFarbeFeld7(){
 		
-		FarbEnum farbe= FarbEnum.weiß;
+		FarbEnum farbe= FarbEnum.weiss;
 			FarbEnum farbe2	= brett[9][2].getFarbe();
 		assertTrue(farbe.equals(farbe2));
 	}
@@ -92,17 +92,17 @@ public class ZZSpielTest {
 	@Test
 	public void testZug2(){
 		spiel.doTheMove(s1, spiel.getSpielbrett().getBrett()[4][8], spiel.getSpielbrett().getBrett()[5][7]);
-		assertTrue(spiel.getSpielbrett().getBrett()[5][7].getSpielfigur().getFarbe()==FarbEnum.weiß);
+		assertTrue(spiel.getSpielbrett().getBrett()[5][7].getSpielfigur().getFarbe()==FarbEnum.weiss);
 	}
 	@Test
 	public void testZug3(){
 		spiel.doTheMove(s1, spiel.getSpielbrett().getBrett()[4][2], spiel.getSpielbrett().getBrett()[5][3]);
-		assertTrue(spiel.getSpielbrett().getBrett()[5][3].getSpielfigur().getFarbe()==FarbEnum.weiß);
+		assertTrue(spiel.getSpielbrett().getBrett()[5][3].getSpielfigur().getFarbe()==FarbEnum.weiss);
 	}
 	@Test
 	public void testZug4(){
 		spiel.doTheMove(s1, spiel.getSpielbrett().getBrett()[3][0], spiel.getSpielbrett().getBrett()[5][1]);
-		assertFalse(spiel.getSpielbrett().getBrett()[5][1].getSpielfigur().getFarbe()==FarbEnum.weiß);
+		assertFalse(spiel.getSpielbrett().getBrett()[5][1].getSpielfigur().getFarbe()==FarbEnum.weiss);
 	}
 	
 	

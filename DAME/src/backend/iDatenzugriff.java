@@ -9,12 +9,10 @@ import java.util.Properties;
  *
  */
 public interface iDatenzugriff {
-
-	public void open(Properties prop) throws IOException;
 	
-	public void writeObject(Object obj) throws IOException;
+	public void writeObject(Object obj, String name) throws IOException;
 	
-	public Object readObject() throws IOException;
+	public Object readObject(String name) throws IOException;
 	
 	public void close() throws IOException;
 }

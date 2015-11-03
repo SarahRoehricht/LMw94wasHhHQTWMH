@@ -1,17 +1,19 @@
 package backend;
 
-public enum FarbEnum {
+import java.io.Serializable;
+
+public enum FarbEnum implements Serializable{
 	schwarz {
 		@Override
 		public String toString() {
 			
-			return "Schwarz";
+			return "schwarz";
 		}
-	}, weiß {
+	}, weiss {
 		@Override
 		public String toString() {
 			
-			return "Weiß";
+			return "weiss";
 		}
 	}, nichts;
 	

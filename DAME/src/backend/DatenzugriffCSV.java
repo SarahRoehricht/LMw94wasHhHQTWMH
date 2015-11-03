@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Properties;
 
@@ -17,7 +18,7 @@ import java.util.Properties;
  * @author A-2
  *
  */
-public class DatenzugriffCSV implements iDatenzugriff {
+public class DatenzugriffCSV implements iDatenzugriff, Serializable  {
 
 	private BufferedReader br;
 	private BufferedWriter bw;
@@ -25,11 +26,13 @@ public class DatenzugriffCSV implements iDatenzugriff {
 	/**
 	 * 
 	 * @param obj
-	 *          -
+	 *            -
+	 * @throws IOException 
 	 */
 	@Override
-	public void writeObject(Object obj) {
+	public void writeObject(Object obj, String name) throws IOException {
 		String str = (String) obj;
+		bw = new BufferedWriter(new FileWriter(name));
 		try {
 			bw.write(str + ";");
 			bw.close();
@@ -40,59 +43,23 @@ public class DatenzugriffCSV implements iDatenzugriff {
 	}
 
 	/**
-	 * @return ausgelesenes Objekt wird zurückgegeben
+	 * @return ausgelesenes Objekt wird zurÃ¼ckgegeben
 	 */
 	@Override
-	public Object readObject() {
+	public Object readObject(String name) {
 		try {
 			String line;
 			ArrayList<String> feld = new ArrayList<String>();
-			// hier wird die .txt Datei ganz eingelesen und in feld übergeben
+			// hier wird die .txt Datei ganz eingelesen und in feld Ã¼bergeben
 			while ((line = br.readLine()) != null) {
 				feld.add(line);
-				String[] klasse;
-				// feld splitten bei ";" um die einzelnen Klassen zu erhalten
-				for (String s : feld) {
-					klasse = line.split(";");
-					// Klasse splitten bei ":" um Name der Klasse von Attributen zu
-					// trennen
-					for (int i = 0; i < klasse.length; i++) {
-						klasse[i].split(":");
-						// Switch Case für Klassennamen
-
-						// Attribute müssen noch gesplittet und dann zugeordnet werden
-						// entsprechende Objekte müssen noch zurückgegeben werden
-					}
-				}
-
 			}
+			return feld;
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
-
-	@Override
-	public void open(Properties prop) throws IOException {
-		bw = new BufferedWriter(new FileWriter("spielstand.txt"));
-		String filename = prop.getProperty("modus");
-		if (filename == null) {
-			throw new IOException("Datei nicht gefunden!");
-		} else {
-			if ("s".equals(prop.getProperty("modus"))) {
-				bw = new BufferedWriter(new FileWriter(filename));
-				// Alfreds Code zur CSV - nochmal checken welche Kombi besser für unsere
-				// Zwecke ist
-				// bw = new BufferedWriter(new OutputStreamWriter(new
-				// FileOutputStream(fileName)));
-			} else if ("l".equals(prop.getProperty("modus"))) {
-				br = new BufferedReader(new FileReader(filename));
-			} else {
-				throw new IOException("modus nicht vorhanden");
-			}
-		}
-	}
-
 	@Override
 	public void close() throws IOException {
 		if (bw != null) {
