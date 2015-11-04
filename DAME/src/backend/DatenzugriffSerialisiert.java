@@ -23,11 +23,11 @@ public class DatenzugriffSerialisiert implements iDatenzugriff , Serializable{
  * wird von saveSerialize() aufgerufen
  */
 	@Override
-	public void writeObject(Object obj,String filename) {
+	public void speichern(Object obj,String filename) {
 		try {
 			os = new ObjectOutputStream(new FileOutputStream(filename));
 			if(os == null) {
-				throw new IOException("OuputStream nicht geÃ¶ffnet.");
+				throw new IOException("OuputStream nicht geÃƒÂ¶ffnet.");
 			} else {
 				os.writeObject(obj);
 				os.close();
@@ -44,7 +44,7 @@ public class DatenzugriffSerialisiert implements iDatenzugriff , Serializable{
  * wird von loadSerialize() aufgerufen
  */
 	@Override
-	public Object readObject(String name) {
+	public Object laden(String name) {
 		try {
 			is = new ObjectInputStream(new FileInputStream(name));
 			Object obj = is.readObject();

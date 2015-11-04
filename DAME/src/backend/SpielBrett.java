@@ -9,7 +9,7 @@ import java.io.Serializable;
  */
 public class SpielBrett implements Serializable {
 	private Spielfeld[][] Brett;
-	public static final int groesse = 12; // Setze nach Aufgabenstellung Größe auf
+	public static final int groesse = 12; // Setze nach Aufgabenstellung GrÃ¶ÃŸe auf
 																				// 12
 
 	/**
@@ -32,6 +32,8 @@ public class SpielBrett implements Serializable {
 				}
 			}
 		}
+		//NullPointerException
+		System.out.println("Fehler getFeldById");
 		return null;
 	}
 	
@@ -42,7 +44,7 @@ public class SpielBrett implements Serializable {
 	 * 
 	 * @param groesse
 	 */
-	private void fillBrett() { // benötigt keine Übergabe da Brett schon die
+	private void fillBrett() { // benÃ¶tigt keine Ãœbergabe da Brett schon die
 															// groesse beinhaltet
 
 		for (int i = Brett.length - 1; i >=0; i--) {
@@ -117,7 +119,7 @@ System.out.print(d+"\t");
 	}
 	
 	/**
-	 * Setzt String für die CSV Speicherung zusammen. Alles durch ";" getrennt.
+	 * Setzt String fÃ¼r die CSV Speicherung zusammen. Alles durch ";" getrennt.
 	 * @return zusammengestzten String
 	 */
 	public String generiereCSV() {
@@ -129,7 +131,8 @@ System.out.print(d+"\t");
 				if (f != null) {
 					res += f.getFarbe() + ";" + f.isDame();
 				} else {
-					res += f;
+					//nullPointException ???
+					res += "null";
 				}
 				res += "\n";
 			}

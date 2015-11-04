@@ -33,14 +33,16 @@ public class Spiel implements iBediener, Serializable {
 	 * hinzu.
 	 *
 	 * @param Scanner
-	 *          scanner, String name1, String name2 creates 2 Spieler objects and
-	 *          calls this.add method with each of them one after another.
+	 *            scanner, String name1, String name2 creates 2 Spieler objects
+	 *            and calls this.add method with each of them one after another.
 	 */
 	@Override
 	public void welcome() {
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Spiel laden [L] oder neues Spiel spielen [n].\n" + "Der aktuelle Spielstand kann jederzeit über die Eingabe [s] gespeichert werden");
+		System.out
+				.println("Spiel laden [L] oder neues Spiel spielen [n].\n"
+						+ "Der aktuelle Spielstand kann jederzeit Ã¼ber die Eingabe [s] gespeichert werden");
 		String eingabe = scanner.nextLine();
 		if ("l".equals(eingabe) == true) {
 			System.out.println("Dateinamen eingeben.");
@@ -90,7 +92,8 @@ public class Spiel implements iBediener, Serializable {
 			System.out.println("Moege das Spiel beginnen!");
 
 			System.out.println(spielbrett);
-			System.out.println(player1.getName() + " - " + "'" + player1.getFarbe() + "'" + " faengt an!");
+			System.out.println(player1.getName() + " - " + "'"
+					+ player1.getFarbe() + "'" + " faengt an!");
 			scanner.reset();
 			playerRotation(player1, player2);
 		}
@@ -135,7 +138,7 @@ public class Spiel implements iBediener, Serializable {
 
 				announceWinner(this.getSpieler()[0]);
 			} // Schaut ob beim anderen Spieler keine
-			// noch Zuege moeglich sind.
+				// noch Zuege moeglich sind.
 			else {
 				announceWinner(this.getSpieler()[1]);
 			}
@@ -174,7 +177,8 @@ public class Spiel implements iBediener, Serializable {
 				if ("s".equals(szeingabe) == true) {
 					System.out.println("Dateinamen eingeben");
 					String filename = scanner.nextLine();
-					System.out.println("Speichertyp [csv] oder [ser] eingeben.");
+					System.out
+							.println("Speichertyp [csv] oder [ser] eingeben.");
 					String typ = scanner.nextLine();
 					this.speichern("", filename, typ);
 
@@ -185,46 +189,56 @@ public class Spiel implements iBediener, Serializable {
 					String[] startZiel = new String[2];
 					startZiel = szeingabe.split("-", 2);
 					if (startZiel[0] == null) {
-						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
+						System.out
+								.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
 						break;
 					}
 					if (startZiel.length == 1) {
-						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
+						System.out
+								.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
 						break;
 					}
 					System.out.println(startZiel[0] + startZiel[1]);
 					String coorda = startZiel[0];
 					if (checkLegitFeld(coorda) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
+						System.out
+								.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
 					Spielfeld startfeld = EingabeSpielfeld(coorda);
 					if (startfeld.getSpielfigur() == null) {
-						System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
+						System.out
+								.println("Keine Spielfigur auf dem Spielfeld "
+										+ coorda + "!");
 						break;
 					}
 
 					if (startfeld.getSpielfigur() != null) {
-						while (!startfeld.getSpielfigur().getFarbe().equals(player1.getFarbe())) {
-							System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
+						while (!startfeld.getSpielfigur().getFarbe()
+								.equals(player1.getFarbe())) {
+							System.out.println("kein " + player1.getFarbe()
+									+ "er Spielstein!");
 							break;
 						}
 					}
 					String coordb = startZiel[1];
 
 					if (checkLegitFeld(coordb) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
+						System.out
+								.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
 					Spielfeld zielfeld = EingabeSpielfeld(coordb);
 					if (startfeld.equals(zielfeld)) {
-						System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
+						System.out
+								.println("Startfeld = Zielfeld, ungueltiger Zug");
 						break;
 
 					}
 
 					if (zielfeld.getSpielfigur() != null) {
-						System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
+						System.out
+								.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
 						break;
 					}
 					spielerFeldArray[0] = startfeld;
@@ -246,7 +260,8 @@ public class Spiel implements iBediener, Serializable {
 	 * @param zielfeld
 	 * @return
 	 */
-	public boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public boolean doTheMove(Spieler player1, Spielfeld startfeld,
+			Spielfeld zielfeld) {
 		if (startfeld.getSpielfigur().isDame() == true) {
 			if (moveDameLegit(player1, startfeld, zielfeld) == true) {
 				move(startfeld, zielfeld);
@@ -297,15 +312,23 @@ public class Spiel implements iBediener, Serializable {
 		}
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+						.getPosX() + i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+							.getPosX() + i].getSpielfigur().getFarbe() == spielbrett
+							.getBrett()[startfeld.getPosY()][startfeld
+							.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+							.getPosX() + i + 1].getSpielfigur() != null) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() == null) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+							.getPosX() + i + 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett
+								.getBrett()[startfeld.getPosY() + i][startfeld
+								.getPosX() + i].getSpielfigur().getFarbe()) {
 							return true;
 						}
 					}
@@ -316,15 +339,23 @@ public class Spiel implements iBediener, Serializable {
 		}
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+						.getPosX() + i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+							.getPosX() + i].getSpielfigur().getFarbe() == spielbrett
+							.getBrett()[startfeld.getPosY()][startfeld
+							.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+							.getPosX() + i + 1].getSpielfigur() != null) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() == null) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+							.getPosX() + i + 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett
+								.getBrett()[startfeld.getPosY() - i][startfeld
+								.getPosX() + i].getSpielfigur().getFarbe()) {
 							return true;
 						}
 					}
@@ -335,15 +366,23 @@ public class Spiel implements iBediener, Serializable {
 		}
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+						.getPosX() - i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+							.getPosX() - i].getSpielfigur().getFarbe() == spielbrett
+							.getBrett()[startfeld.getPosY()][startfeld
+							.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+							.getPosX() - i - 1].getSpielfigur() != null) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() == null) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+							.getPosX() - i - 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett
+								.getBrett()[startfeld.getPosY() + i][startfeld
+								.getPosX() - i].getSpielfigur().getFarbe()) {
 							return true;
 						}
 					}
@@ -354,15 +393,23 @@ public class Spiel implements iBediener, Serializable {
 		}
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+						.getPosX() - i].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+							.getPosX() - i].getSpielfigur().getFarbe() == spielbrett
+							.getBrett()[startfeld.getPosY()][startfeld
+							.getPosX()].getSpielfigur().getFarbe()) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+							.getPosX() - i - 1].getSpielfigur() != null) {
 						break;
 					}
-					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() == null) {
-						if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+							.getPosX() - i - 1].getSpielfigur() == null) {
+						if (startfeld.getSpielfigur().getFarbe() != spielbrett
+								.getBrett()[startfeld.getPosY() - i][startfeld
+								.getPosX() - i].getSpielfigur().getFarbe()) {
 							return true;
 						}
 					}
@@ -382,19 +429,28 @@ public class Spiel implements iBediener, Serializable {
 	 * @param startfeld
 	 * @param zielfeld
 	 */
-	private void schlagenDame(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	private void schlagenDame(Spieler player1, Spielfeld startfeld,
+			Spielfeld zielfeld) {
 		// Flying Kings implementieren?
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
-			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld.getPosX() - 1]);
+			schlagen(startfeld, zielfeld,
+					spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld
+							.getPosX() - 1]);
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
-			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld.getPosX() + 1]);
+			schlagen(startfeld, zielfeld,
+					spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld
+							.getPosX() + 1]);
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
-			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() + 1][zielfeld.getPosX() - 1]);
+			schlagen(startfeld, zielfeld,
+					spielbrett.getBrett()[zielfeld.getPosY() + 1][zielfeld
+							.getPosX() - 1]);
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
-			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() + 1][zielfeld.getPosX() + 1]);
+			schlagen(startfeld, zielfeld,
+					spielbrett.getBrett()[zielfeld.getPosY() + 1][zielfeld
+							.getPosX() + 1]);
 		}
 
 	}
@@ -407,19 +463,30 @@ public class Spiel implements iBediener, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean schlagenDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	private boolean schlagenDameLegit(Spieler player1, Spielfeld startfeld,
+			Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+							.getPosX() + i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+								.getPosX() + i].getSpielfigur().getFarbe() == spielbrett
+								.getBrett()[startfeld.getPosY()][startfeld
+								.getPosX()].getSpielfigur().getFarbe()) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+								.getPosX() + i + 1].getSpielfigur() != null) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() + i + 1] == zielfeld) {
-							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+								.getPosX() + i + 1].getSpielfigur() == null
+								&& spielbrett.getBrett()[startfeld.getPosY()
+										+ i + 1][startfeld.getPosX() + i + 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett
+									.getBrett()[startfeld.getPosY() + i][startfeld
+									.getPosX() + i].getSpielfigur().getFarbe()) {
 								return true;
 							}
 						} else {
@@ -434,15 +501,25 @@ public class Spiel implements iBediener, Serializable {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+							.getPosX() - i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+								.getPosX() - i].getSpielfigur().getFarbe() == spielbrett
+								.getBrett()[startfeld.getPosY()][startfeld
+								.getPosX()].getSpielfigur().getFarbe()) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+								.getPosX() - i - 1].getSpielfigur() != null) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld.getPosX() - i - 1] == zielfeld) {
-							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + i + 1][startfeld
+								.getPosX() - i - 1].getSpielfigur() == null
+								&& spielbrett.getBrett()[startfeld.getPosY()
+										+ i + 1][startfeld.getPosX() - i - 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett
+									.getBrett()[startfeld.getPosY() + i][startfeld
+									.getPosX() - i].getSpielfigur().getFarbe()) {
 								return true;
 							}
 						} else {
@@ -457,15 +534,25 @@ public class Spiel implements iBediener, Serializable {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+							.getPosX() + i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+								.getPosX() + i].getSpielfigur().getFarbe() == spielbrett
+								.getBrett()[startfeld.getPosY()][startfeld
+								.getPosX()].getSpielfigur().getFarbe()) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+								.getPosX() + i + 1].getSpielfigur() != null) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() + i + 1] == zielfeld) {
-							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur().getFarbe()) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+								.getPosX() + i + 1].getSpielfigur() == null
+								&& spielbrett.getBrett()[startfeld.getPosY()
+										- i - 1][startfeld.getPosX() + i + 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett
+									.getBrett()[startfeld.getPosY() - i][startfeld
+									.getPosX() + i].getSpielfigur().getFarbe()) {
 								return true;
 							}
 						} else {
@@ -480,15 +567,25 @@ public class Spiel implements iBediener, Serializable {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe() == spielbrett.getBrett()[startfeld.getPosY()][startfeld.getPosX()].getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+							.getPosX() - i].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+								.getPosX() - i].getSpielfigur().getFarbe() == spielbrett
+								.getBrett()[startfeld.getPosY()][startfeld
+								.getPosX()].getSpielfigur().getFarbe()) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+								.getPosX() - i - 1].getSpielfigur() != null) {
 							break;
 						}
-						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1].getSpielfigur() == null && spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld.getPosX() - i - 1] == zielfeld) {
-							if (startfeld.getSpielfigur().getFarbe() != spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur().getFarbe()) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - i - 1][startfeld
+								.getPosX() - i - 1].getSpielfigur() == null
+								&& spielbrett.getBrett()[startfeld.getPosY()
+										- i - 1][startfeld.getPosX() - i - 1] == zielfeld) {
+							if (startfeld.getSpielfigur().getFarbe() != spielbrett
+									.getBrett()[startfeld.getPosY() - i][startfeld
+									.getPosX() - i].getSpielfigur().getFarbe()) {
 								return true;
 							}
 						} else {
@@ -511,7 +608,8 @@ public class Spiel implements iBediener, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean moveDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	private boolean moveDameLegit(Spieler player1, Spielfeld startfeld,
+			Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "nope") {
 			return false;
 		}
@@ -519,8 +617,10 @@ public class Spiel implements iBediener, Serializable {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
 
 			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i] == zielfeld) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+						.getPosX() + i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+							.getPosX() + i] == zielfeld) {
 						return true;
 					}
 				} else {
@@ -530,8 +630,10 @@ public class Spiel implements iBediener, Serializable {
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i] == zielfeld) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+						.getPosX() - i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld
+							.getPosX() - i] == zielfeld) {
 						return true;
 					}
 				} else {
@@ -541,8 +643,10 @@ public class Spiel implements iBediener, Serializable {
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i] == zielfeld) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+						.getPosX() + i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+							.getPosX() + i] == zielfeld) {
 						return true;
 					}
 				} else {
@@ -552,8 +656,10 @@ public class Spiel implements iBediener, Serializable {
 		}
 		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
 			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i] == zielfeld) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+						.getPosX() - i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld
+							.getPosX() - i] == zielfeld) {
 						return true;
 					}
 				} else {
@@ -572,32 +678,37 @@ public class Spiel implements iBediener, Serializable {
 	 * @param zielfeld
 	 * @return String top-right, top-left, bottom-right, bottom-left
 	 */
-	private String dameStartZiel(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	private String dameStartZiel(Spieler player1, Spielfeld startfeld,
+			Spielfeld zielfeld) {
 		for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
 			try {
 
-				if (startfeld.getPosX() + i == zielfeld.getPosX() && startfeld.getPosY() + i == zielfeld.getPosY()) {
+				if (startfeld.getPosX() + i == zielfeld.getPosX()
+						&& startfeld.getPosY() + i == zielfeld.getPosY()) {
 					return "top-right";
 				}
 			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			}
 			try {
 
-				if (startfeld.getPosX() - i == zielfeld.getPosX() && startfeld.getPosY() + i == zielfeld.getPosY()) {
+				if (startfeld.getPosX() - i == zielfeld.getPosX()
+						&& startfeld.getPosY() + i == zielfeld.getPosY()) {
 					return "top-left";
 				}
 			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			}
 			try {
 
-				if (startfeld.getPosX() + i == zielfeld.getPosX() && startfeld.getPosY() - i == zielfeld.getPosY()) {
+				if (startfeld.getPosX() + i == zielfeld.getPosX()
+						&& startfeld.getPosY() - i == zielfeld.getPosY()) {
 					return "bottom-right";
 				}
 			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
 			}
 			try {
 
-				if (startfeld.getPosX() - i == zielfeld.getPosX() && startfeld.getPosY() - i == zielfeld.getPosY()) {
+				if (startfeld.getPosX() - i == zielfeld.getPosX()
+						&& startfeld.getPosY() - i == zielfeld.getPosY()) {
 					return "bottom-left";
 				}
 			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
@@ -622,28 +733,34 @@ public class Spiel implements iBediener, Serializable {
 			while (askdone == false) {
 				Spielfeld zielfeld;
 				if (player1.getKi() == null) {
-					System.out.println(startfeld.getSchachNotation() + startfeld.getSpielfigur() + " kann noch einmal schlagen");
+					System.out.println(startfeld.getSchachNotation()
+							+ startfeld.getSpielfigur()
+							+ " kann noch einmal schlagen");
 					Scanner scanner = new Scanner(System.in);
 					System.out.println("Eingabe Zielfeld:");
 					String coordb = scanner.nextLine();
 					if (checkLegitFeld(coordb) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
+						System.out
+								.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
 					zielfeld = EingabeSpielfeld(coordb);
 					if (startfeld.equals(zielfeld)) {
-						System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
+						System.out
+								.println("Startfeld = Zielfeld, ungueltiger Zug");
 						break;
 
 					}
 
 					if (zielfeld.getSpielfigur() != null) {
-						System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
+						System.out
+								.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
 						break;
 					}
 
 				} else {
-					zielfeld = player1.getKi().actAgain(startfeld, spielbrett.getBrett()); // KI
+					zielfeld = player1.getKi().actAgain(startfeld,
+							spielbrett.getBrett()); // KI
 
 				}
 				if (startfeld.getSpielfigur().isDame() == false) {
@@ -686,12 +803,21 @@ public class Spiel implements iBediener, Serializable {
 		if (startfeld.getSpielfigur() != null) {
 			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss
+						&& startfeld.getSpielfigur().isDame() == false) {
 					try {
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
-							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2] != null) {
-									if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+								.getPosX() + 1] != null) {
+							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+									.getPosX() + 1].getSpielfigur() != null
+									&& spielbrett.getBrett()[startfeld
+											.getPosY() + 1][startfeld.getPosX() + 1]
+											.getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld
+										.getPosX() + 2] != null) {
+									if (spielbrett.getBrett()[startfeld
+											.getPosY() + 2][startfeld.getPosX() + 2]
+											.getSpielfigur() == null) {
 										return true;
 									}
 								}
@@ -701,10 +827,18 @@ public class Spiel implements iBediener, Serializable {
 
 					}
 					try {
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1] != null) {
-							if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2] != null) {
-									if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+								.getPosX() - 1] != null) {
+							if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+									.getPosX() - 1].getSpielfigur() != null
+									&& spielbrett.getBrett()[startfeld
+											.getPosY() - 1][startfeld.getPosX() - 1]
+											.getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld
+										.getPosX() - 2] != null) {
+									if (spielbrett.getBrett()[startfeld
+											.getPosY() - 2][startfeld.getPosX() - 2]
+											.getSpielfigur() == null) {
 										return true;
 									}
 								}
@@ -714,10 +848,18 @@ public class Spiel implements iBediener, Serializable {
 
 					}
 					try {
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1] != null) {
-							if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2] != null) {
-									if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+								.getPosX() + 1] != null) {
+							if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+									.getPosX() + 1].getSpielfigur() != null
+									&& spielbrett.getBrett()[startfeld
+											.getPosY() - 1][startfeld.getPosX() + 1]
+											.getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld
+										.getPosX() + 2] != null) {
+									if (spielbrett.getBrett()[startfeld
+											.getPosY() - 2][startfeld.getPosX() + 2]
+											.getSpielfigur() == null) {
 										return true;
 									}
 								}
@@ -727,10 +869,18 @@ public class Spiel implements iBediener, Serializable {
 
 					}
 					try {
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
-							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2] != null) {
-									if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+								.getPosX() - 1] != null) {
+							if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+									.getPosX() - 1].getSpielfigur() != null
+									&& spielbrett.getBrett()[startfeld
+											.getPosY() + 1][startfeld.getPosX() - 1]
+											.getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld
+										.getPosX() - 2] != null) {
+									if (spielbrett.getBrett()[startfeld
+											.getPosY() + 2][startfeld.getPosX() - 2]
+											.getSpielfigur() == null) {
 										return true;
 									}
 								}
@@ -743,13 +893,21 @@ public class Spiel implements iBediener, Serializable {
 				}
 			}
 
-			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().isDame() == false) {
+			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.schwarz
+					&& startfeld.getSpielfigur().isDame() == false) {
 
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-							if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2] != null) {
-								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+							.getPosX() + 1] != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+								.getPosX() + 1].getSpielfigur() != null
+								&& spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+										.getPosX() + 1].getSpielfigur()
+										.getFarbe() == FarbEnum.weiss) {
+							if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld
+									.getPosX() + 2] != null) {
+								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld
+										.getPosX() + 2].getSpielfigur() == null) {
 									return true;
 								}
 							}
@@ -759,10 +917,17 @@ public class Spiel implements iBediener, Serializable {
 
 				}
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-							if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2] != null) {
-								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+							.getPosX() - 1] != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+								.getPosX() - 1].getSpielfigur() != null
+								&& spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+										.getPosX() - 1].getSpielfigur()
+										.getFarbe() == FarbEnum.weiss) {
+							if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld
+									.getPosX() - 2] != null) {
+								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld
+										.getPosX() - 2].getSpielfigur() == null) {
 									return true;
 								}
 							}
@@ -772,10 +937,17 @@ public class Spiel implements iBediener, Serializable {
 
 				}
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-							if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2] != null) {
-								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld.getPosX() + 2].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+							.getPosX() + 1] != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+								.getPosX() + 1].getSpielfigur() != null
+								&& spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+										.getPosX() + 1].getSpielfigur()
+										.getFarbe() == FarbEnum.weiss) {
+							if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld
+									.getPosX() + 2] != null) {
+								if (spielbrett.getBrett()[startfeld.getPosY() - 2][startfeld
+										.getPosX() + 2].getSpielfigur() == null) {
 									return true;
 								}
 							}
@@ -785,10 +957,17 @@ public class Spiel implements iBediener, Serializable {
 
 				}
 				try {
-					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
-						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-							if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2] != null) {
-								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld.getPosX() - 2].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+							.getPosX() - 1] != null) {
+						if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+								.getPosX() - 1].getSpielfigur() != null
+								&& spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+										.getPosX() - 1].getSpielfigur()
+										.getFarbe() == FarbEnum.weiss) {
+							if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld
+									.getPosX() - 2] != null) {
+								if (spielbrett.getBrett()[startfeld.getPosY() + 2][startfeld
+										.getPosX() - 2].getSpielfigur() == null) {
 									return true;
 								}
 							}
@@ -817,12 +996,18 @@ public class Spiel implements iBediener, Serializable {
 
 				for (int j = 0; j < spielbrett.getBrett()[i].length - 1; j++) {
 					if (spielbrett.getBrett()[j][i].getSpielfigur() != null) {
-						if (spielbrett.getBrett()[j][i].getSpielfigur().isDame() == false) {
-							if (moveMoeglich(player1, spielbrett.getBrett()[j][i]) == true || SchlagMoeglich(spielbrett.getBrett()[j][i]) == true) {
+						if (spielbrett.getBrett()[j][i].getSpielfigur()
+								.isDame() == false) {
+							if (moveMoeglich(player1,
+									spielbrett.getBrett()[j][i]) == true
+									|| SchlagMoeglich(spielbrett.getBrett()[j][i]) == true) {
 								return true;
 							}
-						} else if (spielbrett.getBrett()[j][i].getSpielfigur().isDame() == true) {
-							if ((moveMoeglich(player1, spielbrett.getBrett()[j][i]) == true || schlagMoeglichDame(spielbrett.getBrett()[j][i]) == true)) {
+						} else if (spielbrett.getBrett()[j][i].getSpielfigur()
+								.isDame() == true) {
+							if ((moveMoeglich(player1,
+									spielbrett.getBrett()[j][i]) == true || schlagMoeglichDame(spielbrett
+									.getBrett()[j][i]) == true)) {
 								return true;
 							}
 						}
@@ -855,8 +1040,10 @@ public class Spiel implements iBediener, Serializable {
 		}
 		if (player1.getFarbe() == FarbEnum.weiss) {
 			try {
-				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() == null) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+						.getPosX() - 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+							.getPosX() - 1].getSpielfigur() == null) {
 						return true;
 					}
 				}
@@ -865,8 +1052,10 @@ public class Spiel implements iBediener, Serializable {
 
 			}
 			try {
-				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() == null) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+						.getPosX() + 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+							.getPosX() + 1].getSpielfigur() == null) {
 						return true;
 					}
 				}
@@ -879,8 +1068,10 @@ public class Spiel implements iBediener, Serializable {
 		if (player1.getFarbe() == FarbEnum.schwarz) {
 			try {
 
-				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1] != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() == null) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+						.getPosX() - 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+							.getPosX() - 1].getSpielfigur() == null) {
 						return true;
 					}
 				}
@@ -891,8 +1082,10 @@ public class Spiel implements iBediener, Serializable {
 			}
 
 			try {
-				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1] != null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() == null) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+						.getPosX() + 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+							.getPosX() + 1].getSpielfigur() == null) {
 						return true;
 					}
 				}
@@ -907,61 +1100,95 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * Ueberprueft ob auf das gewuenschte Feld gezogen werden kann, und fuert dies
-	 * dann auch aus.
+	 * Ueberprueft ob auf das gewuenschte Feld gezogen werden kann, und fuert
+	 * dies dann auch aus.
 	 * 
 	 * @param player1
 	 * @param startfeld
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean doSchlagStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	private boolean doSchlagStein(Spieler player1, Spielfeld startfeld,
+			Spielfeld zielfeld) {
 		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-			if (player1.getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
-				if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+			if (player1.getFarbe() == FarbEnum.weiss
+					&& startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getPosX() + 2 == zielfeld.getPosX()
+						&& startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
 					// right
 					// 1
 					// Figur
 					// ueberspringen
-					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+							.getPosX() + 1].getSpielfigur() != null
+							&& spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+									.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(
+								startfeld,
+								zielfeld,
+								spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+										.getPosX() + 1]);
 						return true;
 					} else {
 
 						return false;
 					}
-				} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+				} else if (startfeld.getPosX() - 2 == zielfeld.getPosX()
+						&& startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
 					// left
 					// 1
 					// Figur
 					// ueberspringen
-					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+							.getPosX() - 1].getSpielfigur() != null
+							&& spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+									.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(
+								startfeld,
+								zielfeld,
+								spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+										.getPosX() - 1]);
 						return true;
 					} else {
 
 						return false;
 					}
-				} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+				} else if (startfeld.getPosX() + 2 == zielfeld.getPosX()
+						&& startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
 					// right
 					// 1
 					// Figur
 					// ueberspringen
-					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+							.getPosX() + 1].getSpielfigur() != null
+							&& spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+									.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(
+								startfeld,
+								zielfeld,
+								spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+										.getPosX() + 1]);
 						return true;
 					} else {
 
 						return false;
 					}
-				} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+				} else if (startfeld.getPosX() - 2 == zielfeld.getPosX()
+						&& startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
 					// left
 					// 1
 					// Figur
 					// ueberspringen
-					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
-						schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+							.getPosX() - 1].getSpielfigur() != null
+							&& spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+									.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						schlagen(
+								startfeld,
+								zielfeld,
+								spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+										.getPosX() - 1]);
 						return true;
 					} else {
 
@@ -970,50 +1197,83 @@ public class Spiel implements iBediener, Serializable {
 				}
 			}
 		}
-		if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().isDame() == false) {
-			if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+		if (player1.getFarbe() == FarbEnum.schwarz
+				&& startfeld.getSpielfigur().isDame() == false) {
+			if (startfeld.getPosX() + 2 == zielfeld.getPosX()
+					&& startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
 				// right
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1]);
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+						.getPosX() + 1].getSpielfigur() != null
+						&& spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+								.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
+					schlagen(
+							startfeld,
+							zielfeld,
+							spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+									.getPosX() + 1]);
 					return true;
 				} else {
 
 					return false;
 				}
-			} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+			} else if (startfeld.getPosX() - 2 == zielfeld.getPosX()
+					&& startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
 				// left
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1]);
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+						.getPosX() - 1].getSpielfigur() != null
+						&& spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+								.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
+					schlagen(
+							startfeld,
+							zielfeld,
+							spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+									.getPosX() - 1]);
 					return true;
 				} else {
 
 					return false;
 				}
-			} else if (startfeld.getPosX() + 2 == zielfeld.getPosX() && startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
+			} else if (startfeld.getPosX() + 2 == zielfeld.getPosX()
+					&& startfeld.getPosY() - 2 == zielfeld.getPosY()) { // Zielfeld:bottom
 				// right
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1]);
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+						.getPosX() + 1].getSpielfigur() != null
+						&& spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+								.getPosX() + 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
+					schlagen(
+							startfeld,
+							zielfeld,
+							spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld
+									.getPosX() + 1]);
 					return true;
 				} else {
 
 					return false;
 				}
-			} else if (startfeld.getPosX() - 2 == zielfeld.getPosX() && startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
+			} else if (startfeld.getPosX() - 2 == zielfeld.getPosX()
+					&& startfeld.getPosY() + 2 == zielfeld.getPosY()) { // Zielfeld:Top
 				// left
 				// 1
 				// Figur
 				// ueberspringen
-				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() != null && spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
-					schlagen(startfeld, zielfeld, spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1]);
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+						.getPosX() - 1].getSpielfigur() != null
+						&& spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+								.getPosX() - 1].getSpielfigur().getFarbe() == FarbEnum.weiss) {
+					schlagen(
+							startfeld,
+							zielfeld,
+							spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld
+									.getPosX() - 1]);
 					return true;
 				} else {
 
@@ -1035,11 +1295,14 @@ public class Spiel implements iBediener, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean doMoveStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	private boolean doMoveStein(Spieler player1, Spielfeld startfeld,
+			Spielfeld zielfeld) {
 		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
-			if (player1.getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
-				if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+			if (player1.getFarbe() == FarbEnum.weiss
+					&& startfeld.getSpielfigur().isDame() == false) {
+				if (startfeld.getPosX() + 1 == zielfeld.getPosX()
+						&& startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
 					// move
 					// right
 					// up
@@ -1048,7 +1311,8 @@ public class Spiel implements iBediener, Serializable {
 					move(startfeld, zielfeld);
 					return true;
 
-				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX()
+						&& startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
 					// move
 					// left
 					// up
@@ -1057,23 +1321,26 @@ public class Spiel implements iBediener, Serializable {
 					move(startfeld, zielfeld);
 					return true;
 
-				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) { // Zielfeld:
-																																																											// move
-																																																											// left
-																																																											// down
-																																																											// not
-																																																											// legit
+				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX()
+						&& startfeld.getPosY() - 1 == zielfeld.getPosY()) { // Zielfeld:
+																			// move
+																			// left
+																			// down
+																			// not
+																			// legit
 
 					return false;
-				} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
-																																																										// move
-																																																										// right
-																																																										// down
-																																																										// not
-																																																										// legit
+				} else if (startfeld.getPosX() + 1 == zielfeld.getPosX()
+						&& startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+																			// move
+																			// right
+																			// down
+																			// not
+																			// legit
 
 					return false;
-				} else if (startfeld.getPosX() == zielfeld.getPosX() || startfeld.getPosY() == zielfeld.getPosY()) {
+				} else if (startfeld.getPosX() == zielfeld.getPosX()
+						|| startfeld.getPosY() == zielfeld.getPosY()) {
 
 					return false;
 				}
@@ -1084,17 +1351,20 @@ public class Spiel implements iBediener, Serializable {
 			}
 		}
 
-		if (player1.getFarbe() == FarbEnum.schwarz && startfeld.getSpielfigur().isDame() == false) {
-			if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
-																																																						// move
-																																																						// left
-																																																						// down
-																																																						// legit
+		if (player1.getFarbe() == FarbEnum.schwarz
+				&& startfeld.getSpielfigur().isDame() == false) {
+			if (startfeld.getPosX() - 1 == zielfeld.getPosX()
+					&& startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+																		// move
+																		// left
+																		// down
+																		// legit
 
 				move(startfeld, zielfeld);
 				return true;
 
-			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
+			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX()
+					&& startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
 				// move
 				// right
 				// down
@@ -1103,21 +1373,24 @@ public class Spiel implements iBediener, Serializable {
 				move(startfeld, zielfeld);
 				return true;
 
-			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
-																																																									// move
-																																																									// right
-																																																									// up
-																																																									// not
-																																																									// legit
+			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX()
+					&& startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																		// move
+																		// right
+																		// up
+																		// not
+																		// legit
 
 				return false;
-			} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
-																																																									// move
-																																																									// left
+			} else if (startfeld.getPosX() - 1 == zielfeld.getPosX()
+					&& startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
+																		// move
+																		// left
 				// up
 				return false; // not
 				// legit
-			} else if (startfeld.getPosX() == zielfeld.getPosX() || startfeld.getPosY() == zielfeld.getPosY()) {
+			} else if (startfeld.getPosX() == zielfeld.getPosX()
+					|| startfeld.getPosY() == zielfeld.getPosY()) {
 
 				return false;
 
@@ -1136,22 +1409,23 @@ public class Spiel implements iBediener, Serializable {
 	 */
 	private boolean checkLegitFeld(String feld) {
 		if (feld.isEmpty() || feld.charAt(0) < 97 || feld.charAt(0) > 108) {// Nur
-																																				// a->l
-																																				// gueltig
+																			// a->l
+																			// gueltig
 			return false;
 		} else if (feld.length() == 1) {// ungueltig, wenn nur ein Buchstabe
-																		// eingegeben wird.
+										// eingegeben wird.
 			return false;
 		}
 		if (feld.length() == 3) {
 			if (feld.charAt(1) == 49) {
-				if (feld.charAt(2) == 48 || feld.charAt(2) == 49 || feld.charAt(2) == 50) { // Nur
-																																										// 10/11/12
-																																										// gueltig
-																																										// 1/2/3
-																																										// an
-																																										// 3.
-																																										// Stelle
+				if (feld.charAt(2) == 48 || feld.charAt(2) == 49
+						|| feld.charAt(2) == 50) { // Nur
+													// 10/11/12
+													// gueltig
+													// 1/2/3
+													// an
+													// 3.
+													// Stelle
 					return true;
 				}
 				if (feld.charAt(2) < 48 || feld.charAt(2) > 50) {
@@ -1162,8 +1436,9 @@ public class Spiel implements iBediener, Serializable {
 		if (feld.length() > 3) {// Ungueltig wenn String laenger als 3
 			return false;
 		}
-		if (feld.charAt(1) < 49 || feld.charAt(1) > 57) { // Nur gueltig bei 0-9 in
-																											// char Wert
+		if (feld.charAt(1) < 49 || feld.charAt(1) > 57) { // Nur gueltig bei 0-9
+															// in
+															// char Wert
 			return false;
 		} else {
 			return true;
@@ -1178,10 +1453,15 @@ public class Spiel implements iBediener, Serializable {
 	 * @param zielfeld
 	 * @param LoeschSteinAufFeld
 	 */
-	private void schlagen(Spielfeld startfeld, Spielfeld zielfeld, Spielfeld LoeschSteinAufFeld) {
+	private void schlagen(Spielfeld startfeld, Spielfeld zielfeld,
+			Spielfeld LoeschSteinAufFeld) {
 
-		System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe() + ",(" + startfeld.getSpielfigur() + ") " + startfeld.getSchachNotation() + " -> " + zielfeld.getSchachNotation() + "   (" + LoeschSteinAufFeld.getSpielfigur() + ") auf Feld: " + LoeschSteinAufFeld.getSchachNotation()
-				+ " geschlagen");
+		System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe()
+				+ ",(" + startfeld.getSpielfigur() + ") "
+				+ startfeld.getSchachNotation() + " -> "
+				+ zielfeld.getSchachNotation() + "   ("
+				+ LoeschSteinAufFeld.getSpielfigur() + ") auf Feld: "
+				+ LoeschSteinAufFeld.getSchachNotation() + " geschlagen");
 
 		zielfeld.setSpielfigur(startfeld.getSpielfigur());
 		startfeld.setSpielfigur(null);
@@ -1205,7 +1485,7 @@ public class Spiel implements iBediener, Serializable {
 	 * 
 	 * 
 	 * @param Spieler
-	 *          player1, player2
+	 *            player1, player2
 	 */
 	private void playerRotation(Spieler player1, Spieler player2) {
 
@@ -1230,7 +1510,8 @@ public class Spiel implements iBediener, Serializable {
 		if (i == 2) {
 			announceWinner(player1);
 		} // Schaut ob beim anderen Spieler keine
-		// Steine mehr uebrig sind, um zu gewinnen && ob noch Zuege moeglich sind.
+			// Steine mehr uebrig sind, um zu gewinnen && ob noch Zuege moeglich
+			// sind.
 		if (i == 1) {
 			announceWinner(player2);
 
@@ -1278,7 +1559,9 @@ public class Spiel implements iBediener, Serializable {
 	private void checkAndGetDame(Spieler player1) {
 		if (player1.getFarbe() == FarbEnum.weiss) {
 			for (int i = 0; i < spielbrett.getBrett().length; i++) {
-				if (spielbrett.getBrett()[11][i].getSpielfigur() != null && spielbrett.getBrett()[11][i].getSpielfigur().isDame() == false) {
+				if (spielbrett.getBrett()[11][i].getSpielfigur() != null
+						&& spielbrett.getBrett()[11][i].getSpielfigur()
+								.isDame() == false) {
 					if (spielbrett.getBrett()[11][i].getSpielfigur().getFarbe() == FarbEnum.weiss) {
 						wirdDame(spielbrett.getBrett()[11][i]);
 					}
@@ -1287,7 +1570,8 @@ public class Spiel implements iBediener, Serializable {
 		}
 		if (player1.getFarbe() == FarbEnum.schwarz) {
 			for (int i = 0; i < spielbrett.getBrett().length; i++) {
-				if (spielbrett.getBrett()[0][i].getSpielfigur() != null && spielbrett.getBrett()[0][i].getSpielfigur().isDame() == false) {
+				if (spielbrett.getBrett()[0][i].getSpielfigur() != null
+						&& spielbrett.getBrett()[0][i].getSpielfigur().isDame() == false) {
 					if (spielbrett.getBrett()[0][i].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 						wirdDame(spielbrett.getBrett()[0][i]);
 					}
@@ -1298,13 +1582,13 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * Setzt Siegkondition auf true, wenn ein Spieler, keine Figuren mehr auf dem
-	 * Feld hat.
+	 * Setzt Siegkondition auf true, wenn ein Spieler, keine Figuren mehr auf
+	 * dem Feld hat.
 	 * 
 	 * @param player
 	 */
 	private boolean checkSiegkondition(Spieler player) { // Siegkondition, kann
-																												// nicht
+															// nicht
 		// mehr ziehen fehlt noch.
 		if (nochSteineaufBrettandererSpieler(player) == false) {
 			return true;
@@ -1393,7 +1677,7 @@ public class Spiel implements iBediener, Serializable {
 	 * Fuegt einen Spieler dem Spieler Array hinzu. Max 2 Spieler
 	 * 
 	 * @param Spieler
-	 *          s1
+	 *            s1
 	 */
 	private void add(Spieler s1) {
 		if (spieler[0] == null) {
@@ -1416,10 +1700,13 @@ public class Spiel implements iBediener, Serializable {
 
 		//
 		posxy.setSpielfigur(stein1.getSpielfigur());// Setzt Spielfigur auf
-																								// Zielfeld.
+													// Zielfeld.
 		// Setzt Spielfigur auf Startfeld auf null.
 
-		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
+		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe()
+				+ ",(" + posxy.getSpielfigur() + ") "
+				+ stein1.getSchachNotation() + " -> "
+				+ posxy.getSchachNotation());
 		stein1.setSpielfigur(null);
 		System.out.println(spielbrett);
 
@@ -1437,9 +1724,11 @@ public class Spiel implements iBediener, Serializable {
 		for (int i = 0; i < spielbrett.getBrett().length; i++) {
 			for (int j = 0; j < spielbrett.getBrett()[i].length; j++) {
 				if (spielbrett.getBrett()[j][i].getSpielfigur() != null) {
-					if (spielbrett.getBrett()[j][i].getSpielfigur().getFarbe() == stein1.getSpielfigur().getFarbe()) {
+					if (spielbrett.getBrett()[j][i].getSpielfigur().getFarbe() == stein1
+							.getSpielfigur().getFarbe()) {
 
-						if (spielbrett.getBrett()[j][i].getSpielfigur().isDame() == false) {
+						if (spielbrett.getBrett()[j][i].getSpielfigur()
+								.isDame() == false) {
 							if (SchlagMoeglich(spielbrett.getBrett()[j][i]) == true) {
 								pustenarr[z] = spielbrett.getBrett()[j][i];
 								z++;
@@ -1471,9 +1760,12 @@ public class Spiel implements iBediener, Serializable {
 	private void askRemove(Spielfeld[] pustenarr) {
 		Spielfeld moeglichkeit1 = pustenarr[0];
 
-		System.out.println("Es wurde gezogen, obwohl man haette schlagen koennen!!!");
+		System.out
+				.println("Es wurde gezogen, obwohl man haette schlagen koennen!!!");
 		if (pustenarr[1] == null) {
-			System.out.println("Spielstein an Stelle " + moeglichkeit1.getSchachNotation() + "(" + moeglichkeit1.getSpielfigur() + ") wird geloescht.");
+			System.out.println("Spielstein an Stelle "
+					+ moeglichkeit1.getSchachNotation() + "("
+					+ moeglichkeit1.getSpielfigur() + ") wird geloescht.");
 			removeSpielfigur(moeglichkeit1);
 		} else if (pustenarr[2] == null) {
 			Spielfeld moeglichkeit2 = pustenarr[1];
@@ -1481,14 +1773,21 @@ public class Spiel implements iBediener, Serializable {
 			while (askdone == false) {
 				while (askdone == false) {
 					Scanner scanner = new Scanner(System.in);
-					System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
-					System.out.println(moeglichkeit1.getSpielfigur() + " auf Feld: " + moeglichkeit1.getSchachNotation() + " oder " + moeglichkeit2.getSpielfigur() + " auf Feld: " + moeglichkeit2.getSchachNotation() + "?");
+					System.out
+							.println("Von Welchem Stein moechtest du dich trennen? :)");
+					System.out.println(moeglichkeit1.getSpielfigur()
+							+ " auf Feld: " + moeglichkeit1.getSchachNotation()
+							+ " oder " + moeglichkeit2.getSpielfigur()
+							+ " auf Feld: " + moeglichkeit2.getSchachNotation()
+							+ "?");
 					String feld = scanner.nextLine();
 					if (checkLegitFeld(feld) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
+						System.out
+								.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
-					if (moeglichkeit1.getSchachNotation().equals(feld) || moeglichkeit2.getSchachNotation().equals(feld)) {
+					if (moeglichkeit1.getSchachNotation().equals(feld)
+							|| moeglichkeit2.getSchachNotation().equals(feld)) {
 						Spielfeld zielfeld = EingabeSpielfeld(feld);
 						if (moeglichkeit1.equals(zielfeld)) {
 							removeSpielfigur(moeglichkeit1);
@@ -1497,7 +1796,8 @@ public class Spiel implements iBediener, Serializable {
 							removeSpielfigur(moeglichkeit2);
 							askdone = true;
 						} else {
-							System.out.println("Dieser Stein steht nicht zur Auswahl");
+							System.out
+									.println("Dieser Stein steht nicht zur Auswahl");
 							break;
 						}
 					} else {
@@ -1514,15 +1814,24 @@ public class Spiel implements iBediener, Serializable {
 					Spielfeld moeglichkeit2 = pustenarr[1];
 					Spielfeld moeglichkeit3 = pustenarr[2];
 					Scanner scanner = new Scanner(System.in);
-					System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
-					System.out.println(moeglichkeit1.getSpielfigur() + " auf Feld: " + moeglichkeit1.getSchachNotation() + " , " + moeglichkeit2.getSpielfigur() + " auf Feld: " + moeglichkeit2.getSchachNotation() + " oder , " + moeglichkeit3.getSpielfigur() + " auf Feld: " + moeglichkeit3.getSchachNotation()
+					System.out
+							.println("Von Welchem Stein moechtest du dich trennen? :)");
+					System.out.println(moeglichkeit1.getSpielfigur()
+							+ " auf Feld: " + moeglichkeit1.getSchachNotation()
+							+ " , " + moeglichkeit2.getSpielfigur()
+							+ " auf Feld: " + moeglichkeit2.getSchachNotation()
+							+ " oder , " + moeglichkeit3.getSpielfigur()
+							+ " auf Feld: " + moeglichkeit3.getSchachNotation()
 							+ "?");
 					String feld = scanner.nextLine();
 					if (checkLegitFeld(feld) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
+						System.out
+								.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
-					if (moeglichkeit1.getSchachNotation().equals(feld) || moeglichkeit2.getSchachNotation().equals(feld) || moeglichkeit3.getSchachNotation().equals(feld)) {
+					if (moeglichkeit1.getSchachNotation().equals(feld)
+							|| moeglichkeit2.getSchachNotation().equals(feld)
+							|| moeglichkeit3.getSchachNotation().equals(feld)) {
 						Spielfeld zielfeld = EingabeSpielfeld(feld);
 						if (moeglichkeit1.equals(zielfeld)) {
 							removeSpielfigur(moeglichkeit1);
@@ -1533,7 +1842,8 @@ public class Spiel implements iBediener, Serializable {
 						} else if (moeglichkeit3.equals(zielfeld)) {
 						} else {
 
-							System.out.println("Dieser Stein steht nicht zur Auswahl");
+							System.out
+									.println("Dieser Stein steht nicht zur Auswahl");
 							break;
 						}
 					} else {
@@ -1553,7 +1863,8 @@ public class Spiel implements iBediener, Serializable {
 	 * @param removeSpielfigur
 	 */
 	private void removeSpielfigur(Spielfeld removeSpielfigur) {
-		System.out.println("Adieu " + removeSpielfigur.getSpielfigur() + " auf Feld: " + removeSpielfigur.getSchachNotation());
+		System.out.println("Adieu " + removeSpielfigur.getSpielfigur()
+				+ " auf Feld: " + removeSpielfigur.getSchachNotation());
 		removeSpielfigur.setSpielfigur(null);
 
 	}
@@ -1566,7 +1877,9 @@ public class Spiel implements iBediener, Serializable {
 	private void wirdDame(Spielfeld spielfeld) {
 		if (spielfeld.getSpielfigur() != null) {
 			spielfeld.getSpielfigur().setDame(true);
-			System.out.println("Spielfigur auf Feld " + spielfeld.getSchachNotation() + " wurde zu einer Dame! TETEREETEEE");
+			System.out.println("Spielfigur auf Feld "
+					+ spielfeld.getSchachNotation()
+					+ " wurde zu einer Dame! TETEREETEEE");
 			System.out.println(spielbrett);
 		}
 	}
@@ -1596,11 +1909,11 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * Allgemeine Speicherfunktion. Über die Eingabe wird der Speichertyp
-	 * ausgewählt.
+	 * Allgemeine Speicherfunktion. Ãœber die Eingabe wird der Speichertyp
+	 * ausgewÃ¤hlt.
 	 *
 	 * @param pfad
-	 *          , dateiname, typ
+	 *            , dateiname, typ
 	 */
 	@Override
 	public void speichern(String pfad, String dateiname, String typ) {
@@ -1627,18 +1940,23 @@ public class Spiel implements iBediener, Serializable {
 		String s = "";
 		s += spieler[0].generiereCSV() + "\n";
 		s += spieler[1].generiereCSV() + "\n";
-		// Aktiver Spieler boolean
-		s += "true\n";
+		if(spieler[0]==getActiveSpieler()){
+			s+="0\n";
+		}
+		else{
+			s+="1\n";
+		}
 		s += spielbrett.generiereCSV();
 		try {
-			csv.writeObject(s, filename);
+			csv.speichern(s, filename);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Allgemeine Ladenfunktion. Über die Eingabe wird der Speichertyp ausgewählt.
+	 * Allgemeine Ladenfunktion. Ãœber die Eingabe wird der Speichertyp
+	 * ausgewÃ¤hlt.
 	 */
 	@Override
 	public void laden(String pfad, String dateiname, String typ) {
@@ -1661,28 +1979,43 @@ public class Spiel implements iBediener, Serializable {
 	 * @param filename
 	 */
 	private void ladenCSV(String filename) {
-		iDatenzugriff laden = new DatenzugriffCSV();
+		iDatenzugriff load = new DatenzugriffCSV();
 		try {
-			ArrayList<String> s = (ArrayList<String>) laden.readObject(filename);
-			for (int i = 0; i < s.size(); i++) {
+			ArrayList<String> s = (ArrayList<String>) load.laden(filename);
+			for (int i = 0; i < s.size() - 1; i++) {
 				String[] args = s.get(i).split(";");
-				//i an der Stelle 0 und 1 sind Spieler
-				if (i == 0 || i == 1) {
+				// i an der Stelle 0 und 1 sind Spieler
+				if (i == 0) {
 					boolean istki = args[2].equals("1");
 					FarbEnum farbe;
-					if (args[1].equals("schwarz")) {
+				if (args[1].equals("schwarz")) {
 						farbe = FarbEnum.schwarz;
-					} else {
-						farbe = FarbEnum.weiss;
-
-					}
-					Spieler s1 = new Spieler(args[0], farbe, istki);
-					this.add(s1);
-					;
-				} else if (i == 2) {
-					// Boolean aktiver Spieler
 				} else {
-					//
+						farbe = FarbEnum.weiss;
+					}
+						Spieler s1 = new Spieler(args[0], farbe, istki);
+						this.add(s1);
+				} else if (i == 0) {
+						boolean istki = args[2].equals("1");
+						FarbEnum farbe;
+				if (args[1].equals("schwarz")) {
+						farbe = FarbEnum.schwarz;
+				} else {
+						farbe = FarbEnum.weiss;
+					}
+					Spieler s2 = new Spieler(args[0], farbe, istki);
+					this.add(s2);
+				//i an der Stelle 2 ist ActivSpieler
+				} else if (i == 2) {
+					if (args[0].equals("0")){
+					this.setActiveSpieler(this.spieler[0]);
+					}
+					else{
+					if (args[0].equals("1")){
+						this.setActiveSpieler(this.spieler[1]);
+					}					
+				}
+				} else {
 					if (args[1].equals("null")) {
 						spielbrett.getFeldById(args[0]).setSpielfigur(null);
 					} else {
@@ -1692,14 +2025,28 @@ public class Spiel implements iBediener, Serializable {
 							farbe = FarbEnum.schwarz;
 						} else {
 							farbe = FarbEnum.weiss;
-
 						}
 						Spielfigur f = new Spielfigur(farbe, b);
-
+						//NullPointerException
 						spielbrett.getFeldById(args[0]).setSpielfigur(f);
 					}
 				}
 			}
+			spielbrett.printBrett();
+			// Zweiter Konstruktor Spiel(Spieler s1, Spieler s2, Spielbrett
+			// brett){
+			// this.setSpielbrett(brett);
+			// Spieler[] sp={s1,s2};
+			// this.setSpieler(sp);
+			// PlayerRotation(....);
+			// }
+
+			if (this.spieler[0] == this.getActiveSpieler()) {
+				this.playerRotation(this.getActiveSpieler(), this.spieler[1]);
+			} else {
+				this.playerRotation(this.getActiveSpieler(), this.spieler[0]);
+			}
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -1714,7 +2061,7 @@ public class Spiel implements iBediener, Serializable {
 	public void saveSerialize(String filename) {
 		iDatenzugriff serial = new DatenzugriffSerialisiert();
 		try {
-			serial.writeObject(this, filename);
+			serial.speichern(this, filename);
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
@@ -1734,7 +2081,7 @@ public class Spiel implements iBediener, Serializable {
 	public void loadSerialize(String filename) {
 		iDatenzugriff serial = new DatenzugriffSerialisiert();
 		try {
-			Spiel spiel = (Spiel) serial.readObject(filename);
+			Spiel spiel = (Spiel) serial.laden(filename);
 			System.out.println("Spiel wurde geladen!");
 			System.out.println(spiel.getSpielbrett());
 			if (spiel.spieler[0] == spiel.getActiveSpieler()) {
