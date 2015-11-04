@@ -2,13 +2,14 @@ package backend;
 
 public interface iBediener {
 
-	 void welcome();
-	void act(Spieler player1);
-	Spielfeld[] eingabeSpielfeldSpieler(Spieler player1);
-	 void askSchlagen(Spieler player, Spielfeld spielfeld);
-	 
-	 public void speichern(String pfad, String dateiname, String typ);
+	//void act(Spieler player1);
 
-	 public void laden(String pfad, String dateiname, String typ);
+	Spielfeld[] eingabeSpielfeldSpieler(Spieler player1);
+
+	void askSchlagen(Spieler player, Spielfeld spielfeld);
+
+	public void speichern(String pfad, String dateiname, String typ);
+
+	public void laden(String pfad, String dateiname, String typ);
 
 }

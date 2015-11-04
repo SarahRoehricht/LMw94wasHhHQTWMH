@@ -21,10 +21,13 @@ public class Spiel implements iBediener, Serializable {
 	 * Konstruktor, ruft SpielBrett Konstruktor auf, und ruft
 	 * this.welcome()Methode zum Spielanfang auf. Fuer End-User
 	 */
-	public Spiel() {
+	public Spiel(String name1, boolean ki1, String name2, boolean ki2) {
 		this.setSpielbrett(new SpielBrett());
-		this.welcome();
-
+		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
+		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
+		this.add(player1);
+		this.add(player2);
+		playerRotation(player1, player2);
 	}
 
 	/**
@@ -36,75 +39,75 @@ public class Spiel implements iBediener, Serializable {
 	 *            scanner, String name1, String name2 creates 2 Spieler objects
 	 *            and calls this.add method with each of them one after another.
 	 */
-	@Override
-	public void welcome() {
-		Scanner scanner = new Scanner(System.in);
-
-		System.out
-				.println("Spiel laden [L] oder neues Spiel spielen [n].\n"
-						+ "Der aktuelle Spielstand kann jederzeit Ã¼ber die Eingabe [s] gespeichert werden");
-		String eingabe = scanner.nextLine();
-		if ("l".equals(eingabe) == true) {
-			System.out.println("Dateinamen eingeben.");
-			String filename = scanner.nextLine();
-			System.out.println("Speichertyp [csv] oder [ser] eingeben.");
-			String typ = scanner.nextLine();
-			this.laden("", filename, typ);
-
-		} else if ("n".equals(eingabe) == true) {
-
-			System.out.println("Name Spieler 1:");
-			String name1 = scanner.next();
-			System.out.println("KI? - y/n");
-			while (!scanner.hasNext("[yn]")) {
-				System.out.println("KI? - y/n");
-				scanner.next();
-			}
-			String ki1 = scanner.next();
-			boolean ki1erstellen = false;
-
-			if (ki1.equals("y")) {
-				ki1erstellen = true;
-			}
-
-			Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1erstellen);
-
-			add(player1);
-			System.out.println(player1 + " hinzugefuegt!");
-			System.out.println("Name Spieler 2:");
-			String name2 = scanner.next();
-			System.out.println("KI? - y/n");
-			while (!scanner.hasNext("[yn]")) {
-				System.out.println("KI? - y/n");
-				scanner.next();
-			}
-			String ki2 = scanner.next();
-			boolean ki2erstellen = false;
-			if (ki2.equals("y")) {
-				ki2erstellen = true;
-			}
-
-			Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2erstellen);
-
-			add(player2);
-			System.out.println(player2 + " hinzugefuegt!");
-
-			System.out.println("Moege das Spiel beginnen!");
-
-			System.out.println(spielbrett);
-			System.out.println(player1.getName() + " - " + "'"
-					+ player1.getFarbe() + "'" + " faengt an!");
-			scanner.reset();
-			playerRotation(player1, player2);
-		}
-	}
+//	@Override
+//	public void welcome() {
+//		Scanner scanner = new Scanner(System.in);
+//
+//		System.out
+//				.println("Spiel laden [L] oder neues Spiel spielen [n].\n"
+//						+ "Der aktuelle Spielstand kann jederzeit Ã¼ber die Eingabe [s] gespeichert werden");
+//		String eingabe = scanner.nextLine();
+//		if ("l".equals(eingabe) == true) {
+//			System.out.println("Dateinamen eingeben.");
+//			String filename = scanner.nextLine();
+//			System.out.println("Speichertyp [csv] oder [ser] eingeben.");
+//			String typ = scanner.nextLine();
+//			this.laden("", filename, typ);
+//
+//		} else if ("n".equals(eingabe) == true) {
+//
+//			System.out.println("Name Spieler 1:");
+//			String name1 = scanner.next();
+//			System.out.println("KI? - y/n");
+//			while (!scanner.hasNext("[yn]")) {
+//				System.out.println("KI? - y/n");
+//				scanner.next();
+//			}
+//			String ki1 = scanner.next();
+//			boolean ki1erstellen = false;
+//
+//			if (ki1.equals("y")) {
+//				ki1erstellen = true;
+//			}
+//
+//			Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1erstellen);
+//
+//			add(player1);
+//			System.out.println(player1 + " hinzugefuegt!");
+//			System.out.println("Name Spieler 2:");
+//			String name2 = scanner.next();
+//			System.out.println("KI? - y/n");
+//			while (!scanner.hasNext("[yn]")) {
+//				System.out.println("KI? - y/n");
+//				scanner.next();
+//			}
+//			String ki2 = scanner.next();
+//			boolean ki2erstellen = false;
+//			if (ki2.equals("y")) {
+//				ki2erstellen = true;
+//			}
+//
+//			Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2erstellen);
+//
+//			add(player2);
+//			System.out.println(player2 + " hinzugefuegt!");
+//
+//			System.out.println("Moege das Spiel beginnen!");
+//
+//			System.out.println(spielbrett);
+//			System.out.println(player1.getName() + " - " + "'"
+//					+ player1.getFarbe() + "'" + " faengt an!");
+//			scanner.reset();
+//			playerRotation(player1, player2);
+//		}
+//	}
 
 	/**
 	 * Beinhaltet Eingabenbehandlungen und Methodenaufrufe, wie auch vorerst die
 	 * Startfeld, Zielfeldsetzung
 	 * 
 	 */
-	@Override
+//	@Override
 	public void act(Spieler player1) {
 		if (AnyMovesLeft(player1) == true) {
 			if (player1.getKi() != null) {
@@ -1528,26 +1531,26 @@ public class Spiel implements iBediener, Serializable {
 	private void announceWinner(Spieler player1) {
 		System.out.println("Spiel zuende!");
 		System.out.println(player1 + " hat gewonnen.");
-		System.out.println("Neues Spiel? y/n?");
-		Scanner c = new Scanner(System.in);
-		String yesNo = c.nextLine();
-		String no = "n";
-		String yes = "y";
-		boolean checkanswer = false;
-		while (checkanswer != true) {
-			if (yesNo.equals(no)) {
-				System.out.println("Auf Wiedersehen!");
-				System.exit(0);
-			}
-			if (yesNo.equals(yes)) {
-				checkanswer = true;
-				new Spiel();
-			}
-			System.out.println("Neues Spiel? y/n?");
-			String tempc = c.nextLine();
-			yesNo = tempc;
-
-		}
+//		System.out.println("Neues Spiel? y/n?");
+//		Scanner c = new Scanner(System.in);
+//		String yesNo = c.nextLine();
+//		String no = "n";
+//		String yes = "y";
+//		boolean checkanswer = false;
+//		while (checkanswer != true) {
+//			if (yesNo.equals(no)) {
+//				System.out.println("Auf Wiedersehen!");
+//				System.exit(0);
+//			}
+//			if (yesNo.equals(yes)) {
+//				checkanswer = true;
+//				new Spiel();
+//			}
+//			System.out.println("Neues Spiel? y/n?");
+//			String tempc = c.nextLine();
+//			yesNo = tempc;
+//
+//		}
 	}
 
 	/**
