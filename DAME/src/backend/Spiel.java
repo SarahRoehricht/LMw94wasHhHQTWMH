@@ -1730,6 +1730,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 */
 	private void ladenCSV(String filename) {
 		iDatenzugriff load = new DatenzugriffCSV();
+		spielbrett = new SpielBrett();
 		try {
 			ArrayList<String> s = (ArrayList<String>) load.laden(filename, "csv");
 			for (int i = 0; i < s.size() - 1; i++) {
@@ -1745,7 +1746,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 					}
 					Spieler s1 = new Spieler(args[0], farbe, istki);
 					this.add(s1);
-				} else if (i == 0) {
+				} else if (i == 1) {
 					boolean istki = args[2].equals("1");
 					FarbEnum farbe;
 					if (args[1].equals("schwarz")) {
@@ -1764,7 +1765,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 							this.setActiveSpieler(this.spieler[1]);
 						}
 					}
-					// i größer 2
+					// i > 2
 				} else {
 					// args[1] entweder null oder farbe
 					if (args[1].equals("null")) {
@@ -1780,29 +1781,14 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 							farbe = FarbEnum.weiss;
 						}
 						Spielfigur f = new Spielfigur(farbe, b);
-						System.out.println(args[0]);
-						//args[0] beispielsweise String reah.. 
-						
-						
-						
-					
-						
-						
-						
-						// NullPointerException
+
 						spielbrett.getFeldById(args[0]).setSpielfigur(f);
 					}
 
 				}
 			}
 			spielbrett.printBrett();
-			// Zweiter Konstruktor Spiel(Spieler s1, Spieler s2, Spielbrett
-			// brett){
-			// this.setSpielbrett(brett);
-			// Spieler[] sp={s1,s2};
-			// this.setSpieler(sp);
-			// PlayerRotation(....);
-			// }
+			System.out.println("");
 
 			if (this.spieler[0] == this.getActiveSpieler()) {
 				this.playerRotation(this.getActiveSpieler(), this.spieler[1]);
