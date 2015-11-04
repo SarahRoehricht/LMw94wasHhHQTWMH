@@ -33,7 +33,7 @@ public class DatenzugriffCSV implements iDatenzugriff, Serializable {
 	public void speichern(Object obj, String name) throws IOException {
 		try {
 			String str = (String) obj;
-			bw = new BufferedWriter(new FileWriter(name));
+			bw = new BufferedWriter(new FileWriter(name + ".csv"));
 			bw.write(str + ";");
 			bw.close();
 
@@ -44,15 +44,15 @@ public class DatenzugriffCSV implements iDatenzugriff, Serializable {
 	}
 
 	/**
-	 * @return ausgelesenes Objekt wird zurÃƒÂ¼ckgegeben
+	 * @return ausgelesenes Objekt wird zurÃƒÆ’Ã‚Â¼ckgegeben
 	 */
 	@Override
-	public Object laden(String name) {
+	public Object laden(String name, String typ) {
 		try {
 			String line;
 			ArrayList<String> feld = new ArrayList<String>();
-			// hier wird die .csv Datei ganz eingelesen und in feld ÃƒÂ¼bergeben
-			br= new BufferedReader(new FileReader(name));
+			// hier wird die .csv Datei ganz eingelesen und in feld ÃƒÆ’Ã‚Â¼bergeben
+			br= new BufferedReader(new FileReader(name + "." + typ));
 			while ((line = br.readLine()) != null) {
 				feld.add(line);
 			}

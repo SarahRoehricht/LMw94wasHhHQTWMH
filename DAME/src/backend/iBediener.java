@@ -8,8 +8,6 @@ public interface iBediener {
 
 	void askSchlagen(Spieler player, Spielfeld spielfeld);
 
-	public void speichern(String pfad, String dateiname, String typ);
-
-	public void laden(String pfad, String dateiname, String typ);
+	
 
 }

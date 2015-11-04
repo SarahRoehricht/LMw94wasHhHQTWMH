@@ -12,7 +12,7 @@ public interface iDatenzugriff {
 	
 	public void speichern(Object obj, String name) throws IOException;
 	
-	public Object laden(String name) throws IOException;
+	public Object laden(String name, String typ) throws IOException;
 	
 	public void close() throws IOException;
 }

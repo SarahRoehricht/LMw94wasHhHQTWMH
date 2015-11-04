@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import javax.management.RuntimeErrorException;
 
-public class Spiel implements iBediener, Serializable {
+public class Spiel implements iBediener, iDatenzugriff, Serializable {
 
 	private SpielBrett spielbrett;
 
@@ -45,7 +45,7 @@ public class Spiel implements iBediener, Serializable {
 //
 //		System.out
 //				.println("Spiel laden [L] oder neues Spiel spielen [n].\n"
-//						+ "Der aktuelle Spielstand kann jederzeit Ã¼ber die Eingabe [s] gespeichert werden");
+//						+ "Der aktuelle Spielstand kann jederzeit ÃƒÂ¼ber die Eingabe [s] gespeichert werden");
 //		String eingabe = scanner.nextLine();
 //		if ("l".equals(eingabe) == true) {
 //			System.out.println("Dateinamen eingeben.");
@@ -101,6 +101,9 @@ public class Spiel implements iBediener, Serializable {
 //			playerRotation(player1, player2);
 //		}
 //	}
+
+	public Spiel() {
+	}
 
 	/**
 	 * Beinhaltet Eingabenbehandlungen und Methodenaufrufe, wie auch vorerst die
@@ -182,9 +185,11 @@ public class Spiel implements iBediener, Serializable {
 					String filename = scanner.nextLine();
 					System.out
 							.println("Speichertyp [csv] oder [ser] eingeben.");
-					String typ = scanner.nextLine();
-					this.speichern("", filename, typ);
-
+					try {
+						this.speichern(this, filename);
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
 				}
 
 				else {
@@ -1912,25 +1917,14 @@ public class Spiel implements iBediener, Serializable {
 	}
 
 	/**
-	 * Allgemeine Speicherfunktion. Ãœber die Eingabe wird der Speichertyp
-	 * ausgewÃ¤hlt.
+	 * Allgemeine Speicherfunktion. ÃƒÅ“ber die Eingabe wird der Speichertyp
+	 * ausgewÃƒÂ¤hlt.
 	 *
 	 * @param pfad
 	 *            , dateiname, typ
 	 */
-	@Override
 	public void speichern(String pfad, String dateiname, String typ) {
-		typ = typ.toLowerCase();
-		switch (typ) {
-		case ("csv"):
-			saveCSV(pfad + dateiname + "." + typ);
-			break;
-		case ("ser"):
-			saveSerialize(pfad + dateiname + "." + typ);
-			break;
-		default:
-			throw new RuntimeException("Dateityp " + typ + " nicht existent");
-		}
+
 	}
 
 	/**
@@ -1957,24 +1951,7 @@ public class Spiel implements iBediener, Serializable {
 		}
 	}
 
-	/**
-	 * Allgemeine Ladenfunktion. Ãœber die Eingabe wird der Speichertyp
-	 * ausgewÃ¤hlt.
-	 */
-	@Override
-	public void laden(String pfad, String dateiname, String typ) {
-		typ = typ.toLowerCase();
-		switch (typ) {
-		case ("csv"):
-			ladenCSV(pfad + dateiname + "." + typ);
-			break;
-		case ("ser"):
-			loadSerialize(pfad + dateiname + "." + typ);
-			break;
-		default:
-			throw new RuntimeException("Dateityp nicht existent");
-		}
-	}
+
 
 	/**
 	 * wird von laden() aufgerufen
@@ -1984,7 +1961,7 @@ public class Spiel implements iBediener, Serializable {
 	private void ladenCSV(String filename) {
 		iDatenzugriff load = new DatenzugriffCSV();
 		try {
-			ArrayList<String> s = (ArrayList<String>) load.laden(filename);
+			ArrayList<String> s = (ArrayList<String>) load.laden(filename, "csv");
 			for (int i = 0; i < s.size() - 1; i++) {
 				String[] args = s.get(i).split(";");
 				// i an der Stelle 0 und 1 sind Spieler
@@ -2084,7 +2061,7 @@ public class Spiel implements iBediener, Serializable {
 	public void loadSerialize(String filename) {
 		iDatenzugriff serial = new DatenzugriffSerialisiert();
 		try {
-			Spiel spiel = (Spiel) serial.laden(filename);
+			Spiel spiel = (Spiel) serial.laden(filename, "ser");
 			System.out.println("Spiel wurde geladen!");
 			System.out.println(spiel.getSpielbrett());
 			if (spiel.spieler[0] == spiel.getActiveSpieler()) {
@@ -2102,6 +2079,43 @@ public class Spiel implements iBediener, Serializable {
 				System.out.println(fehler.getMessage());
 			}
 		}
+	}
+
+	@Override
+	public void speichern(Object obj, String name) throws IOException {
+		Scanner s = new Scanner(System.in);
+		String typ = s.next();
+		switch (typ) {
+		case ("csv"):
+			saveCSV(name);
+			break;
+		case ("ser"):
+			saveSerialize(name);
+			break;
+		default:
+			throw new RuntimeException("Dateityp "  + " nicht existent");
+		}		
+	}
+
+	@Override
+	public Object laden(String name, String typ) throws IOException {
+		typ = typ.toLowerCase();
+		switch (typ) {
+		case ("csv"):
+			ladenCSV(name);
+			break;
+		case ("ser"):
+			loadSerialize(name);
+			break;
+		default:
+			throw new RuntimeException("Dateityp nicht existent");
+		}		return null;
+	}
+
+	@Override
+	public void close() throws IOException {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
