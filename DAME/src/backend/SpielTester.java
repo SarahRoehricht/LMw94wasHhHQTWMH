@@ -31,9 +31,13 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 		actTest(player2, "b8", "a7");
 		actTest(player1, "k5", "j6");
 		try {
-			this.speichernTest(this, "Test","csv");
-			this.speichernTest(this, "Test","ser");
-			
+			this.speichernTest(this, "Test4", "csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			this.speichernTest(this, "Test4", "ser");//speichert auch Klassen Name SpielTester anstatt Spiel.... kann nicht gecastet werden =/ 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -121,20 +125,13 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 	 * Startfeld, Zielfeldsetzung
 	 * 
 	 */
-	public void actTest(Spieler player1,String  sf, String zf) {
-	
-			System.out.println(spielbrett);
-					doTheMove(player1, spielbrett.getFeldById(sf), spielbrett.getFeldById(zf));
-					
-	
+	public void actTest(Spieler player1, String sf, String zf) {
 
-					}
-	
-	
-	
-	
-	
-	
+		System.out.println(spielbrett);
+		doTheMove(player1, spielbrett.getFeldById(sf), spielbrett.getFeldById(zf));
+
+	}
+
 	// @Override
 	public void act(Spieler player1) {
 		if (AnyMovesLeft(player1) == true) {
@@ -144,7 +141,7 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 				Spielfeld startfeld = kiarray[0];
 				Spielfeld zielfeld = kiarray[1];
 				doTheMove(player1, startfeld, zielfeld);
-				
+
 			}
 
 		} else {
@@ -1624,7 +1621,6 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 	 *          , dateiname, typ
 	 */
 
-
 	@Override
 	public void speichern(Object obj, String name) throws IOException {
 		Scanner s = new Scanner(System.in);
@@ -1640,8 +1636,9 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 			throw new RuntimeException("Dateityp " + " nicht existent");
 		}
 	}
+
 	public void speichernTest(Object obj, String name, String type) throws IOException {
-		
+
 		String typ = type;
 		switch (typ) {
 		case ("csv"):
@@ -1654,6 +1651,7 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 			throw new RuntimeException("Dateityp " + " nicht existent");
 		}
 	}
+
 	/**
 	 * wird von speichern() aufgerufen
 	 * 
