@@ -31,7 +31,8 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 		actTest(player2, "b8", "a7");
 		actTest(player1, "k5", "j6");
 		try {
-			this.speichernTest(this, "Testspeichern","csv");
+			this.speichernTest(this, "Test","csv");
+			this.speichernTest(this, "Test","ser");
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
