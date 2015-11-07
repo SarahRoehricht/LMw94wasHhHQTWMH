@@ -182,12 +182,24 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 			}
 		}
 	}
+	/**
+	 * Abgewandelte Act-Methode für SpielTestSpeichern
+	 * Gibt Spielfeld aus und macht einen Move von Start nach Zielfeld. 
+	 * Spieler, Startfeld, Zielfeld
+	 * 
+	 */
 	public void actTest(Spieler player1, String sf, String zf) {
 
 		System.out.println(spielbrett);
 		doTheMove(player1, spielbrett.getFeldById(sf), spielbrett.getFeldById(zf));
 
 	}
+	/**
+	 * Abgewandelte speichern-Methode für SpielTestSpeichern
+	 * Object, name, typ
+	 * Entscheidet ob csv oder serialisiertes Speichern aufgerufen Wird und 
+	 * führt diese aus.
+	 */
 	public void speichernTest(Object obj, String name, String type) throws IOException {
 
 		String typ = type;
