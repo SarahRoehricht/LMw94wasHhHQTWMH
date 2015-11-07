@@ -24,6 +24,7 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 	public SpielTester(String name1, boolean ki1, String name2, boolean ki2) {
 		Scanner scanner = new Scanner(System.in);
 		String eingabe = scanner.nextLine();
+		
 		if("n".equals(eingabe) == true){
 		this.setSpielbrett(new SpielBrett());
 		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
@@ -46,12 +47,15 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 			e.printStackTrace();
 		}
 		}
+		System.out.println("Geben Sie `j` ein für ein normales Spiel");
+		if("j".equals(eingabe) == true){
 		this.setSpielbrett(new SpielBrett());
 		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
 		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
 		this.add(player1);
 		this.add(player2);
 		playerRotation(player1, player2);
+		}
 	}
 
 	/**
