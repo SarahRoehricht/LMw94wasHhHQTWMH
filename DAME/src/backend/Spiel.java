@@ -133,7 +133,9 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 				while (zugdone == false) {
 					if (doTheMove(player1, startfeld, zielfeld) == false) {
 						System.out.println("ungueltiger Zug!");
-
+						spielerFeldArray = eingabeSpielfeldSpieler(player1);
+						startfeld = spielerFeldArray[0];
+						zielfeld = spielerFeldArray[1];
 					}
 					zugdone = true;
 				}
@@ -1281,6 +1283,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		// yesNo = tempc;
 		//
 		// }
+		System.exit(0);
 	}
 
 	/**
