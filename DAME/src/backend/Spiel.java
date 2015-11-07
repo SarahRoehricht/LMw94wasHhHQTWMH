@@ -22,12 +22,40 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * this.welcome()Methode zum Spielanfang auf. Fuer End-User
 	 */
 	public Spiel(String name1, boolean ki1, String name2, boolean ki2) {
+		Scanner scanner = new Scanner(System.in);
+		String eingabe = scanner.nextLine();
+		
+		if("n".equals(eingabe) == true){
+		this.setSpielbrett(new SpielBrett());
+		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
+		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
+		this.add(player1);
+		this.add(player2);
+		actTest(player1, "a5", "b6");
+		actTest(player2, "b8", "a7");
+		actTest(player1, "k5", "j6");
+		this.setActiveSpieler(player2);
+		try {
+			this.speichernTest(this, "Test4", "csv");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			this.speichernTest(this, "Test4", "ser");//speichert auch Klassen Name SpielTester anstatt Spiel.... kann nicht gecastet werden =/ 
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		}
+		
 		this.setSpielbrett(new SpielBrett());
 		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
 		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
 		this.add(player1);
 		this.add(player2);
 		playerRotation(player1, player2);
+		
 	}
 
 	/**
@@ -46,7 +74,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	// System.out
 	// .println("Spiel laden [L] oder neues Spiel spielen [n].\n"
 	// +
-	// "Der aktuelle Spielstand kann jederzeit ÃƒÂ¼ber die Eingabe [s] gespeichert werden");
+	// "Der aktuelle Spielstand kann jederzeit ÃƒÆ’Ã‚Â¼ber die Eingabe [s] gespeichert werden");
 	// String eingabe = scanner.nextLine();
 	// if ("l".equals(eingabe) == true) {
 	// System.out.println("Dateinamen eingeben.");
@@ -153,7 +181,26 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 			}
 		}
 	}
+	public void actTest(Spieler player1, String sf, String zf) {
 
+		System.out.println(spielbrett);
+		doTheMove(player1, spielbrett.getFeldById(sf), spielbrett.getFeldById(zf));
+
+	}
+	public void speichernTest(Object obj, String name, String type) throws IOException {
+
+		String typ = type;
+		switch (typ) {
+		case ("csv"):
+			saveCSV(name);
+			break;
+		case ("ser"):
+			saveSerialize(name);
+			break;
+		default:
+			throw new RuntimeException("Dateityp " + " nicht existent");
+		}
+	}
 	/**
 	 * Will "Enter" zum fortfahren.
 	 * 
@@ -1613,8 +1660,8 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	}
 
 	/**
-	 * Allgemeine Speicherfunktion. ÃƒÅ“ber die Eingabe wird der Speichertyp
-	 * ausgewÃƒÂ¤hlt.
+	 * Allgemeine Speicherfunktion. ÃƒÆ’Ã…â€œber die Eingabe wird der Speichertyp
+	 * ausgewÃƒÆ’Ã‚Â¤hlt.
 	 *
 	 * @param pfad
 	 *          , dateiname, typ

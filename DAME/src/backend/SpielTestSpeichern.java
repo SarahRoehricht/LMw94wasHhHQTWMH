@@ -35,7 +35,7 @@ public class SpielTestSpeichern implements Serializable, iBediener, iDatenzugrif
 			}
 		}
 		System.out.println("Geben Sie `n` ein für ein Test Speichern Spiel das 3 Züge durchführt und danach speichert");
-		iBediener unserSpiel = new SpielTester("TesterName1", false, "TesterName2", false);
+		iBediener unserSpiel = new Spiel("TesterName1", false, "TesterName2", false);
 		
 	}
 
