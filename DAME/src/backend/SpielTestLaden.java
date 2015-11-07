@@ -32,7 +32,7 @@ public class SpielTestLaden implements iBediener, iDatenzugriff{
 			}
 			else if(typ.equals("ser")){
 				try {
-					Spiel s = new Spiel();
+					SpielTester s = new SpielTester();
 					s.laden(filename, typ);
 				} catch (IOException e) {
 					e.printStackTrace();

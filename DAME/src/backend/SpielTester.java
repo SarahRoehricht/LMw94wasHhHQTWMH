@@ -22,6 +22,9 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 	 * this.welcome()Methode zum Spielanfang auf. Fuer End-User
 	 */
 	public SpielTester(String name1, boolean ki1, String name2, boolean ki2) {
+		Scanner scanner = new Scanner(System.in);
+		String eingabe = scanner.nextLine();
+		if("n".equals(eingabe) == true){
 		this.setSpielbrett(new SpielBrett());
 		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
 		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
@@ -42,6 +45,13 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		}
+		this.setSpielbrett(new SpielBrett());
+		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
+		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
+		this.add(player1);
+		this.add(player2);
+		playerRotation(player1, player2);
 	}
 
 	/**
@@ -1658,6 +1668,78 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 	 * @param filename
 	 */
 	public void saveSerialize(String filename) {
+		
+		iDatenzugriff load = new DatenzugriffCSV();
+		spielbrett = new SpielBrett();
+		try {
+			ArrayList<String> s = (ArrayList<String>) load.laden(filename, "csv");
+			for (int i = 0; i < s.size() - 1; i++) {
+				String[] args = s.get(i).split(";");
+				// i an der Stelle 0 und 1 sind Spieler
+				if (i == 0) {
+					boolean istki = args[2].equals("1");
+					FarbEnum farbe;
+					if (args[1].equals("schwarz")) {
+						farbe = FarbEnum.schwarz;
+					} else {
+						farbe = FarbEnum.weiss;
+					}
+					Spieler s1 = new Spieler(args[0], farbe, istki);
+					this.add(s1);
+				} else if (i == 1) {
+					boolean istki = args[2].equals("1");
+					FarbEnum farbe;
+					if (args[1].equals("schwarz")) {
+						farbe = FarbEnum.schwarz;
+					} else {
+						farbe = FarbEnum.weiss;
+					}
+					Spieler s2 = new Spieler(args[0], farbe, istki);
+					this.add(s2);
+					// i an der Stelle 2 ist ActivSpieler
+				} else if (i == 2) {
+					if (args[0].equals("0")) {
+						this.setActiveSpieler(this.spieler[0]);
+					} else {
+						if (args[0].equals("1")) {
+							this.setActiveSpieler(this.spieler[1]);
+						}
+					}
+					// i > 2
+				} else {
+					// args[1] entweder null oder farbe
+					if (args[1].equals("null")) {
+						spielbrett.getFeldById(args[0]).setSpielfigur(null);
+					} else {
+						FarbEnum farbe;
+						// args[2] istDame
+						boolean b = args[2].equals("true");
+						// args[1] schwarz oder weiss
+						if (args[1].equals("schwarz")) {
+							farbe = FarbEnum.schwarz;
+						} else {
+							farbe = FarbEnum.weiss;
+						}
+						Spielfigur f = new Spielfigur(farbe, b);
+
+						spielbrett.getFeldById(args[0]).setSpielfigur(f);
+					}
+
+				}
+			}
+			spielbrett.printBrett();
+			System.out.println("");
+
+//			if (this.spieler[0] == this.getActiveSpieler()) {
+//				this.playerRotation(this.getActiveSpieler(), this.spieler[1]);
+//			} else {
+//				this.playerRotation(this.getActiveSpieler(), this.spieler[0]);
+//			}
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
 		iDatenzugriff serial = new DatenzugriffSerialisiert();
 		try {
 			serial.speichern(this, filename);
