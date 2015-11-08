@@ -896,7 +896,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 								return true;
 							}
 						} else if (spielbrett.getBrett()[j][i].getSpielfigur().isDame() == true) {
-							if ((moveMoeglich(player1, spielbrett.getBrett()[j][i]) == true || schlagMoeglichDame(spielbrett.getBrett()[j][i]) == true)) {
+							if ((moveMoeglichDame(player1, spielbrett.getBrett()[j][i]) == true || schlagMoeglichDame(spielbrett.getBrett()[j][i]) == true)) {
 								return true;
 							}
 						}
@@ -906,6 +906,74 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		}
 
 		return false;
+	}
+	/**
+	 * schaut ob die Dame-Spielfigur auf dem Spielfeld, falls vorhanden noch ziehen
+	 * kann.
+	 * 
+	 * @param player1
+	 * @param startfeld
+	 * @return
+	 */
+	private boolean moveMoeglichDame(Spieler player1, Spielfeld startfeld) {
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+			announceWinner(this.getSpieler()[0]);
+		}
+		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+			announceWinner(this.getSpieler()[1]);
+		}
+
+		if (startfeld.getSpielfigur() == null) {
+			return false;
+		}
+		
+			try {
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() - 1].getSpielfigur() == null) {
+						return true;
+					}
+				}
+
+			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+			}
+			try {
+				if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + 1][startfeld.getPosX() + 1].getSpielfigur() == null) {
+						return true;
+					}
+				}
+			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+			}
+		
+
+		
+			try {
+
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() - 1].getSpielfigur() == null) {
+						return true;
+					}
+				}
+			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+			}
+
+			try {
+				if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1] != null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - 1][startfeld.getPosX() + 1].getSpielfigur() == null) {
+						return true;
+					}
+				}
+			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+
+			}
+
+			return false;
+		
+		
+		
 	}
 
 	/**
@@ -959,8 +1027,6 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 					}
 				}
 			} catch (java.lang.ArrayIndexOutOfBoundsException e) {
-
-			} finally {
 
 			}
 

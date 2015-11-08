@@ -140,7 +140,7 @@ public class Ki_Dame extends Ki implements Serializable {
 	private ArrayList<Spielfeld> MovesMoeglichDame(Spielfeld spielfeld) {
 		ArrayList<Spielfeld> movesMoeglichDame = new ArrayList<Spielfeld>();
 		try {
-			for (int i = 0; i < spielbrett.length - 1; i++) {
+			for (int i = 1; i < spielbrett.length - 1; i++) {
 				if (this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() + i].getSpielfigur() != null) {
 					break;
 				}
@@ -152,7 +152,7 @@ public class Ki_Dame extends Ki implements Serializable {
 
 		}
 		try {
-			for (int i = 0; i < spielbrett.length - 1; i++) {
+			for (int i = 1; i < spielbrett.length - 1; i++) {
 				if (this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() + i].getSpielfigur() != null) {
 					break;
 				}
@@ -164,7 +164,7 @@ public class Ki_Dame extends Ki implements Serializable {
 
 		}
 		try {
-			for (int i = 0; i < spielbrett.length - 1; i++) {
+			for (int i = 1; i < spielbrett.length - 1; i++) {
 				if (this.getSpielbrett()[spielfeld.getPosY() + i][spielfeld.getPosX() - i].getSpielfigur() != null) {
 					break;
 				}
@@ -176,7 +176,7 @@ public class Ki_Dame extends Ki implements Serializable {
 
 		}
 		try {
-			for (int i = 0; i < spielbrett.length - 1; i++) {
+			for (int i = 1; i < spielbrett.length - 1; i++) {
 				if (this.getSpielbrett()[spielfeld.getPosY() - i][spielfeld.getPosX() - i].getSpielfigur() != null) {
 					break;
 				}
