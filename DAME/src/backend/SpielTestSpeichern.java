@@ -11,30 +11,30 @@ public class SpielTestSpeichern implements Serializable, iBediener, iDatenzugrif
 		SpielBrett sb = new SpielBrett();
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Spiel laden [L] oder neues Spiel spielen [n].\n" + "Der aktuelle Spielstand kann jederzeit Ã¼ber die Eingabe [s] gespeichert werden");
-		String eingabe = scanner.nextLine();
-		if ("l".equals(eingabe) == true) {
-			System.out.println("Dateinamen eingeben.");
-			String filename = scanner.nextLine();
-			System.out.println("Speichertyp [csv] oder [ser] eingeben.");
-			String typ = scanner.nextLine();
-			if (typ.equals("csv")) {
-				try {
-					Spiel s = new Spiel();
-					s.laden(filename, typ);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			} else if (typ.equals("ser")) {
-				try {
-					Spiel s = new Spiel();
-					s.laden(filename, typ);
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
-			}
-		}
-		System.out.println("Geben Sie `n` ein für ein Test Speichern Spiel das 3 Züge durchführt und danach speichert");
+		System.out.println("Der aktuelle Spielstand kann jederzeit Über die Eingabe [s] gespeichert werden");
+//		String eingabe = scanner.nextLine();
+//		if ("l".equals(eingabe) == true) {
+//			System.out.println("Dateinamen eingeben.");
+//			String filename = scanner.nextLine();
+//			System.out.println("Speichertyp [csv] oder [ser] eingeben.");
+//			String typ = scanner.nextLine();
+//			if (typ.equals("csv")) {
+//				try {
+//					Spiel s = new Spiel();
+//					s.laden(filename, typ);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			} else if (typ.equals("ser")) {
+//				try {
+//					Spiel s = new Spiel();
+//					s.laden(filename, typ);
+//				} catch (IOException e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		}
+		System.out.println("Geben Sie `n` ein für ein Test Speichern Spiel das 3 Züge durchführt und danach unter Test4.csv /.ser speichert");
 		
 		iBediener unserSpiel = new Spiel("TesterName1", false, "TesterName2", false);
 		
