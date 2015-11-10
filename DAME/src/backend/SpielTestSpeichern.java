@@ -11,7 +11,7 @@ public class SpielTestSpeichern implements Serializable, iBediener, iDatenzugrif
 		SpielBrett sb = new SpielBrett();
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Der aktuelle Spielstand kann jederzeit Über die Eingabe [s] gespeichert werden");
+		System.out.println("Der aktuelle Spielstand kann jederzeit während dem Spiel über die Eingabe von [s] gespeichert werden");
 //		String eingabe = scanner.nextLine();
 //		if ("l".equals(eingabe) == true) {
 //			System.out.println("Dateinamen eingeben.");
@@ -34,7 +34,7 @@ public class SpielTestSpeichern implements Serializable, iBediener, iDatenzugrif
 //				}
 //			}
 //		}
-		System.out.println("Geben Sie `n` ein für ein Test Speichern Spiel das 3 Züge durchführt und danach unter Test4.csv /.ser speichert");
+		System.out.println("Geben Sie `n` ein für ein Test Speichern Spiel das 3 Züge durchführt und danach unter Test4.csv/.ser das Spiel speichert");
 		
 		iBediener unserSpiel = new Spiel("TesterName1", false, "TesterName2", false);
 		

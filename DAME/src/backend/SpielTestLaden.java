@@ -15,7 +15,7 @@ public class SpielTestLaden implements iBediener, iDatenzugriff{
 		SpielBrett sb = new SpielBrett();
 		Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Spiel laden [L] "+ "Der aktuelle Spielstand kann jederzeit Über die Eingabe [s] gespeichert werden");//oder neues Spiel spielen [n].\n" 
+		System.out.println("Spiel laden [L] "+ "Der aktuelle Spielstand kann jederzeit während dem Spiel über die Eingabe von [s] gespeichert werden");//oder neues Spiel spielen [n].\n" 
 		String eingabe = scanner.nextLine();
 		if ("l".equals(eingabe) == true) {
 			System.out.println("Dateinamen eingeben (Test4).");
