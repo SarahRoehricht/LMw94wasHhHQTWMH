@@ -1,15 +1,20 @@
 package frontend;
 
+
+
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileFilter;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -17,14 +22,20 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class SpielOberflaeche extends JFrame implements ActionListener {
+public class MenuLeiste extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 	GraphicsEnvironment env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 	Rectangle bounds = env.getMaximumWindowBounds();
 
-	JFrame jf;
+	JPanel panel;
+	JFileChooser jfc_laden;
+	JFileChooser jfc_speichern;
+	FileNameExtensionFilter filter_csv;
+	FileNameExtensionFilter filter_ser;
+	FileNameExtensionFilter filter_pdf;
 	JMenuBar leiste;
 	Container c;
 
@@ -64,15 +75,24 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 
 	JMenuItem spielBeschreibung;
 
-	public SpielOberflaeche() {
+	public MenuLeiste() {
 
-		jf = new JFrame("Dame International");
-		c = jf.getContentPane();
+		filter_csv = new FileNameExtensionFilter("csv", "csv"); 
+		filter_ser = new FileNameExtensionFilter("ser", "ser"); 
+		filter_pdf = new FileNameExtensionFilter("pdf", "pdf"); 
+		panel = new JPanel();
+		jfc_laden = new JFileChooser(".");
+		jfc_laden.removeChoosableFileFilter(jfc_laden.getChoosableFileFilters()[0]);
+		jfc_speichern = new JFileChooser(".");
+		jfc_laden.addChoosableFileFilter(filter_csv);
+		jfc_laden.addChoosableFileFilter(filter_ser);
+		jfc_laden.addChoosableFileFilter(filter_pdf);
+		//c = panel.getContentPane();
 
 		jp_laden = new JPanel();
 		jp_neuesSpiel = new JPanel();
 		jp_schliessen = new JPanel();
-
+	
 		jl_laden = new JLabel(
 				"Soll der aktuelle Spielstand gespeichert werden?");
 		jl_laden.setHorizontalAlignment(JLabel.CENTER);
@@ -141,8 +161,8 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 		schliessen_ja.addActionListener(this);
 		schliessen_nein.addActionListener(this);
 
-		laden_ja.setPreferredSize(new Dimension(100, 20));
-		laden_nein.setPreferredSize(new Dimension(100, 20));
+		laden_ja.setPreferredSize(new Dimension(70, 20));
+		laden_nein.setPreferredSize(new Dimension(70, 20));
 		speichern_ja.setPreferredSize(new Dimension(100, 20));
 		speichern_nein.setPreferredSize(new Dimension(100, 20));
 		schliessen_ja.setPreferredSize(new Dimension(100, 20));
@@ -157,7 +177,7 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 		// Dialogfenster
 		jd_laden = new JDialog();
 		jd_laden.setTitle("Sicherung des Spielstands");
-		jd_laden.setSize(400, 200);
+		jd_laden.setSize(350, 150);
 		jd_laden.setModal(true);
 		jd_laden.add(jl_laden);
 		jd_laden.add(jp_laden, BorderLayout.SOUTH);
@@ -173,13 +193,17 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 		jd_schliessen.add(jp_schliessen, BorderLayout.SOUTH);
 		jd_schliessen.setLocationRelativeTo(null);
 
-		jf.setSize(bounds.width, bounds.height);
-		jf.add(leiste, BorderLayout.NORTH);
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		jf.setVisible(true);
+//		panel.setSize(bounds.width, bounds.height);
+//		panel.add(leiste, BorderLayout.NORTH);
+//		panel.setVisible(true);
 
 	}
 
+	public Component getJPanel(){
+		panel.add(leiste);
+		return panel;
+	}
+	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 
@@ -188,27 +212,30 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 
 		// LADEN
 		if (e.getSource() == jmi_laden) {
-			jd_laden.setVisible(true);
+			//jd_laden.setVisible(true);
+			jfc_laden.setVisible(true);
+			jfc_laden.showOpenDialog(this);
+			
 		}
-		if (e.getSource() == laden_ja) {
-			System.out
-					.println("JDialog nur anzeigen, wenn bereits ein Spiel läuft");
-			System.out
-					.println("Aktuelles Spiel wird abgebrochen und gespeichert");
-			System.out
-					.println("Eingabe des Titels und Art der Speicherung in neuem Fenster");
-			System.out.println("Älteres Spiel soll geladen werden");
-			System.out
-					.println("Öffnen eines neuen JDialogs mit Auswahl aller gespeicherter Spiele");
-			jd_laden.dispose();
-		}
-		if (e.getSource() == laden_nein) {
-			System.out
-					.println("Der aktuelle Spielstand wird nicht gespeichert");
-			System.out
-					.println("Öffnen eines neuen JDialogs mit Auswahl aller gespeicherter Spiele");
-			jd_laden.dispose();
-		}
+//		if (e.getSource() == laden_ja) {
+//			System.out
+//					.println("JDialog nur anzeigen, wenn bereits ein Spiel läuft");
+//			System.out
+//					.println("Aktuelles Spiel wird abgebrochen und gespeichert");
+//			System.out
+//					.println("Eingabe des Titels und Art der Speicherung in neuem Fenster");
+//			System.out.println("Älteres Spiel soll geladen werden");
+//			System.out
+//					.println("Öffnen eines neuen JDialogs mit Auswahl aller gespeicherter Spiele");
+//			jd_laden.dispose();
+//		}
+//		if (e.getSource() == laden_nein) {
+//			System.out
+//					.println("Der aktuelle Spielstand wird nicht gespeichert");
+//			System.out
+//					.println("Öffnen eines neuen JDialogs mit Auswahl aller gespeicherter Spiele");
+//			jd_laden.dispose();
+//		}
 
 		
 		// Neues Spiel starten
@@ -232,7 +259,7 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 		}
 
 		// Schliessen
-		if (e.getSource() == jmi_speichern) {
+		if (e.getSource() == jmi_schliessen) {
 			jd_schliessen.setVisible(true);
 		}
 		if (e.getSource() == schliessen_ja) {
@@ -254,7 +281,9 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 		
 		//Speichern
 		if(e.getSource() == jmi_speichern){
-			System.out.println("Fenster zur Eingabe von Dateiname und Speicherformat wird geöffnet");
+			//System.out.println("Fenster zur Eingabe von Dateiname und Speicherformat wird geöffnet");
+			jfc_speichern.setVisible(true);
+			jfc_speichern.showSaveDialog(this);
 		}
 		
 		if (e.getSource() == hintergrundAendern) {
@@ -271,7 +300,6 @@ public class SpielOberflaeche extends JFrame implements ActionListener {
 	}
 
 	public static void main(String[] args) {
-		SpielOberflaeche ml = new SpielOberflaeche();
-		//ml.dispose();
+		MenuLeiste so = new MenuLeiste();
 	}
 }
