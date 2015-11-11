@@ -2,6 +2,7 @@ package frontend;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
@@ -25,6 +26,9 @@ public class DameStartZielEingabe {
 		JTFStartZiel();
 		spiel = new Spiel("Jonas", false, "Peter", false);
 		// this.jTF_Start_Ziel = jTF_Start_Ziel;
+		Font font;
+		font = new Font("ARIAL",Font.BOLD,14);
+		jTF_Start_Ziel.setFont(font);
 	}
 
 	Container c;
@@ -54,6 +58,8 @@ public class DameStartZielEingabe {
 		jf.setSize(1920, 1080);
 		jf.setVisible(true);
 		jTF_Start_Ziel.addActionListener(new EH_DameStartZielEingabe(this));
+		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 	}
 
 	public static void main(String[] args) {
