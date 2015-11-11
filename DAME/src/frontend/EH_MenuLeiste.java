@@ -14,7 +14,7 @@ public class EH_MenuLeiste implements ActionListener {
 
 	MenuLeiste menu = null;
 	Spiel spiel;
-
+	
 	public EH_MenuLeiste(MenuLeiste menu) {
 		// Swing Seite 36 Konstruktor
 		// MenuLeiste in EH_MenuLeiste

@@ -102,7 +102,7 @@ public class MenuLeiste extends JFrame {
 				+ "Steine springen kann, muss sie das auch tun. Es gelten also die Sprungregeln für einfache " + "Steine, mit der zusätzlichen Regel, dass die Dame über mehrere " + "Felder vorwärts und eben auch rückwärts springen kann.</p>"
 				+ "<p>Da eine Dame auf dem Feld hinter dem geschlagenen Stein aufsetzen muss, ist es möglich," + " ein Endspiel von zwei Damen gegen eine einzelne gegnerische Dame zu gewinnen. Beim " + "Erreichen der gegnerischen Grundlinie eines Spielsteins durch Schlagen gegnerischer Figuren "
 				+ "geschieht ebenfalls eine Umwandlung zur Dame. Der Zug endet damit; es ist nicht möglich, " + "mit der Umwandlung zur Dame sofort weitere gegnerische Spielsteine zu schlagen." + "Die Spielsteine können diagonal gezogen werden und auch andere Steine schlagen.</p>"
-
+				
 				+ "<p>Ziel des Spieles ist es, dem Gegner alle Zugmöglichkeiten " + "zu nehmen, also alle gegnerischen Steine zu schlagen oder zu blockieren.</p>";
 
 		f = new JFrame("Spielbeschreibung");
