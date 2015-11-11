@@ -154,7 +154,7 @@ public class MenuLeiste extends JFrame {
 		jl_laden = new JLabel("Soll der aktuelle Spielstand gespeichert werden?");
 		jl_laden.setHorizontalAlignment(JLabel.CENTER);
 
-		jl_neuesSpiel = new JLabel("Möchte Sie das aktuelle Spiel wirklich beenden?");
+		jl_neuesSpiel = new JLabel("Möchten Sie das aktuelle Spiel wirklich beenden?");
 		jl_neuesSpiel.setHorizontalAlignment(JLabel.CENTER);
 		
 		jl_schliessen = new JLabel("Möchten Sie das Spiel wirklich verlassen?");
