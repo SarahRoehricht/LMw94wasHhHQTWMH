@@ -47,7 +47,7 @@ public class MenuLeiste extends JFrame {
 	JMenuBar leiste;
 	Container c;
 
-	JPanel jp_laden; 
+	JPanel jp_laden;  
 	JPanel jp_neuesSpiel;
 	JPanel jp_schliessen;
 
