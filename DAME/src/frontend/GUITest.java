@@ -7,5 +7,4 @@ public class GUITest {
 		MainWindow mw = new MainWindow("Internationale Dame");
 		
 	}
-
 }
