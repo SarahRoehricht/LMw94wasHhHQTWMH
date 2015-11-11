@@ -13,7 +13,8 @@ import javax.swing.JPanel;
 public class DameBrett extends JPanel implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
-
+	
+	
 	public static void main(String[] args) {
 
 		// http://stackoverflow.com/questions/2712414/how-to-create-an-array-of-jlabels-in-java-to-be-printed-on-a-jframe

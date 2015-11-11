@@ -13,16 +13,19 @@ public class MainWindow {
 	private JPanel panelFuerLeiste;
 	private JFrame jf;
 	private Rectangle bounds;
+	private Spielbrett spielbrett;
 	GraphicsEnvironment env;
 
 	public MainWindow(String title) {
 		panel = new JPanel(new BorderLayout());
 		ml = new MenuLeiste();
+		spielbrett=new Spielbrett();
 		panelFuerLeiste = new JPanel(new BorderLayout());
 		panelFuerLeiste.add(ml.getJPanel(), BorderLayout.WEST);
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		bounds = env.getMaximumWindowBounds();
 		panel.add(panelFuerLeiste, BorderLayout.NORTH);
+		panel.add(spielbrett.getSpielbrett(), BorderLayout.CENTER );
 		jf = new JFrame(title);
 		jf.setContentPane(panel);
 		jf.setSize(bounds.width, bounds.height);
