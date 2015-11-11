@@ -36,6 +36,7 @@ public class MenuLeiste extends JFrame {
 	JFrame f;
 	JTextPane pane;
 	HTMLEditorKit eKit;
+	
 	/**********************************/
 	
 	JPanel panel;
