@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import backend.Spiel;
 
 public class MainWindow {
 	private MenuLeiste ml;
@@ -15,7 +18,6 @@ public class MainWindow {
 	private Rectangle bounds;
 	private Spielbrett spielbrett;
 	GraphicsEnvironment env;
-
 	public MainWindow(String title) {
 		panel = new JPanel(new BorderLayout());
 		ml = new MenuLeiste();
@@ -31,6 +33,7 @@ public class MainWindow {
 		jf.setSize(bounds.width, bounds.height);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setVisible(true);
+		
 	}
 
 }
