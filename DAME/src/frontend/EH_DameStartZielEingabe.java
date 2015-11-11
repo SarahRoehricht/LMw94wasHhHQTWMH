@@ -36,6 +36,7 @@ public class EH_DameStartZielEingabe implements ActionListener{
 					ausgabe= "Falsch Synatax";
 					//sp.addToTextArea(ausgabe);
 					
+					
 					DEF.jTF_Start_Ziel.setFont(font);
 					DEF.jTF_Start_Ziel.setBackground(Color.red);
 					
