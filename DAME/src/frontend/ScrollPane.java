@@ -1,24 +1,25 @@
 package frontend;
 
 import java.awt.Component;
-
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class ScrollPane {
+	
 	private JPanel jp;
 	private JTextArea jta;
-
+	
 	public ScrollPane() {
-		jta = new JTextArea();
-		jp = new JPanel();
-		jta.add(new JScrollBar());
-		
+
+		jp = new JPanel();	
+		jta = new JTextArea(10 ,150);
 		jta.setEditable(false);
-		jta.setText("Log:");
-		jp.add(new JScrollPane(jta));
+		jta.setText("Log:");	
+		jta.add(new JScrollBar());
+		jp.add( new JScrollPane(jta));
+		
 	}
 	
 	public void addToTextArea(String s){

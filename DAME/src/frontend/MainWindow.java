@@ -21,11 +21,13 @@ public class MainWindow {
 	private DameStartZielEingabe dsze;
 	GraphicsEnvironment env;
 	public MainWindow(String title) {
+		EH_Spielbrett eh= new EH_Spielbrett();
 		panel = new JPanel(new BorderLayout());
 		ml = new MenuLeiste();
-		spielbrett=new Spielbrett();
+		spielbrett=new Spielbrett(eh);
 		sp=new ScrollPane();
 		dsze= new DameStartZielEingabe();
+		
 		panelFuerLeiste = new JPanel(new BorderLayout());
 		panelFuerLeiste.add(ml.getJPanel(), BorderLayout.WEST);
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -34,7 +36,8 @@ public class MainWindow {
 		panel.add(spielbrett.getSpielbrett(), BorderLayout.CENTER );
 		panel.add(sp.getJPanel(), BorderLayout.SOUTH);
 //		panel.add(dsze.getJPanel(), BorderLayout.EAST);
-		
+		Spiel spiel= new Spiel("Harald", false, "Johannes", false);
+		eh.setSpiel(spiel, spielbrett);
 		jf = new JFrame(title);
 		jf.setContentPane(panel);
 		jf.setSize(bounds.width, bounds.height);

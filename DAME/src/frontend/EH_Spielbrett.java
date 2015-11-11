@@ -21,6 +21,9 @@ public class EH_Spielbrett implements ActionListener {
 	public EH_Spielbrett(Spielbrett spielbrett) {
 		this.spielbrett = spielbrett;
 	}
+	public EH_Spielbrett(){
+		
+	}
 
 	public boolean schonGeklickt(JButton[][] spielfelder) {
 		for (int i = 0; i < spielfelder.length; i++) {
@@ -37,11 +40,12 @@ public class EH_Spielbrett implements ActionListener {
 	}
 
 	public void setzeSteine() {
-		for (int i = 0; i < spielbrett.Spielfelder.length; i++) {
+		for (int i = spielbrett.Spielfelder.length-1; i >= 0; i--) {
 			for (int j = 0; j < spielbrett.Spielfelder[1].length; j++) {
-				if (spiel.getSpielbrett().getBrett()[j][i].getSpielfigur() != null) {
-					if (spiel.getSpielbrett().getBrett()[j][i].getFarbe() == FarbEnum.schwarz) {
-						if (spiel.getSpielbrett().getBrett()[j][i].getSpielfigur().isDame() == false) {
+				if(spiel.getSpielbrett().getBrett()[i][j].getFarbe()==FarbEnum.schwarz){
+				if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur() != null) {
+					if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
+						if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur().isDame() == false) {
 							ImageIcon icon = new ImageIcon("Schwarz.gif");
 							spielbrett.Spielfelder[j][i].setIcon(icon);
 						} else {
@@ -49,14 +53,14 @@ public class EH_Spielbrett implements ActionListener {
 							spielbrett.Spielfelder[j][i].setIcon(icon);
 						}
 					} else {
-						if (spiel.getSpielbrett().getBrett()[j][i].getSpielfigur().isDame() == false) {
+						if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur().isDame() == false) {
 
 							ImageIcon icon = new ImageIcon("Weiss.png");
 							spielbrett.Spielfelder[j][i].setIcon(icon);
 						}else{
 							ImageIcon icon = new ImageIcon("WeissDame.png");
 							spielbrett.Spielfelder[j][i].setIcon(icon);
-						}
+						}}
 					}
 				}
 			}
@@ -96,8 +100,10 @@ public class EH_Spielbrett implements ActionListener {
 
 	}
 
-	public void setSpiel(Spiel spiel) {
+	public void setSpiel(Spiel spiel, Spielbrett spielbrett) {
 this.spiel=spiel;
+this.spielbrett=spielbrett;
+setzeSteine();
 	}
 
 }

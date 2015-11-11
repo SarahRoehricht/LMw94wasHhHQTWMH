@@ -18,25 +18,25 @@ public class Spielbrett {
 	
 	public JButton[][] Spielfelder = new JButton[12][12];
 	private JPanel Spielbrett;
-	private EH_Spielbrett eh= new EH_Spielbrett(this);
+	EH_Spielbrett eh;
 	
 	private static final String spaltenbuchstaben = "ABCDEFGHIJKL";
 	
 	
-	public Spielbrett(){
-		
+	public Spielbrett(EH_Spielbrett eh){
+		this.eh=eh;
 		Spielbrett= new JPanel();
 		Spielbrett.setLayout(new GridLayout(0,14));
 		gui.add(Spielbrett);
 		Spielbrett.setBorder(new LineBorder(Color.black));
-		Insets buttonMargin = new Insets(0,0,0,0);
+		Insets buttonMargin = new Insets(1,1,1,1);
 		
-		for (int i = 0; i < Spielfelder.length; i++) {
+		for (int i = Spielfelder.length-1; i>=0; i--) {
 			for (int j = 0; j < Spielfelder[i].length; j++) {
 				JButton b=new JButton();
 				b.setMargin(buttonMargin);
 				
-			if((j%2==1&& i%2==1)||(j%2==0 && i%2==0)){
+			if((i % 2 == j % 2)){
 				b.setBackground(Color.white);
 			}
 			else{
@@ -44,7 +44,7 @@ public class Spielbrett {
 				
 				b.setBackground(Color.black);
 			}
-			Spielfelder[j][i]=b;
+			Spielfelder[i][j]=b;
 			b.addActionListener(eh);
 			}
 		}
