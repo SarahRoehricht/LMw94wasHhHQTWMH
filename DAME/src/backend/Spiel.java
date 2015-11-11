@@ -22,42 +22,42 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * this.welcome()Methode zum Spielanfang auf. Fuer End-User
 	 */
 	public Spiel(String name1, boolean ki1, String name2, boolean ki2) {
-		Scanner scanner = new Scanner(System.in);
-		String eingabe = scanner.nextLine();
-		
-		if("n".equals(eingabe) == true){
+//		Scanner scanner = new Scanner(System.in);
+//		String eingabe = scanner.nextLine();
+//		
+//		if("n".equals(eingabe) == true){
+//		this.setSpielbrett(new SpielBrett());
+//		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
+//		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
+//		this.add(player1);
+//		this.add(player2);
+//		actTest(player1, "a5", "b6");
+//		actTest(player2, "b8", "a7");
+//		actTest(player1, "k5", "j6");
+//		this.setActiveSpieler(player2);
+//		try {
+//			this.speichernTest(this, "Test4", "csv");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		try {
+//			this.speichernTest(this, "Test4", "ser");
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//		playerRotation(player2, player1);
+//		}
+//		else{
 		this.setSpielbrett(new SpielBrett());
 		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
 		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
 		this.add(player1);
 		this.add(player2);
-		actTest(player1, "a5", "b6");
-		actTest(player2, "b8", "a7");
-		actTest(player1, "k5", "j6");
-		this.setActiveSpieler(player2);
-		try {
-			this.speichernTest(this, "Test4", "csv");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+//		playerRotation(player1, player2);
 		}
-		try {
-			this.speichernTest(this, "Test4", "ser");
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		playerRotation(player2, player1);
-		}
-		else{
-		this.setSpielbrett(new SpielBrett());
-		Spieler player1 = new Spieler(name1, FarbEnum.weiss, ki1);
-		Spieler player2 = new Spieler(name2, FarbEnum.schwarz, ki2);
-		this.add(player1);
-		this.add(player2);
-		playerRotation(player1, player2);
-		}
-	}
+//	}
 
 	/**
 	 * Spielinitialisierung, fragt die Namen ab und generiert Spieler fuer den
@@ -133,6 +133,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	// }
 
 	public Spiel() {
+		
 	}
 
 	/**
