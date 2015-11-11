@@ -53,7 +53,7 @@ public class DameStartZielEingabe {
 		jp.setVisible(true);
 		jf.setSize(1920, 1080);
 		jf.setVisible(true);
-		jTF_Start_Ziel.addActionListener(new EH_DameEingabeFeld(this));
+		jTF_Start_Ziel.addActionListener(new EH_DameStartZielEingabe(this));
 	}
 
 	public static void main(String[] args) {
