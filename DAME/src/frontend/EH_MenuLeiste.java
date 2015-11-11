@@ -42,27 +42,24 @@ public class EH_MenuLeiste implements ActionListener {
 			int rueckgabeWert = menu.jfc_laden.showOpenDialog(menu);
 			if (rueckgabeWert == JFileChooser.APPROVE_OPTION) {
 				String datei = menu.jfc_laden.getSelectedFile().getName();
-				String dateiName =datei.substring(0, menu.jfc_laden.getSelectedFile().getName().length() -4); 
-				String dateiEndung = datei.substring(datei.length()-3);
-				if(dateiEndung.equals("csv")){
+				String dateiName = datei.substring(0, menu.jfc_laden.getSelectedFile().getName().length() - 4);
+				String dateiEndung = datei.substring(datei.length() - 3);
+				if (dateiEndung.equals("csv")) {
 					try {
 						spiel.laden(dateiName, "csv");
 					} catch (IOException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
-				}  
-				else{
+				} else {
 					try {
 						spiel.loadSerialize(dateiName);
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}
 				}
-					
-				
-				//altes Spiel laden
 			}
+			// altes Spiel laden
 			// neues Spiel laden
 		}
 

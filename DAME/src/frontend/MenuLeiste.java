@@ -31,14 +31,14 @@ public class MenuLeiste extends JFrame {
 	private static final long serialVersionUID = 1L;
 	GraphicsEnvironment env;
 	Rectangle bounds;
-
-	/*********Für JPaneText*************/
+	EH_MenuLeiste eh = new EH_MenuLeiste(this);
+	/********* Für JPaneText *************/
 	JFrame f;
 	JTextPane pane;
 	HTMLEditorKit eKit;
-	
+
 	/**********************************/
-	
+
 	JPanel panel;
 	JFileChooser jfc_laden;
 	JFileChooser jfc_speichern;
@@ -47,8 +47,8 @@ public class MenuLeiste extends JFrame {
 	FileNameExtensionFilter filter_pdf;
 	JMenuBar leiste;
 	Container c;
-    
-	JPanel jp_laden;  
+
+	JPanel jp_laden;
 	JPanel jp_neuesSpiel;
 	JPanel jp_schliessen;
 
@@ -59,7 +59,7 @@ public class MenuLeiste extends JFrame {
 	JLabel jl_laden;
 	JLabel jl_neuesSpiel;
 	JLabel jl_schliessen;
-	
+
 	JTextArea jText;
 
 	JButton vorLadenSpeichern_ja;
@@ -86,41 +86,25 @@ public class MenuLeiste extends JFrame {
 	JMenuItem spielBeschreibung;
 
 	public MenuLeiste() {
-		
+
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		bounds = env.getMaximumWindowBounds();
-		
-		/**************Für JPaneText************/
-		final String text = "<h1>Die internationale Damevariante</h1> "
-				+ "<p>Diese wird auf einem quadratischen Brett mit abwechselnd weißen und "
-				+ "schwarzen Feldern gespielt.Die Größe des Spielbretts beträgt 12x12 Felder, "
+
+		/************** Für JPaneText ************/
+		final String text = "<h1>Die internationale Damevariante</h1> " + "<p>Diese wird auf einem quadratischen Brett mit abwechselnd weißen und " + "schwarzen Feldern gespielt.Die Größe des Spielbretts beträgt 12x12 Felder, "
 				+ "wobei jeder Spieler 30 Steine besitzt.Gespielt wird nur auf den dunklen Feldern.</p>"
 
-				+ "<p>Die Steine ziehen ein Feld in diagonaler Richtung, aber nur vorwärts. Gegnerische "
-				+ "Steine müssen übersprungen und dadurch geschlagen werden, sofern das direkt angrenzende "
-				+ "dahinter liegende Feld frei ist, indem auf dieses freie Feld gezogen wird. "
-				+ "Wenn das Zielfeld eines Sprungs auf ein Feld führt, von dem aus ein weiterer "
-				+ "Stein übersprungen werden kann, so wird der Sprung fortgesetzt. Alle übersprungenen "
-				+ "Steine werden vom Brett genommen.Erreicht ein Spielstein die gegnerische Grundlinie, "
-				+ "wird er zur Dame befördert. Dies wird kenntlich gemacht, indem ein zweiter Stein "
-				+ "obenauf gesetzt wird.</p>"
+				+ "<p>Die Steine ziehen ein Feld in diagonaler Richtung, aber nur vorwärts. Gegnerische " + "Steine müssen übersprungen und dadurch geschlagen werden, sofern das direkt angrenzende " + "dahinter liegende Feld frei ist, indem auf dieses freie Feld gezogen wird. "
+				+ "Wenn das Zielfeld eines Sprungs auf ein Feld führt, von dem aus ein weiterer " + "Stein übersprungen werden kann, so wird der Sprung fortgesetzt. Alle übersprungenen " + "Steine werden vom Brett genommen.Erreicht ein Spielstein die gegnerische Grundlinie, "
+				+ "wird er zur Dame befördert. Dies wird kenntlich gemacht, indem ein zweiter Stein " + "obenauf gesetzt wird.</p>"
 
-				+ "<p>Eine Dame darf beliebig weit vorwärts oder rückwärts ziehen und springen. Beim "
-				+ "Überspringen eines gegnerischen Steines muss die Dame allerdings auf dem unmittelbar "
-				+ "dahinterliegen Diagonalfeld aufsetzen. Falls sie von dem neuen Feld aus über andere "
-				+ "Steine springen kann, muss sie das auch tun. Es gelten also die Sprungregeln für einfache "
-				+ "Steine, mit der zusätzlichen Regel, dass die Dame über mehrere "
-				+ "Felder vorwärts und eben auch rückwärts springen kann.</p>"
-				+ "<p>Da eine Dame auf dem Feld hinter dem geschlagenen Stein aufsetzen muss, ist es möglich,"
-				+ " ein Endspiel von zwei Damen gegen eine einzelne gegnerische Dame zu gewinnen. Beim "
-				+ "Erreichen der gegnerischen Grundlinie eines Spielsteins durch Schlagen gegnerischer Figuren "
-				+ "geschieht ebenfalls eine Umwandlung zur Dame. Der Zug endet damit; es ist nicht möglich, "
-				+ "mit der Umwandlung zur Dame sofort weitere gegnerische Spielsteine zu schlagen."
-				+ "Die Spielsteine können diagonal gezogen werden und auch andere Steine schlagen.</p>"
+				+ "<p>Eine Dame darf beliebig weit vorwärts oder rückwärts ziehen und springen. Beim " + "Überspringen eines gegnerischen Steines muss die Dame allerdings auf dem unmittelbar " + "dahinterliegen Diagonalfeld aufsetzen. Falls sie von dem neuen Feld aus über andere "
+				+ "Steine springen kann, muss sie das auch tun. Es gelten also die Sprungregeln für einfache " + "Steine, mit der zusätzlichen Regel, dass die Dame über mehrere " + "Felder vorwärts und eben auch rückwärts springen kann.</p>"
+				+ "<p>Da eine Dame auf dem Feld hinter dem geschlagenen Stein aufsetzen muss, ist es möglich," + " ein Endspiel von zwei Damen gegen eine einzelne gegnerische Dame zu gewinnen. Beim " + "Erreichen der gegnerischen Grundlinie eines Spielsteins durch Schlagen gegnerischer Figuren "
+				+ "geschieht ebenfalls eine Umwandlung zur Dame. Der Zug endet damit; es ist nicht möglich, " + "mit der Umwandlung zur Dame sofort weitere gegnerische Spielsteine zu schlagen." + "Die Spielsteine können diagonal gezogen werden und auch andere Steine schlagen.</p>"
 
-				+ "<p>Ziel des Spieles ist es, dem Gegner alle Zugmöglichkeiten "
-				+ "zu nehmen, also alle gegnerischen Steine zu schlagen oder zu blockieren.</p>";
-		
+				+ "<p>Ziel des Spieles ist es, dem Gegner alle Zugmöglichkeiten " + "zu nehmen, also alle gegnerischen Steine zu schlagen oder zu blockieren.</p>";
+
 		f = new JFrame("Spielbeschreibung");
 		pane = new JTextPane();
 		eKit = new javax.swing.text.html.HTMLEditorKit();
@@ -130,7 +114,6 @@ public class MenuLeiste extends JFrame {
 		f.setSize(500, 400);
 		f.setLocationRelativeTo(null);
 		/**************************************/
-
 
 		filter_csv = new FileNameExtensionFilter("csv", "csv");
 		filter_ser = new FileNameExtensionFilter("ser", "ser");
@@ -146,7 +129,7 @@ public class MenuLeiste extends JFrame {
 		jfc_speichern.addChoosableFileFilter(filter_csv);
 		jfc_speichern.addChoosableFileFilter(filter_ser);
 		jfc_speichern.addChoosableFileFilter(filter_pdf);
-		
+
 		jp_laden = new JPanel();
 		jp_neuesSpiel = new JPanel();
 		jp_schliessen = new JPanel();
@@ -156,7 +139,7 @@ public class MenuLeiste extends JFrame {
 
 		jl_neuesSpiel = new JLabel("Möchten Sie das aktuelle Spiel wirklich beenden?");
 		jl_neuesSpiel.setHorizontalAlignment(JLabel.CENTER);
-		
+
 		jl_schliessen = new JLabel("Möchten Sie das Spiel wirklich verlassen?");
 		jl_schliessen.setHorizontalAlignment(JLabel.CENTER);
 
@@ -217,16 +200,14 @@ public class MenuLeiste extends JFrame {
 
 		jp_laden.add(vorLadenSpeichern_ja);
 		jp_laden.add(vorLadenSpeichern_nein);
-		
+
 		jp_neuesSpiel.add(verlassen_ja);
 		jp_neuesSpiel.add(verlassen_nein);
 
 		jp_schliessen.add(schliessen_ja);
 		jp_schliessen.add(schliessen_nein);
 
-
-		
-		/******************************** JDialog-Fenster LADEN**************************************/
+		/******************************** JDialog-Fenster LADEN **************************************/
 		jd_laden = new JDialog();
 		jd_laden.setTitle("Aktuelles Spiel speichern?");
 		jd_laden.setSize(400, 130);
@@ -235,7 +216,6 @@ public class MenuLeiste extends JFrame {
 		jd_laden.add(jp_laden, BorderLayout.SOUTH);
 		jd_laden.add(jp_laden, BorderLayout.SOUTH);
 		jd_laden.setLocationRelativeTo(null);
-		
 
 		/******************************** JDialog-Fenster NEUES SPIEL **************************************/
 		jd_neuesSpiel = new JDialog();
@@ -246,8 +226,7 @@ public class MenuLeiste extends JFrame {
 		jd_neuesSpiel.add(jp_neuesSpiel, BorderLayout.SOUTH);
 		jd_neuesSpiel.add(jp_neuesSpiel, BorderLayout.SOUTH);
 		jd_neuesSpiel.setLocationRelativeTo(null);
-		
-		
+
 		/******************************** JDialog-Fenster SCHLIESSEN **************************************/
 		jd_schliessen = new JDialog();
 		jd_schliessen.setTitle("Spiel verlassen");
@@ -259,21 +238,21 @@ public class MenuLeiste extends JFrame {
 		jd_schliessen.setLocationRelativeTo(null);
 
 		/******************************** ALLE ActionListener **************************************/
-		jmi_laden.addActionListener(new EH_MenuLeiste(this));
-		jmi_speichern.addActionListener(new EH_MenuLeiste(this));
-		jmi_neuesSpiel.addActionListener(new EH_MenuLeiste(this));
-		jmi_schliessen.addActionListener(new EH_MenuLeiste(this));
-		hintergrundAendern.addActionListener(new EH_MenuLeiste(this));
-		SteineFarbeAendern.addActionListener(new EH_MenuLeiste(this));
-		spielBeschreibung.addActionListener(new EH_MenuLeiste(this));
-		vorLadenSpeichern_ja.addActionListener(new EH_MenuLeiste(this));
-		vorLadenSpeichern_nein.addActionListener(new EH_MenuLeiste(this));
-		speichern_ja.addActionListener(new EH_MenuLeiste(this));
-		speichern_nein.addActionListener(new EH_MenuLeiste(this));
-		verlassen_ja.addActionListener(new EH_MenuLeiste(this));
-		verlassen_nein.addActionListener(new EH_MenuLeiste(this));
-		schliessen_ja.addActionListener(new EH_MenuLeiste(this));
-		schliessen_nein.addActionListener(new EH_MenuLeiste(this));
+		jmi_laden.addActionListener(eh);
+		jmi_speichern.addActionListener(eh);
+		jmi_neuesSpiel.addActionListener(eh);
+		jmi_schliessen.addActionListener(eh);
+		hintergrundAendern.addActionListener(eh);
+		SteineFarbeAendern.addActionListener(eh);
+		spielBeschreibung.addActionListener(eh);
+		vorLadenSpeichern_ja.addActionListener(eh);
+		vorLadenSpeichern_nein.addActionListener(eh);
+		speichern_ja.addActionListener(eh);
+		speichern_nein.addActionListener(eh);
+		verlassen_ja.addActionListener(eh);
+		verlassen_nein.addActionListener(eh);
+		schliessen_ja.addActionListener(eh);
+		schliessen_nein.addActionListener(eh);
 
 	}
 
