@@ -18,12 +18,14 @@ public class MainWindow {
 	private Rectangle bounds;
 	private Spielbrett spielbrett;
 	private ScrollPane sp;
+	private DameStartZielEingabe dsze;
 	GraphicsEnvironment env;
 	public MainWindow(String title) {
 		panel = new JPanel(new BorderLayout());
 		ml = new MenuLeiste();
 		spielbrett=new Spielbrett();
 		sp=new ScrollPane();
+		dsze= new DameStartZielEingabe();
 		panelFuerLeiste = new JPanel(new BorderLayout());
 		panelFuerLeiste.add(ml.getJPanel(), BorderLayout.WEST);
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -31,6 +33,8 @@ public class MainWindow {
 		panel.add(panelFuerLeiste, BorderLayout.NORTH);
 		panel.add(spielbrett.getSpielbrett(), BorderLayout.CENTER );
 		panel.add(sp.getJPanel(), BorderLayout.SOUTH);
+//		panel.add(dsze.getJPanel(), BorderLayout.EAST);
+		
 		jf = new JFrame(title);
 		jf.setContentPane(panel);
 		jf.setSize(bounds.width, bounds.height);

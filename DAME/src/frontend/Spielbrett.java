@@ -18,6 +18,7 @@ public class Spielbrett {
 	
 	public JButton[][] Spielfelder = new JButton[12][12];
 	private JPanel Spielbrett;
+	private EH_Spielbrett eh= new EH_Spielbrett(this);
 	
 	private static final String spaltenbuchstaben = "ABCDEFGHIJKL";
 	
@@ -44,7 +45,7 @@ public class Spielbrett {
 				b.setBackground(Color.black);
 			}
 			Spielfelder[j][i]=b;
-			b.addActionListener(new EH_Spielbrett(this));
+			b.addActionListener(eh);
 			}
 		}
 		Spielbrett.add(new JLabel(""));
