@@ -1507,7 +1507,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param coord
 	 * @return Spielfeld spielfeld = spielfelder[Stelle2Y][Stelle1X]
 	 */
-	private Spielfeld EingabeSpielfeld(String coord) {
+	public Spielfeld EingabeSpielfeld(String coord) {
 		char Stelle1 = coord.charAt(0);
 		int Stelle1X;
 		int Stelle2Y = -1;
