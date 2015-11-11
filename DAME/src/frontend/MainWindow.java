@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import backend.Spiel;
 
 public class MainWindow {
 	private MenuLeiste ml;
@@ -14,23 +17,30 @@ public class MainWindow {
 	private JFrame jf;
 	private Rectangle bounds;
 	private Spielbrett spielbrett;
+	private ScrollPane sp;
+	private DameStartZielEingabe dsze;
 	GraphicsEnvironment env;
-
 	public MainWindow(String title) {
 		panel = new JPanel(new BorderLayout());
 		ml = new MenuLeiste();
 		spielbrett=new Spielbrett();
+		sp=new ScrollPane();
+		dsze= new DameStartZielEingabe();
 		panelFuerLeiste = new JPanel(new BorderLayout());
 		panelFuerLeiste.add(ml.getJPanel(), BorderLayout.WEST);
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		bounds = env.getMaximumWindowBounds();
 		panel.add(panelFuerLeiste, BorderLayout.NORTH);
 		panel.add(spielbrett.getSpielbrett(), BorderLayout.CENTER );
+		panel.add(sp.getJPanel(), BorderLayout.SOUTH);
+//		panel.add(dsze.getJPanel(), BorderLayout.EAST);
+		
 		jf = new JFrame(title);
 		jf.setContentPane(panel);
 		jf.setSize(bounds.width, bounds.height);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setVisible(true);
+		
 	}
 
 }

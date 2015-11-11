@@ -1,12 +1,14 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.regex.Pattern;
 
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import backend.Spiel;
@@ -34,8 +36,10 @@ public class DameStartZielEingabe implements ActionListener {
 	JTextField jTF_Start_Ziel;
 	DameStartZielEingabe Texthandler;
 	String Startziel = "";
+	private JPanel jp;
 
 	public void JTFStartZiel() {
+		jp=new JPanel();
 		jTF_Start_Ziel = new JTextField(5);
 		c.add(jTF_Start_Ziel, BorderLayout.EAST);
 		// jTF_Start_Ziel.add(, BorderLayout.EAST);
@@ -43,12 +47,12 @@ public class DameStartZielEingabe implements ActionListener {
 		jTF_Start_Ziel.addActionListener(Texthandler);
 		jTF_Start_Ziel.setSize(300, 100);
 		jTF_Start_Ziel.setVisible(true);
+		jp.add(jTF_Start_Ziel);
 
 	}
 
-	public static void main(String[] args) {
-		DameStartZielEingabe DEF = new DameStartZielEingabe();
-
+	public Component getJPanel(){
+		return jp;
 	}
 
 }

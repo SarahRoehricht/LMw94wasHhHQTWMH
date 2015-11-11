@@ -4,28 +4,25 @@ package frontend;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Dimension;
 import java.awt.GridLayout;
 import java.awt.Insets;
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 public class Spielbrett {
 	private final JPanel gui = new JPanel(new BorderLayout(3, 3));
 	
-	private JButton[][] Spielfelder = new JButton[12][12];
+	public JButton[][] Spielfelder = new JButton[12][12];
 	private JPanel Spielbrett;
+	private EH_Spielbrett eh= new EH_Spielbrett(this);
 	
 	private static final String spaltenbuchstaben = "ABCDEFGHIJKL";
+	
+	
 	public Spielbrett(){
 		
 		Spielbrett= new JPanel();
@@ -43,18 +40,12 @@ public class Spielbrett {
 				b.setBackground(Color.white);
 			}
 			else{
-				if(i>6){
-					ImageIcon icon= new ImageIcon("Weiss.png");
-					b.setIcon(icon);
-				}
-				if(i<5){
-					ImageIcon icon= new ImageIcon("schwarzkeks.gif");
-					b.setIcon(icon);
-				}
+			
 				
 				b.setBackground(Color.black);
 			}
 			Spielfelder[j][i]=b;
+			b.addActionListener(eh);
 			}
 		}
 		Spielbrett.add(new JLabel(""));
