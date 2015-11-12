@@ -32,19 +32,20 @@ public class Spielbrett {
 		Insets buttonMargin = new Insets(1,1,1,1);
 		
 		for (int i = Spielfelder.length-1; i>=0; i--) {
-			for (int j = 0; j < Spielfelder[i].length; j++) {
+		for (int j = 0; j < Spielfelder[i].length; j++) {
 				JButton b=new JButton();
 				b.setMargin(buttonMargin);
 				
 			if((i % 2 == j % 2)){
-				b.setBackground(Color.white);
+				b.setBackground(Color.black);
 			}
 			else{
 			
 				
-				b.setBackground(Color.black);
+				b.setBackground(Color.white);
 			}
-			Spielfelder[i][j]=b;
+			b.setText(""+i+j);
+			Spielfelder[j][i]=b;
 			b.addActionListener(eh);
 			}
 		}
@@ -53,8 +54,11 @@ public class Spielbrett {
 			Spielbrett.add(new JLabel(spaltenbuchstaben.substring(i,i+ 1),SwingConstants.CENTER));
 		}
 		Spielbrett.add(new JLabel(""));
+		
+		
+		
 		int c=12;
-		for (int i = 0; i < 12; i++) {
+		for (int i = 11; i>=0; i--) {
 			for (int j = 0; j < 12; j++) {
 				
 			
