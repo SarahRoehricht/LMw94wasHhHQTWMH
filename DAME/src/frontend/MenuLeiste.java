@@ -4,12 +4,14 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileFilter;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -20,8 +22,10 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.html.HTMLEditorKit;
@@ -38,6 +42,29 @@ public class MenuLeiste extends JFrame {
 	HTMLEditorKit eKit;
 
 	/**********************************/
+	
+	/*********Fenster für NEUES SPIEL**************/
+	
+	JFrame jf;
+	JPanel jp;
+	JLabel jl_spieler1;
+	JLabel jl_spieler2;
+	JRadioButton rb_mensch1;
+	JRadioButton rb_ki1;
+	JRadioButton rb_mensch2;
+	JRadioButton rb_ki2;
+	ButtonGroup bg1;
+	ButtonGroup bg2;
+	JTextField jt_spieler1;
+	JTextField jt_spieler2;
+	JButton jb_abbruch;
+	JButton jb_bestaetigen;
+
+	Font spieler;
+	Font fontEingabe;
+	
+	
+	/********************************************/
 
 	JPanel panel;
 	JFileChooser jfc_laden;
@@ -115,6 +142,116 @@ public class MenuLeiste extends JFrame {
 		f.setLocationRelativeTo(null);
 		/**************************************/
 
+		/*************************Fenster für NEUES SPIEL *******************************/
+		
+		
+		jp = new JPanel();
+		jp.setLayout(null);
+		jl_spieler1 = new JLabel();
+		jl_spieler2 = new JLabel();
+		rb_mensch1 = new JRadioButton();
+		rb_ki1 = new JRadioButton();
+		rb_mensch2 = new JRadioButton();
+		rb_ki2 = new JRadioButton();
+		bg1 = new ButtonGroup();
+		bg2 = new ButtonGroup();
+		jt_spieler1 = new JTextField();
+		jt_spieler2 = new JTextField();
+		jb_abbruch = new JButton();
+		jb_bestaetigen = new JButton();
+
+		// spieler = new Font("Courier NEW", Font.BOLD, 22);
+		spieler = new Font("", Font.BOLD, 20);
+		fontEingabe = new Font("", Font.BOLD, 20);
+
+		bg1.add(rb_mensch1);
+		bg1.add(rb_ki1);
+		bg2.add(rb_mensch2);
+		bg2.add(rb_ki2);
+		jp.add(jl_spieler1);
+		jp.add(jl_spieler2);
+		jp.add(rb_mensch1);
+		jp.add(rb_mensch2);
+		jp.add(rb_ki1);
+		jp.add(rb_ki2);
+		jp.add(jt_spieler1);
+		jp.add(jt_spieler2);
+		jp.add(jb_abbruch);
+		jp.add(jb_bestaetigen);
+
+	// Spieler 1 (links)
+			jl_spieler1.setBounds(30, 15, 120, 25);
+			jl_spieler1.setFont(spieler);
+			jl_spieler1.setText("Spieler 1");
+			rb_mensch1.setBounds(15, 55, 100, 25);
+			rb_mensch1.setText("Mensch");
+			rb_ki1.setBounds(15, 80, 100, 25);
+			rb_ki1.setText("KI");
+			jt_spieler1.setBounds(15, 120, 100, 25);
+			jt_spieler1.setSize(140, 30);
+			jt_spieler1.setFont(fontEingabe);
+			jt_spieler1.setHorizontalAlignment(JTextField.CENTER);
+			jb_abbruch.setBounds(25, 160, 120, 25);
+			jb_abbruch.setText("abbrechen");
+
+			// Spieler 2 (rechts)
+			jl_spieler2.setBounds(215, 15, 120, 25);
+			jl_spieler2.setFont(spieler);
+			jl_spieler2.setText("Spieler 2");
+			rb_mensch2.setBounds(200, 55, 100, 25);
+			rb_mensch2.setText("Mensch");
+			rb_ki2.setBounds(200, 80, 100, 25);
+			rb_ki2.setText("KI");
+			jt_spieler2.setBounds(200, 120, 100, 25);
+			jt_spieler2.setSize(140, 30);
+			jt_spieler2.setFont(fontEingabe);
+			jt_spieler2.setHorizontalAlignment(JTextField.CENTER);
+			jb_bestaetigen.setBounds(210, 160, 120, 25);
+			jb_bestaetigen.setText("bestätigen");
+
+			add(jp);
+
+			setSize(360, 230);
+		
+//		// Spieler 1 (links)
+//		jl_spieler1.setBounds(30, 15, 100, 25);
+//		jl_spieler1.setFont(spieler);
+//		jl_spieler1.setText("Spieler 1");
+//		rb_mensch1.setBounds(15, 55, 100, 25);
+//		rb_mensch1.setText("Mensch");
+//		rb_ki1.setBounds(15, 80, 100, 25);
+//		rb_ki1.setText("KI");
+//		jt_spieler1.setBounds(15, 120, 100, 25);
+//		jt_spieler1.setSize(120, 30);
+//		jt_spieler1.setFont(fontEingabe);
+//		jt_spieler1.setHorizontalAlignment(JTextField.CENTER);
+//		jb_abbruch.setBounds(25, 160, 100, 25);
+//		jb_abbruch.setText("abbrechen");
+//
+//		// Spieler 2 (rechts)
+//		jl_spieler2.setBounds(185, 15, 100, 25);
+//		jl_spieler2.setFont(spieler);
+//		jl_spieler2.setText("Spieler 2");
+//		rb_mensch2.setBounds(170, 55, 100, 25);
+//		rb_mensch2.setText("Mensch");
+//		rb_ki2.setBounds(170, 80, 100, 25);
+//		rb_ki2.setText("KI");
+//		jt_spieler2.setBounds(170, 120, 100, 25);
+//		jt_spieler2.setSize(120, 30);
+//		jt_spieler2.setFont(fontEingabe);
+//		jt_spieler2.setHorizontalAlignment(JTextField.CENTER);
+//		jb_bestaetigen.setBounds(180, 160, 100, 25);
+//		jb_bestaetigen.setText("bestätigen");
+//
+//		add(jp);
+//
+//		setSize(320, 250);
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
+		
+		/*********************************************************************************/
+		
+		
 		filter_csv = new FileNameExtensionFilter("csv", "csv");
 		filter_ser = new FileNameExtensionFilter("ser", "ser");
 		filter_pdf = new FileNameExtensionFilter("pdf", "pdf");
