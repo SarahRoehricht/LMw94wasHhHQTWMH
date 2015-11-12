@@ -69,16 +69,20 @@ public class EH_MenuLeiste implements ActionListener {
 		}
 		if (e.getSource() == menu.verlassen_ja) {
 			menu.jd_neuesSpiel.dispose();
-			menu.setVisible(true);
-//			System.out.println("JDialog nur anzeigen, wenn bereits ein Spiel läuft");
-//			System.out.println("Aktuelles Spiel wird abgebrochen und gespeichert");
-//			System.out.println("Eingabe des Titels und Art der Speicherung in neuem Fenster");
-//			System.out.println("Älteres Spiel soll geladen werden");
-//			System.out.println("Öffnen eines neuen JDialogs mit Auswahl aller gespeicherter Spiele");
-
+			//neuesSpielFenster
+			menu.jf.setVisible(true);
 		}
 		if (e.getSource() == menu.verlassen_nein) {
 			menu.jd_neuesSpiel.dispose();
+		}
+		if(e.getSource() == menu.jb_abbruch){
+			System.out.println("blub abbruch");
+			menu.jf.dispose();
+		}
+		if(e.getSource() == menu.jb_bestaetigen){
+			menu.jf.dispose();
+			System.out.println("NEUES SPIEL!!!");
+			spiel = new Spiel();
 		}
 
 		// Schliessen

@@ -144,7 +144,7 @@ public class MenuLeiste extends JFrame {
 
 		/*************************Fenster für NEUES SPIEL *******************************/
 		
-		
+		jf = new JFrame(); 
 		jp = new JPanel();
 		jp.setLayout(null);
 		jl_spieler1 = new JLabel();
@@ -209,9 +209,12 @@ public class MenuLeiste extends JFrame {
 			jb_bestaetigen.setBounds(210, 160, 120, 25);
 			jb_bestaetigen.setText("bestätigen");
 
-			add(jp);
+			jb_abbruch.addActionListener(eh);
+			jb_bestaetigen.addActionListener(eh);
+			
+			jf.add(jp);
 
-			setSize(360, 230);
+			jf.setSize(360, 230);
 		
 //		// Spieler 1 (links)
 //		jl_spieler1.setBounds(30, 15, 100, 25);
