@@ -56,6 +56,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		this.add(player1);
 		this.add(player2);
 //		playerRotation(player1, player2);
+		setActiveSpieler(player1);
 		}
 //	}
 
@@ -128,7 +129,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	// System.out.println(player1.getName() + " - " + "'"
 	// + player1.getFarbe() + "'" + " faengt an!");
 	// scanner.reset();
-	// playerRotation(player1, player2);
+//	 playerRotation(player1, player2);
 	// }
 	// }
 
@@ -143,6 +144,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 */
 	// @Override
 	public void act(Spieler player1) {
+		
 		if (AnyMovesLeft(player1) == true) {
 			if (player1.getKi() != null) {
 				continueEnter("Ki am Zug druecke Enter");

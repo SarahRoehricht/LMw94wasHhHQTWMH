@@ -78,10 +78,12 @@ public class EH_Spielbrett implements ActionListener {
 							if (spielbrett.Spielfelder[j][i].getBackground() == klickColor) {
 								spielbrett.Spielfelder[j][i].setBackground(Color.black);
 							} else {
+								System.out.println("HI");
 								spielbrett.Spielfelder[j][i].setBackground(klickColor);
-								if (spiel.doTheMove(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[0]][buttonkoords[1]], spiel.getSpielbrett().getBrett()[j][i]) == true) {
-								
+								if (spiel.doTheMove(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
+								bewegeIcon(buttonkoords[0], buttonkoords[1], j, i);
 								}
+								
 							}
 						}
 					}
@@ -100,6 +102,10 @@ public class EH_Spielbrett implements ActionListener {
 
 	}
 
+	private void bewegeIcon(int i, int j, int j2, int i2) {
+		spielbrett.Spielfelder[j2][i2].setIcon(spielbrett.Spielfelder[i][j].getIcon());
+		spielbrett.Spielfelder[i][j].setIcon(null);
+	}
 	public void setSpiel(Spiel spiel, Spielbrett spielbrett) {
 this.spiel=spiel;
 this.spielbrett=spielbrett;
