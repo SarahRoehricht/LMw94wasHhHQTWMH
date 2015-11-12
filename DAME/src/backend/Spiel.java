@@ -38,13 +38,11 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 //		try {
 //			this.speichernTest(this, "Test4", "csv");
 //		} catch (IOException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		try {
 //			this.speichernTest(this, "Test4", "ser");
 //		} catch (IOException e) {
-//			// TODO Auto-generated catch block
 //			e.printStackTrace();
 //		}
 //		playerRotation(player2, player1);
@@ -147,7 +145,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		
 		if (AnyMovesLeft(player1) == true) {
 			if (player1.getKi() != null) {
-				continueEnter("Ki am Zug druecke Enter");
+//				continueEnter("Ki am Zug druecke Enter");
 				Spielfeld kiarray[] = new Spielfeld[2];
 				kiarray = player1.getKi().kiAct(spielbrett.getBrett());
 				Spielfeld startfeld = kiarray[0];
@@ -222,11 +220,11 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * 
 	 * @param message
 	 */
-	private void continueEnter(String message) {
-		System.out.println(message);
-		Scanner keyboard = new Scanner(System.in);
-		keyboard.nextLine();
-	}
+//	private void continueEnter(String message) {
+//		System.out.println(message);
+//		Scanner keyboard = new Scanner(System.in);
+//		keyboard.nextLine();
+//	}
 
 	/**
 	 * Fragt Spieler nach dem Start und Zielfeld ab
@@ -477,7 +475,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	}
 
 	/**
-	 * Ueberprueft ob die Dameschlagen kann
+	 * Ueberprueft ob die Dame schlagen kann
 	 * 
 	 * @param player1
 	 * @param startfeld
@@ -1936,7 +1934,6 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 
 	@Override
 	public void close() throws IOException {
-		// TODO Auto-generated method stub
 
 	}
 
