@@ -1,23 +1,14 @@
 package frontend;
 
-import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.Container;
 import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.util.regex.Pattern;
 
 import javax.swing.JFrame;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import backend.Spiel;
-import backend.Spieler;
-
-import backend.Spielfeld;
-//
-//import frontend.SpielOberflaeche.StartZielHandler;
 
 public class DameStartZielEingabe {
 
@@ -40,10 +31,10 @@ public class DameStartZielEingabe {
 	JFrame jf;
 
 	public void JTFStartZiel() {
-		jf = new JFrame();
+		
 		jp = new JPanel();
 		jTF_Start_Ziel = new JTextField(7);
-		jf.add(jp);
+		
 		jp.add(jTF_Start_Ziel);
 
 		// jTF_Start_Ziel.getText();
@@ -55,17 +46,16 @@ public class DameStartZielEingabe {
 		// jTF_Start_Ziel.addActionListener((ActionListener) Texthandler);
 		jTF_Start_Ziel.setSize(300, 100);
 		jTF_Start_Ziel.setVisible(true);
-		jp.setVisible(true);
-		jf.setSize(1920, 1080);
-		jf.setVisible(true);
+//		jp.setVisible(true);
+//		jf.setSize(1920, 1080);
+//		jf.setVisible(true);
 		jTF_Start_Ziel.addActionListener(new EH_DameStartZielEingabe(this));
-		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+//		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		
 	}
-
-	public static void main(String[] args) {
-		DameStartZielEingabe DEF = new DameStartZielEingabe();
-
-	}
+public Component getJPanel(){
+	return jp;
+}
+	
 
 }

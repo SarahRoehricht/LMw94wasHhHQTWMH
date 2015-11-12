@@ -35,7 +35,7 @@ public class MainWindow {
 		panel.add(panelFuerLeiste, BorderLayout.NORTH);
 		panel.add(spielbrett.getSpielbrett(), BorderLayout.CENTER );
 		panel.add(sp.getJPanel(), BorderLayout.SOUTH);
-//		panel.add(dsze.getJPanel(), BorderLayout.EAST);
+		panel.add(dsze.getJPanel(), BorderLayout.EAST);
 		Spiel spiel= new Spiel("Harald", false, "Johannes", false);
 		eh.setSpiel(spiel, spielbrett);
 		jf = new JFrame(title);
