@@ -43,7 +43,9 @@ public class EH_Spielbrett implements ActionListener {
 		for (int i = spielbrett.Spielfelder.length-1; i >= 0; i--) {
 			for (int j = 0; j < spielbrett.Spielfelder[1].length; j++) {
 				if(spiel.getSpielbrett().getBrett()[i][j].getFarbe()==FarbEnum.schwarz){
+					spielbrett.Spielfelder[j][i].setIcon(null);
 				if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur() != null) {
+					
 					if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
 						if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur().isDame() == false) {
 							ImageIcon icon = new ImageIcon("Schwarz.gif");
@@ -78,13 +80,25 @@ public class EH_Spielbrett implements ActionListener {
 							if (spielbrett.Spielfelder[j][i].getBackground() == klickColor) {
 								spielbrett.Spielfelder[j][i].setBackground(Color.black);
 							} else {
-								System.out.println("HI");
 								spielbrett.Spielfelder[j][i].setBackground(klickColor);
+								if(spiel.getSpielbrett().getBrett()[i][j].getSpielfigur()==null){
 								if (spiel.doTheMove(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
 								bewegeIcon(buttonkoords[0], buttonkoords[1], j, i);
+								spielbrett.Spielfelder[j][i].setBackground(Color.black);
+								spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
+								if(spiel.getActiveSpieler()==spiel.getSpieler()[0]){
+									spiel.setActiveSpieler(spiel.getSpieler()[1]);
+								}else{
+									spiel.setActiveSpieler(spiel.getSpieler()[0]);
 								}
+								setzeSteine();
+								}else{
+									spielbrett.Spielfelder[j][i].setBackground(Color.black);
+									spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
+								}}
 								
-							}
+							}spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
+						spielbrett.Spielfelder[j][i].setBackground(Color.black);
 						}
 					}
 				}
@@ -93,9 +107,11 @@ public class EH_Spielbrett implements ActionListener {
 			for (int i = 0; i < spielbrett.Spielfelder.length; i++) {
 				for (int j = 0; j < spielbrett.Spielfelder[i].length; j++) {
 					if (spielbrett.Spielfelder[j][i] == e.getSource()) {
+						
 						if (spielbrett.Spielfelder[j][i].getBackground() == Color.black){
+							if(spielbrett.Spielfelder[j][i].getIcon()!=null){
 							spielbrett.Spielfelder[j][i].setBackground(klickColor);
-						}
+						}}
 					}
 				}
 		}}
