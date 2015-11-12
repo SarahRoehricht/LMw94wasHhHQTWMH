@@ -67,7 +67,7 @@ public class DameStartZielEingabe {
 		jTF_Start_Ziel.setVisible(true);
 		jTF_Start_Ziel.setSize(300, 100);
 		jTF_Start_Ziel.setVisible(true);
-//		jp.setVisible(true);
+//		jp.setVisible(true); // 70-72 84-87 testing
 //		jf.setSize(1920, 1080);
 //		jf.setVisible(true);
 		jb.setSize(100,50);
