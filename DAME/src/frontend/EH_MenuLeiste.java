@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
-import javax.swing.ButtonModel;
 import javax.swing.JFileChooser;
 
 import backend.Spiel;
@@ -26,12 +25,28 @@ public class EH_MenuLeiste implements ActionListener {
 
 		// LADEN
 
-		if (e.getSource() == menu.jmi_laden) {
-			menu.jd_laden.setVisible(true);
+		if (e.getSource() == menu.jmi_laden && spiel != null) {
+			menu.jd_speichernVorLaden.setVisible(true);
+
+		}
+		if (e.getSource() == menu.jmi_laden && spiel == null) {
+			menu.jfc_speichernVorLaden.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile().getName();
+			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter().getDescription();
+			String pfad = menu.jfc_speichernVorLaden.getSelectedFile().getAbsolutePath();
+			int pfadLaenge = pfad.length();
+			int dateiNameLaenge = dateiName.length();
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
+
+			/******** Testausgabe **********/
+			System.out.println(dateiName + "." + dateiTyp);
+			System.out.println(pfad);
+			System.out.println(pfadOhneDateiname);
+			/****************************/
 
 		}
 		if (e.getSource() == menu.vorLadenSpeichern_ja) {
-			menu.jd_laden.dispose();
+			menu.jd_speichernVorLaden.dispose();
 			menu.jfc_speichernVorLaden.setVisible(true);
 			menu.jfc_speichernVorLaden.showSaveDialog(menu);
 
@@ -59,7 +74,7 @@ public class EH_MenuLeiste implements ActionListener {
 			}
 		}
 		if (e.getSource() == menu.vorLadenSpeichern_nein) {
-			menu.jd_laden.dispose();
+			menu.jd_speichernVorLaden.dispose();
 			menu.jfc_laden.setVisible(true);
 			int rueckgabeWert = menu.jfc_laden.showOpenDialog(menu);
 			if (rueckgabeWert == JFileChooser.APPROVE_OPTION) {
@@ -85,9 +100,14 @@ public class EH_MenuLeiste implements ActionListener {
 			// neues Spiel laden
 		}
 
-		// Neues Spiel starten
-		if (e.getSource() == menu.jmi_neuesSpiel) {
+		// Neues Spiel starten möglich , nur wenn Spiel != null
+		// ansonsten wurde ja noch kein Spiel gespielt, also muss auch keines
+		// geladen werden.
+		if (e.getSource() == menu.jmi_neuesSpiel && spiel != null) {
 			menu.jd_neuesSpiel.setVisible(true);
+		}
+		if (e.getSource() == menu.jmi_neuesSpiel && spiel == null) {
+			menu.jf.setVisible(true);
 		}
 		if (e.getSource() == menu.verlassen_ja) {
 			menu.jd_neuesSpiel.dispose();
@@ -102,18 +122,18 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jf.dispose();
 		}
 		if (e.getSource() == menu.jb_bestaetigen) {
-//			String nameWeiß;
-//			String nameSchwarz;
+			// String nameWeiß;
+			// String nameSchwarz;
 			boolean dame1 = false;
 			boolean dame2 = false;
 			if (menu.rb_ki1.isSelected()) {
 				dame1 = true;
-			}else{
+			} else {
 				dame1 = false;
 			}
 			if (menu.rb_ki2.isSelected()) {
 				dame2 = true;
-			}else{
+			} else {
 				dame2 = false;
 			}
 
@@ -122,7 +142,6 @@ public class EH_MenuLeiste implements ActionListener {
 			System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz + ", " + dame2);
 			spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
 			menu.jf.dispose();
-
 		}
 
 		// Schliessen

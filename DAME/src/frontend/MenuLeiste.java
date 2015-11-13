@@ -76,7 +76,7 @@ public class MenuLeiste extends JFrame {
 	JPanel jp_schliessen;
 
 	JDialog jd_neuesSpiel;
-	JDialog jd_laden;
+	JDialog jd_speichernVorLaden;
 	JDialog jd_schliessen;
 
 	JLabel jl_laden;
@@ -178,7 +178,8 @@ public class MenuLeiste extends JFrame {
 	// Spieler 1 (links)
 			jl_spieler1.setBounds(30, 15, 120, 25);
 			jl_spieler1.setFont(spieler);
-			jl_spieler1.setText("Spieler 1");
+			//jl_spieler1.setText("Spieler 1");
+			jl_spieler1.setText("Weiß");
 			rb_mensch1.setBounds(15, 55, 100, 25);
 			rb_mensch1.setText("Mensch");
 			rb_ki1.setBounds(15, 80, 100, 25);
@@ -193,7 +194,8 @@ public class MenuLeiste extends JFrame {
 			// Spieler 2 (rechts)
 			jl_spieler2.setBounds(215, 15, 120, 25);
 			jl_spieler2.setFont(spieler);
-			jl_spieler2.setText("Spieler 2");
+//			jl_spieler2.setText("Spieler 2");
+			jl_spieler2.setText("Schwarz");
 			rb_mensch2.setBounds(200, 55, 100, 25);
 			rb_mensch2.setText("Mensch");
 			rb_ki2.setBounds(200, 80, 100, 25);
@@ -211,6 +213,7 @@ public class MenuLeiste extends JFrame {
 			jf.add(jp);
 
 			jf.setSize(360, 230);
+			jf.setLocationRelativeTo(null);
 		
 //		// Spieler 1 (links)
 //		jl_spieler1.setBounds(30, 15, 100, 25);
@@ -350,14 +353,14 @@ public class MenuLeiste extends JFrame {
 		jp_schliessen.add(schliessen_nein);
 
 		/******************************** JDialog-Fenster LADEN **************************************/
-		jd_laden = new JDialog();
-		jd_laden.setTitle("Aktuelles Spiel speichern?");
-		jd_laden.setSize(400, 130);
-		jd_laden.setModal(true);
-		jd_laden.add(jl_laden);
-		jd_laden.add(jp_laden, BorderLayout.SOUTH);
-		jd_laden.add(jp_laden, BorderLayout.SOUTH);
-		jd_laden.setLocationRelativeTo(null);
+		jd_speichernVorLaden = new JDialog();
+		jd_speichernVorLaden.setTitle("Aktuelles Spiel speichern?");
+		jd_speichernVorLaden.setSize(400, 130);
+		jd_speichernVorLaden.setModal(true);
+		jd_speichernVorLaden.add(jl_laden);
+		jd_speichernVorLaden.add(jp_laden, BorderLayout.SOUTH);
+		jd_speichernVorLaden.add(jp_laden, BorderLayout.SOUTH);
+		jd_speichernVorLaden.setLocationRelativeTo(null);
 
 		/******************************** JDialog-Fenster NEUES SPIEL **************************************/
 		jd_neuesSpiel = new JDialog();
