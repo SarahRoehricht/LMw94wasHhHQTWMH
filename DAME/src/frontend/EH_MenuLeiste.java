@@ -3,9 +3,7 @@ package frontend;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-
 import javax.swing.JFileChooser;
-
 import backend.Spiel;
 
 public class EH_MenuLeiste implements ActionListener {
@@ -14,8 +12,6 @@ public class EH_MenuLeiste implements ActionListener {
 	Spiel spiel;
 
 	public EH_MenuLeiste(MenuLeiste menu) {
-		// Swing Seite 36 Konstruktor
-		// MenuLeiste in EH_MenuLeiste
 		this.menu = menu;
 		spiel = new Spiel();
 	}
@@ -68,7 +64,7 @@ public class EH_MenuLeiste implements ActionListener {
 				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
 			}
 			if (dateiTyp.equals("ser")) {
-				// spiel.saveSerialize(filename);
+				spiel.saveSerialize(dateiName);
 			} else {
 				// PDF speichern
 			}
@@ -122,8 +118,6 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jf.dispose();
 		}
 		if (e.getSource() == menu.jb_bestaetigen) {
-			// String nameWeiß;
-			// String nameSchwarz;
 			boolean dame1 = false;
 			boolean dame2 = false;
 			if (menu.rb_ki1.isSelected()) {
@@ -179,7 +173,7 @@ public class EH_MenuLeiste implements ActionListener {
 				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
 			}
 			if (dateiTyp.equals("ser")) {
-				// spiel.saveSerialize(filename);
+				spiel.saveSerialize(dateiName);
 			} else {
 				// PDF speichern
 			}
@@ -197,5 +191,4 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.f.setVisible(true);
 		}
 	}
-
 }
