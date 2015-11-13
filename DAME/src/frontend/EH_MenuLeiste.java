@@ -4,7 +4,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 
+import javax.swing.ButtonModel;
 import javax.swing.JFileChooser;
+
 import backend.Spiel;
 
 public class EH_MenuLeiste implements ActionListener {
@@ -100,9 +102,27 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jf.dispose();
 		}
 		if (e.getSource() == menu.jb_bestaetigen) {
+//			String nameWeiß;
+//			String nameSchwarz;
+			boolean dame1 = false;
+			boolean dame2 = false;
+			if (menu.rb_ki1.isSelected()) {
+				dame1 = true;
+			}else{
+				dame1 = false;
+			}
+			if (menu.rb_ki2.isSelected()) {
+				dame2 = true;
+			}else{
+				dame2 = false;
+			}
+
+			String nameWeiß = menu.jt_spieler1.getText();
+			String nameSchwarz = menu.jt_spieler2.getText();
+			System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz + ", " + dame2);
+			spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
 			menu.jf.dispose();
-			System.out.println("NEUES SPIEL!!!");
-			spiel = new Spiel();
+
 		}
 
 		// Schliessen
