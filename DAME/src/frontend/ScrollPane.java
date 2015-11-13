@@ -15,8 +15,7 @@ public class ScrollPane {
 
 		jp = new JPanel();	
 		jta = new JTextArea(10 ,150);
-		jta.setEditable(false);
-		jta.setText("Log:");	
+		jta.setEditable(false);	
 		jta.add(new JScrollBar());
 		jp.add( new JScrollPane(jta));
 		

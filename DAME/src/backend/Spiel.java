@@ -141,60 +141,60 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * 
 	 */
 	// @Override
-	public void act(Spieler player1) {
-		
-		if (AnyMovesLeft(player1) == true) {
-			if (player1.getKi() != null) {
-//				continueEnter("Ki am Zug druecke Enter");
-				Spielfeld kiarray[] = new Spielfeld[2];
-				kiarray = player1.getKi().kiAct(spielbrett.getBrett());
-				Spielfeld startfeld = kiarray[0];
-				Spielfeld zielfeld = kiarray[1];
-				if (doTheMove(player1, startfeld, zielfeld) == false) {
-					System.out.println("ungueltiger Zug!");
-					throw new RuntimeErrorException(null, "KI BAUT MIST.");
-				}
-			} else {
-				Spielfeld spielerFeldArray[] = new Spielfeld[2];
-				spielerFeldArray = eingabeSpielfeldSpieler(player1);
-				Spielfeld startfeld = spielerFeldArray[0];
-				Spielfeld zielfeld = spielerFeldArray[1];
-				boolean zugdone = false;
-				while (zugdone == false) {
-					if (doTheMove(player1, startfeld, zielfeld) == false) {
-						System.out.println("ungueltiger Zug!");
-						spielerFeldArray = eingabeSpielfeldSpieler(player1);
-						startfeld = spielerFeldArray[0];
-						zielfeld = spielerFeldArray[1];
-					}
-					zugdone = true;
-				}
-
-			}
-
-		} else {
-			if (player1.equals(this.getSpieler()[0])) {
-
-				announceWinner(this.getSpieler()[0]);
-			} // Schaut ob beim anderen Spieler keine
-				// noch Zuege moeglich sind.
-			else {
-				announceWinner(this.getSpieler()[1]);
-			}
-		}
-	}
+//	public void act(Spieler player1) {
+//		
+//		if (AnyMovesLeft(player1) == true) {
+//			if (player1.getKi() != null) {
+////				continueEnter("Ki am Zug druecke Enter");
+//				Spielfeld kiarray[] = new Spielfeld[2];
+//				kiarray = player1.getKi().kiAct(spielbrett.getBrett());
+//				Spielfeld startfeld = kiarray[0];
+//				Spielfeld zielfeld = kiarray[1];
+//				if (doTheMove(player1, startfeld, zielfeld) == false) {
+//					System.out.println("ungueltiger Zug!");
+//					throw new RuntimeErrorException(null, "KI BAUT MIST.");
+//				}
+//			} else {
+//				Spielfeld spielerFeldArray[] = new Spielfeld[2];
+//				spielerFeldArray = eingabeSpielfeldSpieler(player1);
+//				Spielfeld startfeld = spielerFeldArray[0];
+//				Spielfeld zielfeld = spielerFeldArray[1];
+//				boolean zugdone = false;
+//				while (zugdone == false) {
+//					if (doTheMove(player1, startfeld, zielfeld) == false) {
+//						System.out.println("ungueltiger Zug!");
+//						spielerFeldArray = eingabeSpielfeldSpieler(player1);
+//						startfeld = spielerFeldArray[0];
+//						zielfeld = spielerFeldArray[1];
+//					}
+//					zugdone = true;
+//				}
+//
+//			}
+//
+//		} else {
+//			if (player1.equals(this.getSpieler()[0])) {
+//
+//				announceWinner(this.getSpieler()[0]);
+//			} // Schaut ob beim anderen Spieler keine
+//				// noch Zuege moeglich sind.
+//			else {
+//				announceWinner(this.getSpieler()[1]);
+//			}
+//		}
+//	}
 	/**
 	 * Abgewandelte Act-Methode für SpielTestSpeichern
 	 * Gibt Spielfeld aus und macht einen Move von Start nach Zielfeld. 
 	 * Spieler, Startfeld, Zielfeld
 	 * 
 	 */
-	public void actTest(Spieler player1, String sf, String zf) {
-
-		System.out.println(spielbrett);
-		doTheMove(player1, spielbrett.getFeldById(sf), spielbrett.getFeldById(zf));
-
-	}
+//	public void actTest(Spieler player1, String sf, String zf) {
+//
+//		System.out.println(spielbrett);
+//		doTheMove(player1, spielbrett.getFeldById(sf), spielbrett.getFeldById(zf));
+//
+//	}
 	/**
 	 * Abgewandelte speichern-Methode für SpielTestSpeichern
 	 * Object, name, typ
@@ -321,39 +321,39 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param zielfeld
 	 * @return
 	 */
-	public boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
-		if (startfeld.getSpielfigur().isDame() == true) {
-			if (moveDameLegit(player1, startfeld, zielfeld) == true) {
-				move(startfeld, zielfeld);
-				return true;
-			}
-			if (schlagenDameLegit(player1, startfeld, zielfeld) == true) {
-				schlagenDame(player1, startfeld, zielfeld);
-				if (schlagMoeglichDame(zielfeld) == true) {
-					askSchlagen(player1, zielfeld);
-				}
-			} else {
-
-				return false;
-			}
-		} else if (startfeld.getSpielfigur().isDame() == false) {
-
-			if (doMoveStein(player1, startfeld, zielfeld) == false) {
-
-				if (doSchlagStein(player1, startfeld, zielfeld) == true) {
-					if (SchlagMoeglich(zielfeld) == true) {
-						askSchlagen(player1, zielfeld);
-
-					}
-				} else {
-
-					return false;
-				}
-
-			}
-		}
-		return true;
-	}
+//	public boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+//		if (startfeld.getSpielfigur().isDame() == true) {
+//			if (moveDameLegit(player1, startfeld, zielfeld) == true) {
+//				move(startfeld, zielfeld);
+//				return true;
+//			}
+//			if (schlagenDameLegit(player1, startfeld, zielfeld) == true) {
+//				schlagenDame(player1, startfeld, zielfeld);
+//				if (schlagMoeglichDame(zielfeld) == true) {
+//					askSchlagen(player1, zielfeld);
+//				}
+//			} else {
+//
+//				return false;
+//			}
+//		} else if (startfeld.getSpielfigur().isDame() == false) {
+//
+//			if (doMoveStein(player1, startfeld, zielfeld) == false) {
+//
+//				if (doSchlagStein(player1, startfeld, zielfeld) == true) {
+//					if (SchlagMoeglich(zielfeld) == true) {
+//						askSchlagen(player1, zielfeld);
+//
+//					}
+//				} else {
+//
+//					return false;
+//				}
+//
+//			}
+//		}
+//		return true;
+//	}
 
 	/**
 	 * Untersucht Spielfigur mit dame=true auf startfeld, ob diese ein weiteres
@@ -362,7 +362,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param startfeld
 	 * @return
 	 */
-	private boolean schlagMoeglichDame(Spielfeld startfeld) {
+	public boolean schlagMoeglichDame(Spielfeld startfeld) {
 
 		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
 			announceWinner(this.getSpieler()[0]);
@@ -457,7 +457,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param startfeld
 	 * @param zielfeld
 	 */
-	private void schlagenDame(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public void schlagenDame(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		// Flying Kings implementieren?
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
 			schlagen(startfeld, zielfeld, spielbrett.getBrett()[zielfeld.getPosY() - 1][zielfeld.getPosX() - 1]);
@@ -482,7 +482,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean schlagenDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public boolean schlagenDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				try {
@@ -586,7 +586,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean moveDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public boolean moveDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "nope") {
 			return false;
 		}
@@ -757,7 +757,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param startfeld
 	 * @return
 	 */
-	private boolean SchlagMoeglich(Spielfeld startfeld) {
+	public boolean SchlagMoeglich(Spielfeld startfeld) {
 		if (startfeld.getSpielfigur() != null) {
 			if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
@@ -1056,7 +1056,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean doSchlagStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public boolean doSchlagStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
 			if (player1.getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
@@ -1176,7 +1176,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	private boolean doMoveStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public boolean doMoveStein(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (startfeld.getSpielfigur().getFarbe() == FarbEnum.weiss) {
 
 			if (player1.getFarbe() == FarbEnum.weiss && startfeld.getSpielfigur().isDame() == false) {
@@ -1349,37 +1349,37 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param Spieler
 	 *          player1, player2
 	 */
-	private void playerRotation(Spieler player1, Spieler player2) {
-
-		int i = 0;
-		while (i == 0) {
-			this.setActiveSpieler(player1);
-			System.out.println(player1 + " ist am Zug!");
-			act(player1);
-			checkAndGetDame(player1);
-			if (checkSiegkondition(player2) == true) {
-				i = 2;
-			}
-			System.out.println(player2 + " ist am Zug!");
-			this.setActiveSpieler(player2);
-			act(player2);
-			checkAndGetDame(player2);
-			if (checkSiegkondition(player1) == true) {
-				i = 1;
-			}
-
-		}
-		if (i == 2) {
-			announceWinner(player1);
-		} // Schaut ob beim anderen Spieler keine
-			// Steine mehr uebrig sind, um zu gewinnen && ob noch Zuege moeglich
-			// sind.
-		if (i == 1) {
-			announceWinner(player2);
-
-		}
-
-	}
+//	private void playerRotation(Spieler player1, Spieler player2) {
+//
+//		int i = 0;
+//		while (i == 0) {
+//			this.setActiveSpieler(player1);
+//			System.out.println(player1 + " ist am Zug!");
+//			act(player1);
+//			checkAndGetDame(player1);
+//			if (checkSiegkondition(player2) == true) {
+//				i = 2;
+//			}
+//			System.out.println(player2 + " ist am Zug!");
+//			this.setActiveSpieler(player2);
+//			act(player2);
+//			checkAndGetDame(player2);
+//			if (checkSiegkondition(player1) == true) {
+//				i = 1;
+//			}
+//
+//		}
+//		if (i == 2) {
+//			announceWinner(player1);
+//		} // Schaut ob beim anderen Spieler keine
+//			// Steine mehr uebrig sind, um zu gewinnen && ob noch Zuege moeglich
+//			// sind.
+//		if (i == 1) {
+//			announceWinner(player2);
+//
+//		}
+//
+//	}
 
 	/**
 	 * Kuendigt den Gewinner an und fragt den Benutzer, ob ein neues Spiel
@@ -1554,7 +1554,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param stein1
 	 * @param posxy
 	 */
-	private void move(Spielfeld stein1, Spielfeld posxy) {
+	public void move(Spielfeld stein1, Spielfeld posxy) {
 		// Check Pusten
 		doCheckPusten(stein1);
 

@@ -15,8 +15,11 @@ public class EH_Spielbrett implements ActionListener {
 	private Spielbrett spielbrett;
 	private Color klickColor = new Color(130, 255, 174);
 	private Spiel spiel;
+	private boolean schlagMoeglich;
+	private ScrollPane sp;
 
 	private int[] buttonkoords = new int[2];
+	private int[] schlagStartKoords = new int[2];
 
 	public EH_Spielbrett(Spielbrett spielbrett) {
 		this.spielbrett = spielbrett;
@@ -50,7 +53,7 @@ public class EH_Spielbrett implements ActionListener {
 		for (int i = spielbrett.Spielfelder.length - 1; i >= 0; i--) {
 			for (int j = 0; j < spielbrett.Spielfelder[1].length; j++) {
 				if (spiel.getSpielbrett().getBrett()[i][j].getFarbe() == FarbEnum.schwarz) {
-					spielbrett.Spielfelder[j][i].setIcon(null);
+
 					if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur() != null) {
 
 						if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur().getFarbe() == FarbEnum.schwarz) {
@@ -71,6 +74,8 @@ public class EH_Spielbrett implements ActionListener {
 								spielbrett.Spielfelder[j][i].setIcon(icon);
 							}
 						}
+					} else {
+						spielbrett.Spielfelder[j][i].setIcon(null);
 					}
 				}
 			}
@@ -82,64 +87,182 @@ public class EH_Spielbrett implements ActionListener {
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		
+		
+		//------------------------------------------------------------------------------------#-------------------------------------________SPIELBRETT_________-------========_______ANFANG_=======------
+		if (schlagMoeglich == false) {
+			if (schonGeklickt(spielbrett.Spielfelder) == true) {
+				for (int i = 0; i < spielbrett.Spielfelder.length; i++) {
+					for (int j = 0; j < spielbrett.Spielfelder[i].length; j++) {
+						if (spielbrett.Spielfelder[j][i] == e.getSource()) {
+							if (spielbrett.Spielfelder[j][i].getBackground() == klickColor || spielbrett.Spielfelder[j][i].getBackground() == Color.black) {
+								if (spielbrett.Spielfelder[j][i].getBackground() == klickColor) {
+									spielbrett.Spielfelder[j][i].setBackground(Color.black);
+								} else {
+									spielbrett.Spielfelder[j][i].setBackground(klickColor);
+									if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur() == null) {
 
-		if (schonGeklickt(spielbrett.Spielfelder) == true) {
-			for (int i = 0; i < spielbrett.Spielfelder.length; i++) {
-				for (int j = 0; j < spielbrett.Spielfelder[i].length; j++) {
-					if (spielbrett.Spielfelder[j][i] == e.getSource()) {
-						if (spielbrett.Spielfelder[j][i].getBackground() == klickColor || spielbrett.Spielfelder[j][i].getBackground() == Color.black) {
-							if (spielbrett.Spielfelder[j][i].getBackground() == klickColor) {
-								spielbrett.Spielfelder[j][i].setBackground(Color.black);
-							} else {
-								spielbrett.Spielfelder[j][i].setBackground(klickColor);
-								if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur() == null) {
-									if (spiel.doTheMove(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
-										bewegeIcon(buttonkoords[0], buttonkoords[1], j, i);
-										spielbrett.Spielfelder[j][i].setBackground(Color.black);
-										spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
-										if (spiel.getActiveSpieler() == spiel.getSpieler()[0]) {
-											spiel.setActiveSpieler(spiel.getSpieler()[1]);
+										if (spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]].getSpielfigur().isDame() == true) {
+
+											if (spiel.moveDameLegit(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
+												spiel.move(spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]);
+											sp.addToTextArea("Zug von:"+spiel.getActiveSpieler().getFarbe()+". \n"+spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]].getSchachNotation()+" auf "+ spiel.getSpielbrett().getBrett()[i][j].getSchachNotation()+".");
+											
+											}
+											if (spiel.schlagenDameLegit(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
+												spiel.schlagenDame(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]);
+												if (spiel.schlagMoeglichDame(spiel.getSpielbrett().getBrett()[i][j]) == true) {
+													schlagMoeglich = true;
+
+													schlagStartKoords[0] = i;
+													schlagStartKoords[1] = j;
+													// Log Sagen Schlagmoeglich
+												} else {
+													schlagMoeglich = false;
+												}
+											} else {
+
+											}
+										} else if (spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]].getSpielfigur().isDame() == false) {
+
+											if (spiel.doMoveStein(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]) == false) {
+
+												if (spiel.doSchlagStein(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
+													if (spiel.SchlagMoeglich(spiel.getSpielbrett().getBrett()[i][j]) == true) {
+														schlagMoeglich = true;
+														schlagStartKoords[0] = i;
+														schlagStartKoords[1] = j;
+
+													} else {
+														schlagMoeglich = false;
+													}
+												} else {
+
+												}
+
+											}else{
+												sp.addToTextArea("Zug von:"+spiel.getActiveSpieler().getFarbe()+". \n"+spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]].getSchachNotation()+" auf "+ spiel.getSpielbrett().getBrett()[i][j].getSchachNotation()+".");
+											}
+										}
+
+										if (schlagMoeglich == false) {
+											spielbrett.Spielfelder[j][i].setBackground(Color.black);
+											spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
+											if (spiel.getActiveSpieler() == spiel.getSpieler()[0]) {
+												spiel.setActiveSpieler(spiel.getSpieler()[1]);
+											} else {
+												spiel.setActiveSpieler(spiel.getSpieler()[0]);
+											}
 										} else {
-											spiel.setActiveSpieler(spiel.getSpieler()[0]);
+
+											spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
 										}
 										setzeSteine();
 									} else {
-										spielbrett.Spielfelder[j][i].setBackground(Color.black);
-										spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
+
 									}
 								}
 
 							}
-							spielbrett.Spielfelder[buttonkoords[0]][buttonkoords[1]].setBackground(Color.black);
-							spielbrett.Spielfelder[j][i].setBackground(Color.black);
+
 						}
 					}
 				}
-			}
-		} else {
-			for (int i = 0; i < spielbrett.Spielfelder.length; i++) {
-				for (int j = 0; j < spielbrett.Spielfelder[i].length; j++) {
-					if (spielbrett.Spielfelder[j][i] == e.getSource()) {
+			} else {
+				for (int i = 0; i < spielbrett.Spielfelder.length; i++) {
+					for (int j = 0; j < spielbrett.Spielfelder[i].length; j++) {
+						if (spielbrett.Spielfelder[j][i] == e.getSource()) {
 
-						if (spielbrett.Spielfelder[j][i].getBackground() == Color.black) {
-							if (spielbrett.Spielfelder[j][i].getIcon() != null) {
-								spielbrett.Spielfelder[j][i].setBackground(klickColor);
+							if (spielbrett.Spielfelder[j][i].getBackground() == Color.black) {
+								if (spielbrett.Spielfelder[j][i].getIcon() != null) {
+									spielbrett.Spielfelder[j][i].setBackground(klickColor);
+								}
 							}
 						}
 					}
 				}
 			}
-		}
 
+		} else {
+			for (int i = 0; i < spielbrett.Spielfelder.length; i++) {
+				for (int j = 0; j < spielbrett.Spielfelder[i].length; j++) {
+					if (spielbrett.Spielfelder[j][i] == e.getSource()) {
+						if (spielbrett.Spielfelder[j][i].getBackground() == Color.black) {
+							if (spielbrett.Spielfelder[j][i].getIcon() == null) {
+								if (spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]].getSpielfigur().isDame() == true) {
+									if (spiel.schlagenDameLegit(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
+										spiel.schlagenDame(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]], spiel.getSpielbrett().getBrett()[i][j]);
+										if (spiel.schlagMoeglichDame(spiel.getSpielbrett().getBrett()[i][j]) == true) {
+											schlagMoeglich = true;
+
+											schlagStartKoords[0] = i;
+											schlagStartKoords[1] = j;
+											// Log Sagen Schlagmoeglich
+										} else {
+											schlagMoeglich = false;
+										}}
+																	
+								
+								
+								}else if (spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]].getSpielfigur().isDame() == false) {
+									if (spiel.doSchlagStein(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]], spiel.getSpielbrett().getBrett()[i][j]) == true) {
+										if (spiel.SchlagMoeglich(spiel.getSpielbrett().getBrett()[i][j]) == true) {
+											schlagMoeglich = true;
+											schlagStartKoords[0] = i;
+											schlagStartKoords[1] = j;
+
+										} else {
+											schlagMoeglich = false;
+										}
+									} else {
+
+									}
+								}		
+
+								if (schlagMoeglich == false) {
+									spielbrett.Spielfelder[j][i].setBackground(Color.black);
+									spielbrett.Spielfelder[schlagStartKoords[0]][schlagStartKoords[1]].setBackground(Color.black);
+									if (spiel.getActiveSpieler() == spiel.getSpieler()[0]) {
+										spiel.setActiveSpieler(spiel.getSpieler()[1]);
+									} else {
+										spiel.setActiveSpieler(spiel.getSpieler()[0]);
+									}
+								} else {
+
+									spielbrett.Spielfelder[schlagStartKoords[0]][schlagStartKoords[1]].setBackground(Color.black);
+								}
+								setzeSteine();
+							}
+						}
+					}
+				}
+			}
+
+		}
+		
+		
+		
+		
+	//------------------------------------------------------------------------------------#-------------------------------------________SPIELBRETT_________-------========_______ENDE_____=======------
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 
 	/**
 	 * JAVAVA JVAJVA VAVJAVAVAVJ DOCCCCCCCCCCCC PLPPLLSLLSLSLSLSSSSSSS!!!!
 	 */
-	private void bewegeIcon(int i, int j, int j2, int i2) {
-		spielbrett.Spielfelder[j2][i2].setIcon(spielbrett.Spielfelder[i][j].getIcon());
-		spielbrett.Spielfelder[i][j].setIcon(null);
-	}
+//	private void bewegeIcon(int i, int j, int j2, int i2) {
+//		spielbrett.Spielfelder[j2][i2].setIcon(spielbrett.Spielfelder[i][j].getIcon());
+//		spielbrett.Spielfelder[i][j].setIcon(null);
+//	}
 
 	/**
 	 * JAVAVA JVAJVA VAVJAVAVAVJ DOCCCCCCCCCCCC PLPPLLSLLSLSLSLSSSSSSS!!!!
@@ -148,6 +271,11 @@ public class EH_Spielbrett implements ActionListener {
 		this.spiel = spiel;
 		this.spielbrett = spielbrett;
 		setzeSteine();
+	}
+
+	public void setScrollPane(ScrollPane sp) {
+	this.sp=sp;
+		
 	}
 
 }
