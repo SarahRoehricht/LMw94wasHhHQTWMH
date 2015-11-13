@@ -32,6 +32,29 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jd_laden.dispose();
 			menu.jfc_speichernVorLaden.setVisible(true);
 			menu.jfc_speichernVorLaden.showSaveDialog(menu);
+
+			menu.jfc_speichernVorLaden.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile().getName();
+			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter().getDescription();
+			String pfad = menu.jfc_speichernVorLaden.getSelectedFile().getAbsolutePath();
+			int pfadLaenge = pfad.length();
+			int dateiNameLaenge = dateiName.length();
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
+
+			/******** Testausgabe **********/
+			System.out.println(dateiName + "." + dateiTyp);
+			System.out.println(pfad);
+			System.out.println(pfadOhneDateiname);
+			/****************************/
+
+			if (dateiTyp.equals("csv")) {
+				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
+			}
+			if (dateiTyp.equals("ser")) {
+				// spiel.saveSerialize(filename);
+			} else {
+				// PDF speichern
+			}
 		}
 		if (e.getSource() == menu.vorLadenSpeichern_nein) {
 			menu.jd_laden.dispose();
@@ -96,23 +119,23 @@ public class EH_MenuLeiste implements ActionListener {
 
 		// Speichern
 		if (e.getSource() == menu.jmi_speichern) {
-			// menu.jfc_speichern.setVisible(true);
+			menu.jfc_speichern.setVisible(true);
 			menu.jfc_speichern.showSaveDialog(menu);
 
 			menu.jfc_speichern.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			String dateiName = menu.jfc_speichern.getSelectedFile().getName();
 			String dateiTyp = menu.jfc_speichern.getFileFilter().getDescription();
 			String pfad = menu.jfc_speichern.getSelectedFile().getAbsolutePath();
-			int pfadLaenge = pfad.length(); 
+			int pfadLaenge = pfad.length();
 			int dateiNameLaenge = dateiName.length();
-			String pfadOhneDateiname = pfad.substring(0,pfadLaenge-dateiNameLaenge);
-			
-			/********Testausgabe**********/
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
+
+			/******** Testausgabe **********/
 			System.out.println(dateiName + "." + dateiTyp);
 			System.out.println(pfad);
 			System.out.println(pfadOhneDateiname);
 			/****************************/
-			
+
 			if (dateiTyp.equals("csv")) {
 				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
 			}
