@@ -7,10 +7,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.FileFilter;
-
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -20,7 +16,6 @@ import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
@@ -69,6 +64,7 @@ public class MenuLeiste extends JFrame {
 	JPanel panel;
 	JFileChooser jfc_laden;
 	JFileChooser jfc_speichern;
+	JFileChooser jfc_speichernVorLaden;
 	FileNameExtensionFilter filter_csv;
 	FileNameExtensionFilter filter_ser;
 	FileNameExtensionFilter filter_pdf;
@@ -269,6 +265,12 @@ public class MenuLeiste extends JFrame {
 		jfc_speichern.addChoosableFileFilter(filter_csv);
 		jfc_speichern.addChoosableFileFilter(filter_ser);
 		jfc_speichern.addChoosableFileFilter(filter_pdf);
+		
+		jfc_speichernVorLaden = new JFileChooser(".");
+		jfc_speichernVorLaden.removeChoosableFileFilter(jfc_speichernVorLaden.getChoosableFileFilters()[0]);
+		jfc_speichernVorLaden.addChoosableFileFilter(filter_csv);
+		jfc_speichernVorLaden.addChoosableFileFilter(filter_ser);
+		jfc_speichernVorLaden.addChoosableFileFilter(filter_pdf);
 
 		jp_laden = new JPanel();
 		jp_neuesSpiel = new JPanel();
