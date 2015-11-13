@@ -6,6 +6,11 @@ import java.io.IOException;
 import javax.swing.JFileChooser;
 import backend.Spiel;
 
+/**
+ * 
+ * @author A2
+ *
+ */
 public class EH_MenuLeiste implements ActionListener {
 
 	MenuLeiste menu = null;
@@ -81,7 +86,6 @@ public class EH_MenuLeiste implements ActionListener {
 					try {
 						spiel.laden(dateiName, "csv");
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 				} else {
@@ -92,8 +96,6 @@ public class EH_MenuLeiste implements ActionListener {
 					}
 				}
 			}
-			// altes Spiel laden
-			// neues Spiel laden
 		}
 
 		// Neues Spiel starten möglich , nur wenn Spiel != null
@@ -181,10 +183,11 @@ public class EH_MenuLeiste implements ActionListener {
 		}
 
 		if (e.getSource() == menu.hintergrundAendern) {
-
+			// muss noch erstellt werden
 		}
 
 		if (e.getSource() == menu.SteineFarbeAendern) {
+			// muss noch erstellt werden
 		}
 
 		if (e.getSource() == menu.spielBeschreibung) {

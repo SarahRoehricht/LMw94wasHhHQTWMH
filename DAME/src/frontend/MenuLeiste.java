@@ -25,6 +25,11 @@ import javax.swing.JTextPane;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.html.HTMLEditorKit;
 
+/**
+ * 
+ * @author A2
+ *
+ */
 public class MenuLeiste extends JFrame {
 
 	private static final long serialVersionUID = 1L;
