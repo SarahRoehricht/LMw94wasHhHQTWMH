@@ -6,8 +6,11 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.GridLayout;
 import java.awt.Insets;
+import java.awt.Dialog.ModalityType;
+
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
@@ -19,7 +22,14 @@ public class Spielbrett {
 	public JButton[][] Spielfelder = new JButton[12][12];
 	private JPanel Spielbrett;
 	EH_Spielbrett eh;
-	
+	JDialog pustDialog= new JDialog();
+	JPanel pustDialogpanel= new JPanel(new BorderLayout());
+	JPanel pustDialogTextPanel= new JPanel(new BorderLayout());
+	JLabel pustDialogText1= new JLabel("", SwingConstants.CENTER);
+	JLabel pustDialogText2 =  new JLabel("", SwingConstants.CENTER);
+JPanel	pustDialogpanelSouth = new JPanel();
+	JButton pustDialogButton1= new JButton();
+	JButton pustDialogButton2= new JButton();
 	private static final String spaltenbuchstaben = "ABCDEFGHIJKL";
 	
 	
@@ -28,7 +38,26 @@ public class Spielbrett {
 		Spielbrett= new JPanel();
 		Spielbrett.setLayout(new GridLayout(0,14));
 		gui.add(Spielbrett);
+		pustDialog.setTitle("Pusten!");
+	 
+		pustDialogTextPanel.add(pustDialogText1, BorderLayout.NORTH);
+		pustDialogTextPanel.add(pustDialogText2, BorderLayout.CENTER);
+		pustDialogpanelSouth.add(pustDialogButton1);
+		pustDialogpanelSouth.add(pustDialogButton2);
+		pustDialogpanel.add(pustDialogpanelSouth, BorderLayout.SOUTH);
+		pustDialogpanel.add(pustDialogTextPanel, BorderLayout.CENTER);
+		pustDialog.add(pustDialogpanel);
+		
+		pustDialog.setModalityType(ModalityType.APPLICATION_MODAL);
+		pustDialog.setSize(500,200);
+		pustDialog.setMinimumSize(pustDialog.getPreferredSize());
+		pustDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		pustDialog.setLocationRelativeTo(null);
+		
+		
+		
 		Spielbrett.setBorder(new LineBorder(Color.black));
+
 		Insets buttonMargin = new Insets(1,1,1,1);
 		
 		for (int i = Spielfelder.length-1; i>=0; i--) {

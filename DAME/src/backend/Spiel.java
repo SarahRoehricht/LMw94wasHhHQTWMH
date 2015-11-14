@@ -354,7 +354,58 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 //		}
 //		return true;
 //	}
+	public boolean moveDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+		if (dameStartZiel(player1, startfeld, zielfeld) == "nope") {
+			return false;
+		}
 
+		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
+
+			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i] == zielfeld) {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			}
+		}
+		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
+			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i] == zielfeld) {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			}
+		}
+		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
+			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i] == zielfeld) {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			}
+		}
+		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
+			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
+				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() == null) {
+					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i] == zielfeld) {
+						return true;
+					}
+				} else {
+					return false;
+				}
+			}
+		}
+		return false;
+	}
 	/**
 	 * Untersucht Spielfigur mit dame=true auf startfeld, ob diese ein weiteres
 	 * mal schlagen kann
@@ -586,7 +637,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param zielfeld
 	 * @return boolean
 	 */
-	public boolean moveDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+	public boolean p(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "nope") {
 			return false;
 		}
@@ -1186,7 +1237,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 					// up
 					// legit
 
-					move(startfeld, zielfeld);
+					
 					return true;
 
 				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
@@ -1195,7 +1246,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 					// up
 					// legit
 
-					move(startfeld, zielfeld);
+				
 					return true;
 
 				} else if (startfeld.getPosX() - 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) { // Zielfeld:
@@ -1232,7 +1283,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 				// down
 				// legit
 
-				move(startfeld, zielfeld);
+				
 				return true;
 
 			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() - 1 == zielfeld.getPosY()) {// Zielfeld:
@@ -1241,7 +1292,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 				// down
 				// legit
 
-				move(startfeld, zielfeld);
+				
 				return true;
 
 			} else if (startfeld.getPosX() + 1 == zielfeld.getPosX() && startfeld.getPosY() + 1 == zielfeld.getPosY()) {// Zielfeld:
@@ -1419,7 +1470,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * 
 	 * @param player1
 	 */
-	private void checkAndGetDame(Spieler player1) {
+	public void checkAndGetDame(Spieler player1) {
 		if (player1.getFarbe() == FarbEnum.weiss) {
 			for (int i = 0; i < spielbrett.getBrett().length; i++) {
 				if (spielbrett.getBrett()[11][i].getSpielfigur() != null && spielbrett.getBrett()[11][i].getSpielfigur().isDame() == false) {
@@ -1555,8 +1606,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param posxy
 	 */
 	public void move(Spielfeld stein1, Spielfeld posxy) {
-		// Check Pusten
-		doCheckPusten(stein1);
+		
 
 		//
 		posxy.setSpielfigur(stein1.getSpielfigur());// Setzt Spielfigur auf
@@ -1575,129 +1625,47 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param stein1
 	 * @return boolean
 	 */
-	private boolean doCheckPusten(Spielfeld stein1) {
-		Spielfeld[] pustenarr = new Spielfeld[3];
-		int z = 0;
+	public ArrayList<int[]> doCheckPusten(Spielfeld stein1) {
+		
+		ArrayList<int[]> Spielfeldkoords= new ArrayList<int[]>();
+		
+		
 		for (int i = 0; i < spielbrett.getBrett().length; i++) {
 			for (int j = 0; j < spielbrett.getBrett()[i].length; j++) {
 				if (spielbrett.getBrett()[j][i].getSpielfigur() != null) {
+					
 					if (spielbrett.getBrett()[j][i].getSpielfigur().getFarbe() == stein1.getSpielfigur().getFarbe()) {
 
 						if (spielbrett.getBrett()[j][i].getSpielfigur().isDame() == false) {
 							if (SchlagMoeglich(spielbrett.getBrett()[j][i]) == true) {
-								pustenarr[z] = spielbrett.getBrett()[j][i];
-								z++;
+								int[] spielfeldkoord= new int[2];
+								spielfeldkoord[0]=j;
+								spielfeldkoord[1]=i;
+								Spielfeldkoords.add(spielfeldkoord);
 							}
 						} else {
 							if (schlagMoeglichDame(spielbrett.getBrett()[j][i]) == true) {
-								pustenarr[z] = spielbrett.getBrett()[j][i];
-								z++;
+								int[] spielfeldkoord= new int[2];
+								spielfeldkoord[0]=j;
+								spielfeldkoord[1]=i;
+								Spielfeldkoords.add(spielfeldkoord);
 							}
 						}
 					}
 				}
 			}
 		}
-		if (z > 0) {
-			askRemove(pustenarr);
-
-			return true;
-		} else {
-			return false;
-		}
+		return Spielfeldkoords;
 	}
 
-	/**
-	 * Fragt den Benutzer, welchen Stein er von 2 entfernen moechte.
-	 * 
-	 * @param pustenarr
-	 */
-	private void askRemove(Spielfeld[] pustenarr) {
-		Spielfeld moeglichkeit1 = pustenarr[0];
-
-		System.out.println("Es wurde gezogen, obwohl man haette schlagen koennen!!!");
-		if (pustenarr[1] == null) {
-			System.out.println("Spielstein an Stelle " + moeglichkeit1.getSchachNotation() + "(" + moeglichkeit1.getSpielfigur() + ") wird geloescht.");
-			removeSpielfigur(moeglichkeit1);
-		} else if (pustenarr[2] == null) {
-			Spielfeld moeglichkeit2 = pustenarr[1];
-			boolean askdone = false;
-			while (askdone == false) {
-				while (askdone == false) {
-					Scanner scanner = new Scanner(System.in);
-					System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
-					System.out.println(moeglichkeit1.getSpielfigur() + " auf Feld: " + moeglichkeit1.getSchachNotation() + " oder " + moeglichkeit2.getSpielfigur() + " auf Feld: " + moeglichkeit2.getSchachNotation() + "?");
-					String feld = scanner.nextLine();
-					if (checkLegitFeld(feld) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
-						break;
-					}
-					if (moeglichkeit1.getSchachNotation().equals(feld) || moeglichkeit2.getSchachNotation().equals(feld)) {
-						Spielfeld zielfeld = EingabeSpielfeld(feld);
-						if (moeglichkeit1.equals(zielfeld)) {
-							removeSpielfigur(moeglichkeit1);
-							askdone = true;
-						} else if (moeglichkeit2.equals(zielfeld)) {
-							removeSpielfigur(moeglichkeit2);
-							askdone = true;
-						} else {
-							System.out.println("Dieser Stein steht nicht zur Auswahl");
-							break;
-						}
-					} else {
-						break;
-					}
-
-					askdone = true;
-				}
-			}
-		} else {
-			boolean askdone = false;
-			while (askdone == false) {
-				while (askdone == false) {
-					Spielfeld moeglichkeit2 = pustenarr[1];
-					Spielfeld moeglichkeit3 = pustenarr[2];
-					Scanner scanner = new Scanner(System.in);
-					System.out.println("Von Welchem Stein moechtest du dich trennen? :)");
-					System.out.println(moeglichkeit1.getSpielfigur() + " auf Feld: " + moeglichkeit1.getSchachNotation() + " , " + moeglichkeit2.getSpielfigur() + " auf Feld: " + moeglichkeit2.getSchachNotation() + " oder , " + moeglichkeit3.getSpielfigur() + " auf Feld: " + moeglichkeit3.getSchachNotation()
-							+ "?");
-					String feld = scanner.nextLine();
-					if (checkLegitFeld(feld) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
-						break;
-					}
-					if (moeglichkeit1.getSchachNotation().equals(feld) || moeglichkeit2.getSchachNotation().equals(feld) || moeglichkeit3.getSchachNotation().equals(feld)) {
-						Spielfeld zielfeld = EingabeSpielfeld(feld);
-						if (moeglichkeit1.equals(zielfeld)) {
-							removeSpielfigur(moeglichkeit1);
-							askdone = true;
-						} else if (moeglichkeit2.equals(zielfeld)) {
-							removeSpielfigur(moeglichkeit2);
-							askdone = true;
-						} else if (moeglichkeit3.equals(zielfeld)) {
-						} else {
-
-							System.out.println("Dieser Stein steht nicht zur Auswahl");
-							break;
-						}
-					} else {
-						break;
-					}
-
-					askdone = true;
-				}
-			}
-		}
-
-	}
+	
 
 	/**
 	 * entfernt Spielfigur auf Spielbrett
 	 * 
 	 * @param removeSpielfigur
 	 */
-	private void removeSpielfigur(Spielfeld removeSpielfigur) {
-		System.out.println("Adieu " + removeSpielfigur.getSpielfigur() + " auf Feld: " + removeSpielfigur.getSchachNotation());
+	public void removeSpielfigur(Spielfeld removeSpielfigur) {
 		removeSpielfigur.setSpielfigur(null);
 
 	}
