@@ -30,6 +30,7 @@ public class Spielbrett {
 JPanel	pustDialogpanelSouth = new JPanel();
 	JButton pustDialogButton1= new JButton();
 	JButton pustDialogButton2= new JButton();
+	private Color schwarzFeldColor= new Color(156, 93, 82);
 	private static final String spaltenbuchstaben = "ABCDEFGHIJKL";
 	
 	
