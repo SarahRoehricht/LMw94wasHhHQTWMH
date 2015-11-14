@@ -1608,7 +1608,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	public void move(Spielfeld stein1, Spielfeld posxy) {
 		
 
-		//
+		if(stein1.getSpielfigur()!=null){
 		posxy.setSpielfigur(stein1.getSpielfigur());// Setzt Spielfigur auf
 		// Zielfeld.
 		// Setzt Spielfigur auf Startfeld auf null.
@@ -1616,14 +1616,14 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
 		stein1.setSpielfigur(null);
 		System.out.println(spielbrett);
-
+		}
 	}
 
 	/**
 	 * Ueberprueft ob gepustet werden muss, und fuehrt dass auch aus.
 	 * 
-	 * @param stein1
-	 * @return boolean
+	 * @param Spielfeld stein1
+	 * @return ArrayList<int[]>
 	 */
 	public ArrayList<int[]> doCheckPusten(Spielfeld stein1) {
 		

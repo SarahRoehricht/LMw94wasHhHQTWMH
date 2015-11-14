@@ -39,8 +39,9 @@ JPanel	pustDialogpanelSouth = new JPanel();
 		Spielbrett.setLayout(new GridLayout(0,14));
 		gui.add(Spielbrett);
 		pustDialog.setTitle("Pusten!");
-	 
-		pustDialogTextPanel.add(pustDialogText1, BorderLayout.NORTH);
+	 pustDialogButton1.addActionListener(eh);
+	 pustDialogButton2.addActionListener(eh);
+	 pustDialogTextPanel.add(pustDialogText1, BorderLayout.NORTH);
 		pustDialogTextPanel.add(pustDialogText2, BorderLayout.CENTER);
 		pustDialogpanelSouth.add(pustDialogButton1);
 		pustDialogpanelSouth.add(pustDialogButton2);

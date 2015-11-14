@@ -125,7 +125,7 @@ public class Spielfeld implements Serializable{
 	 */
 	public String getSchachNotation(){
 	int c = this.getPosY() + 1;
-			char d = 97;
+			char d = 'A';
 			d += getPosX();
 		return "" + d + c+"";
 		
