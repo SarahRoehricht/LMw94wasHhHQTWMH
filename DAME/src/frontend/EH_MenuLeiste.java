@@ -34,13 +34,18 @@ public class EH_MenuLeiste implements ActionListener {
 
 		}
 		if (e.getSource() == menu.jmi_laden && spiel == null) {
-			menu.jfc_speichernVorLaden.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile().getName();
-			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter().getDescription();
-			String pfad = menu.jfc_speichernVorLaden.getSelectedFile().getAbsolutePath();
+			menu.jfc_speichernVorLaden
+					.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile()
+					.getName();
+			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter()
+					.getDescription();
+			String pfad = menu.jfc_speichernVorLaden.getSelectedFile()
+					.getAbsolutePath();
 			int pfadLaenge = pfad.length();
 			int dateiNameLaenge = dateiName.length();
-			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge
+					- dateiNameLaenge);
 
 			/******** Testausgabe **********/
 			System.out.println(dateiName + "." + dateiTyp);
@@ -54,13 +59,18 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jfc_speichernVorLaden.setVisible(true);
 			menu.jfc_speichernVorLaden.showSaveDialog(menu);
 
-			menu.jfc_speichernVorLaden.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile().getName();
-			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter().getDescription();
-			String pfad = menu.jfc_speichernVorLaden.getSelectedFile().getAbsolutePath();
+			menu.jfc_speichernVorLaden
+					.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile()
+					.getName();
+			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter()
+					.getDescription();
+			String pfad = menu.jfc_speichernVorLaden.getSelectedFile()
+					.getAbsolutePath();
 			int pfadLaenge = pfad.length();
 			int dateiNameLaenge = dateiName.length();
-			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge
+					- dateiNameLaenge);
 
 			/******** Testausgabe **********/
 			System.out.println(dateiName + "." + dateiTyp);
@@ -83,7 +93,8 @@ public class EH_MenuLeiste implements ActionListener {
 			int rueckgabeWert = menu.jfc_laden.showOpenDialog(menu);
 			if (rueckgabeWert == JFileChooser.APPROVE_OPTION) {
 				String datei = menu.jfc_laden.getSelectedFile().getName();
-				String dateiName = datei.substring(0, menu.jfc_laden.getSelectedFile().getName().length() - 4);
+				String dateiName = datei.substring(0, menu.jfc_laden
+						.getSelectedFile().getName().length() - 4);
 				String dateiEndung = datei.substring(datei.length() - 3);
 				if (dateiEndung.equals("csv")) {
 					try {
@@ -126,8 +137,7 @@ public class EH_MenuLeiste implements ActionListener {
 		// Mensch RadioButton als default ausgewählt
 		menu.rb_mensch1.setSelected(true);
 		menu.rb_mensch2.setSelected(true);
-		// Bestätiegn Button nur klickbar, wenn erforderliche Angaben gemacht
-		// wurden
+
 		if (e.getSource() == menu.jb_bestaetigen) {
 			boolean dame1 = false;
 			boolean dame2 = false;
@@ -144,21 +154,29 @@ public class EH_MenuLeiste implements ActionListener {
 
 			String nameWeiß = menu.jt_spieler1.getText();
 			String nameSchwarz = menu.jt_spieler2.getText();
-
+			
 			if (e.getSource() == menu.jb_bestaetigen && (nameWeiß.length() < 3)) {
-				JOptionPane.showMessageDialog(null, "Spieler 1: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"Spieler 1: Ihr Name muss mindestens 3 Zeichen lang sein!",
+						"Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
-
+			
 			if (e.getSource() == menu.jb_bestaetigen && (nameSchwarz.length() < 3)) {
-				JOptionPane.showMessageDialog(null, "Spieler 2: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null,
+						"Spieler 2: Ihr Name muss mindestens 3 Zeichen lang sein!",
+						"Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
-			if (nameWeiß.equals(nameSchwarz)) {
-				JOptionPane.showMessageDialog(null, "Spieler 1 und Spieler 2 dürfen nicht den selben Namen besitzen!", "Fehlerhafte Eingabe!", JOptionPane.WARNING_MESSAGE);
+			if(e.getSource() == menu.jb_bestaetigen && nameWeiß.equals(nameSchwarz)){
+				JOptionPane.showMessageDialog(null,
+						"Spieler 1 und Spieler 2 dürfen nicht den selben Namen besitzen!",
+						"Fehlerhafte Eingabe!", JOptionPane.WARNING_MESSAGE);
+			} else {
+				System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz
+						+ ", " + dame2);
+				spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
+				menu.jf.dispose();
 			}
-
-			System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz + ", " + dame2);
-			spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
-			menu.jf.dispose();
+			
 		}
 
 		// Schliessen
@@ -178,13 +196,17 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jfc_speichern.setVisible(true);
 			menu.jfc_speichern.showSaveDialog(menu);
 
-			menu.jfc_speichern.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			menu.jfc_speichern
+					.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			String dateiName = menu.jfc_speichern.getSelectedFile().getName();
-			String dateiTyp = menu.jfc_speichern.getFileFilter().getDescription();
-			String pfad = menu.jfc_speichern.getSelectedFile().getAbsolutePath();
+			String dateiTyp = menu.jfc_speichern.getFileFilter()
+					.getDescription();
+			String pfad = menu.jfc_speichern.getSelectedFile()
+					.getAbsolutePath();
 			int pfadLaenge = pfad.length();
 			int dateiNameLaenge = dateiName.length();
-			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge
+					- dateiNameLaenge);
 
 			/******** Testausgabe **********/
 			System.out.println(dateiName + "." + dateiTyp);
