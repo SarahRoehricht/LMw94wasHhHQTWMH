@@ -1,9 +1,13 @@
 package frontend;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -14,19 +18,10 @@ import javax.swing.JTextField;
 
 import backend.Spiel;
 
-
-public class DameStartZielEingabe {
+public class DameStartZielEingabe implements FocusListener{
 
 	Spiel spiel;
-
-	public DameStartZielEingabe() {// JTextField jTF_Start_Ziel
-		JTFStartZiel();
-		spiel = new Spiel("Jonas", false, "Peter", false);
-		// this.jTF_Start_Ziel = jTF_Start_Ziel;
-		Font font;
-		font = new Font("ARIAL",Font.BOLD,14);
-		jTF_Start_Ziel.setFont(font);
-	}
+	EH_DameStartZielEingabe eh = null;
 
 	Container c;
 	JTextField jTF_Start_Ziel;
@@ -36,61 +31,73 @@ public class DameStartZielEingabe {
 	JFrame jf;
 	JButton jb;
 	JLabel jl;
+	Font font;
+
+	public DameStartZielEingabe() {
+		JTFStartZiel();
+		spiel = new Spiel("Jonas", false, "Peter", false);
+		// this.jTF_Start_Ziel = jTF_Start_Ziel;
+		
+		font = new Font("ARIAL", Font.BOLD, 14);
+		jTF_Start_Ziel.setFont(font);
+	}
 
 	public void JTFStartZiel() {
+		String s = "z.B. a5-b6";
 		jf = new JFrame();
 		jp = new JPanel();
+		jf.add(jp, BorderLayout.EAST);
 		jTF_Start_Ziel = new JTextField(7);
-		jb = new JButton();
-		jl = new JLabel();
-		jf.add(jp);
+		jTF_Start_Ziel.setText(s);
+		jTF_Start_Ziel.addFocusListener(new FocusListener() {
+
+			public void focusLost(FocusEvent e) {
+				if (jTF_Start_Ziel.getText().equals("")) {
+					jTF_Start_Ziel.setText(s);
+				}
+
+			}
+
+			public void focusGained(FocusEvent e) {
+				jTF_Start_Ziel.setText("");
+
+			}
+		});
+		jb = new JButton("los");
+		jl = new JLabel("Zugeingabe: ");
+		jp.add(jl);
 		jp.add(jTF_Start_Ziel);
 		jp.add(jb);
-		jp.add(jl);
-//		jf.setResizable(false);
+		jf.add(jp);
 		jb.setForeground(Color.BLUE);
-			ImageIcon Icon = new ImageIcon("check.png");
-			ImageIcon Icon2 = new ImageIcon("error.png");
-			
-			//jb.setIcon(Icon);
-			
-//			jb.setSize(50,50);
-		
-		// jTF_Start_Ziel.getText();
-
-		// c.add(jTF_Start_Ziel, BorderLayout.EAST);
-
-		// jTF_Start_Ziel.add(, BorderLayout.EAST);
-		// Texthandler = new NeueTestOberfläche();
-		// jTF_Start_Ziel.addActionListener((ActionListener) Texthandler);
-		jTF_Start_Ziel.setSize(300, 100);
+		ImageIcon Icon = new ImageIcon("check.png");
+		ImageIcon Icon2 = new ImageIcon("error.png");
+		jTF_Start_Ziel.setPreferredSize(new Dimension(90, 25));
+		jTF_Start_Ziel.setForeground(Color.LIGHT_GRAY);
 		jTF_Start_Ziel.setVisible(true);
-		jTF_Start_Ziel.setSize(300, 100);
-		jTF_Start_Ziel.setVisible(true);
-//		jp.setVisible(true); // 70-72 84-87 testing
-//		jf.setSize(1920, 1080);
-//		jf.setVisible(true);
-		jb.setSize(100,50);
+		jb.setPreferredSize(new Dimension(70, 25));
 		jb.setVisible(true);
-		jl.setSize(100,50);;
+		jl.setSize(100, 50);
 		jl.setVisible(true);
-		jTF_Start_Ziel.addActionListener(new EH_DameStartZielEingabe(this));
-		jb.addActionListener(new EH_DameStartZielEingabe(this));
-		
-//		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		jTF_Start_Ziel.addActionListener(eh);
+		jb.addActionListener(eh);
+
+	}
+
+	public Component getJPanel() {
+		return jp;
+	}
+
+	@Override
+	public void focusGained(FocusEvent e) {
+		// TODO Auto-generated method stub
 		
 	}
 
-//	public static void main(String[] args) {
-//		DameStartZielEingabe DEF = new DameStartZielEingabe();
-//
-//	}
-
-	
-	
-public Component getJPanel(){
-	return jp;
-}
-	
+	@Override
+	public void focusLost(FocusEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
