@@ -91,16 +91,32 @@ public class EH_Spielbrett implements ActionListener {
 		}
 	}
 public void spielerRotation(){
+	setzeSteine();
 	if (spiel.getActiveSpieler() == spiel.getSpieler()[0]) {
+		if(spiel.checkSiegkondition(spiel.getActiveSpieler())){
+			spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler()+" hat gewonnen.");
+			spielbrett.spielGewonnenDialog.setVisible(true);
+		}
 		spiel.checkAndGetDame(spiel.getActiveSpieler());
 		spiel.setActiveSpieler(spiel.getSpieler()[1]);
+		
 		sp.addToTextArea("Zug "+rundenZaehler+": "+spiel.getActiveSpieler().getFarbe());
+		if(spiel.getActiveSpieler().getKi()!=null){
+			spielbrett.kiDialog.setVisible(true);
+		}
 		rundenZaehler++;
 	} else {
+		if(spiel.checkSiegkondition(spiel.getActiveSpieler())){
+			spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler()+" hat gewonnen.");
+			spielbrett.spielGewonnenDialog.setVisible(true);
+		}
 		spiel.checkAndGetDame(spiel.getActiveSpieler());
 		spiel.setActiveSpieler(spiel.getSpieler()[0]);
-		sp.addToTextArea("Zug "+rundenZaehler+": "+spiel.getActiveSpieler().getFarbe());
 		
+		sp.addToTextArea("Zug "+rundenZaehler+": "+spiel.getActiveSpieler().getFarbe());
+		if(spiel.getActiveSpieler().getKi()!=null){
+			spielbrett.kiDialog.setVisible(true);
+		}
 	}
 }
 	/**
@@ -304,7 +320,7 @@ public void spielerRotation(){
 											
 											schlagStartKoords[0] = i;
 											schlagStartKoords[1] = j;
-											spielbrett.Spielfelder[schlagStartKoords[1]][schlagStartKoords[0]].setBackground(klickColor);
+											spielbrett.Spielfelder[j][i].setBackground(klickColor);
 											sp.addToTextArea(spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]]+" auf " +spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]].getSchachNotation() +" kann noch einmal schlagen.");
 										} else {
 											schlagMoeglich = false;
@@ -323,7 +339,7 @@ public void spielerRotation(){
 											spielbrett.Spielfelder[schlagStartKoords[1]][schlagStartKoords[0]].setBackground(Color.black);
 											schlagStartKoords[0] = i;
 											schlagStartKoords[1] = j;
-											spielbrett.Spielfelder[i][j].setBackground(klickColor);
+											spielbrett.Spielfelder[j][i].setBackground(klickColor);
 											sp.addToTextArea(spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]]+" auf " +spiel.getSpielbrett().getBrett()[schlagStartKoords[0]][schlagStartKoords[1]].getSchachNotation() +" kann noch einmal schlagen.");
 										} else {
 											schlagMoeglich = false;
@@ -341,7 +357,7 @@ public void spielerRotation(){
 									spielerRotation();
 								} else {
 
-									spielbrett.Spielfelder[schlagStartKoords[1]][schlagStartKoords[0]].setBackground(Color.black);
+									
 								}
 								setzeSteine();
 							}
@@ -373,7 +389,27 @@ public void spielerRotation(){
 			setzeSteine();
 		}
 		// ------------------------------------------------------------------------------------#-------------------------------------________PUSTENDIALOG_________-------========_______ENDE_=======------
-
+	
+		
+		
+		// ------------------------------------------------------------------------------------#-------------------------------------________SPIELGEWONNEN_________-------========_______ANFANG_=======------
+	
+		if(e.getSource()==spielbrett.spielGewonnenDialogButton){
+			spielbrett.spielGewonnenDialog.setVisible(false);
+		}
+		
+		// ------------------------------------------------------------------------------------#-------------------------------------________SPIELGEWONNEN_________-------========_______ENDE_=======------
+	// ------------------------------------------------------------------------------------#-------------------------------------________KIDIALOG_________-------========_______ANFANG_=======------
+		if(e.getSource()==spielbrett.kiButton){
+			spiel.act(spiel.getActiveSpieler());
+			sp.addToTextArea(spiel.getActiveSpieler()+"");
+			setzeSteine();
+			spielerRotation();
+			spielbrett.kiDialog.setVisible(false);
+			
+		}
+		
+	// ------------------------------------------------------------------------------------#-------------------------------------________KIDIALOG_________-------========_______ENDE_=======------
 	}
 
 

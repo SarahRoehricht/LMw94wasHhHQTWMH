@@ -50,7 +50,7 @@ public class MainWindow {
 		panel.add(sp.getJPanel(), BorderLayout.SOUTH);
 		panel.add(dsze.getJPanel(), BorderLayout.EAST);
 		panel.add(labelWestSpielerName, BorderLayout.WEST);
-		Spiel spiel = new Spiel("Harald", false, "Johannes", false);
+		Spiel spiel = new Spiel("Harald", false, "Johannes", true);
 		eh.setSpiel(spiel, spielbrett);
 		eh.setScrollPane(sp);
 		jf = new JFrame(title);

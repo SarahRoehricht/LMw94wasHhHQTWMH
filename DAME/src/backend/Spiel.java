@@ -141,19 +141,20 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * 
 	 */
 	// @Override
-//	public void act(Spieler player1) {
+	public void act(Spieler player1) {
 //		
 //		if (AnyMovesLeft(player1) == true) {
 //			if (player1.getKi() != null) {
-////				continueEnter("Ki am Zug druecke Enter");
-//				Spielfeld kiarray[] = new Spielfeld[2];
-//				kiarray = player1.getKi().kiAct(spielbrett.getBrett());
-//				Spielfeld startfeld = kiarray[0];
-//				Spielfeld zielfeld = kiarray[1];
-//				if (doTheMove(player1, startfeld, zielfeld) == false) {
-//					System.out.println("ungueltiger Zug!");
-//					throw new RuntimeErrorException(null, "KI BAUT MIST.");
+//				continueEnter("Ki am Zug druecke Enter");
+				Spielfeld kiarray[] = new Spielfeld[2];
+				kiarray = player1.getKi().kiAct(spielbrett.getBrett());
+				Spielfeld startfeld = kiarray[0];
+				Spielfeld zielfeld = kiarray[1];
+				if (doTheMove(player1, startfeld, zielfeld) == false) {
+					
+					throw new RuntimeErrorException(null, "KI BAUT MIST.");
 //				}
+				}}
 //			} else {
 //				Spielfeld spielerFeldArray[] = new Spielfeld[2];
 //				spielerFeldArray = eingabeSpielfeldSpieler(player1);
@@ -321,39 +322,49 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param zielfeld
 	 * @return
 	 */
-//	public boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
-//		if (startfeld.getSpielfigur().isDame() == true) {
-//			if (moveDameLegit(player1, startfeld, zielfeld) == true) {
-//				move(startfeld, zielfeld);
-//				return true;
-//			}
-//			if (schlagenDameLegit(player1, startfeld, zielfeld) == true) {
-//				schlagenDame(player1, startfeld, zielfeld);
-//				if (schlagMoeglichDame(zielfeld) == true) {
-//					askSchlagen(player1, zielfeld);
-//				}
-//			} else {
-//
-//				return false;
-//			}
-//		} else if (startfeld.getSpielfigur().isDame() == false) {
-//
-//			if (doMoveStein(player1, startfeld, zielfeld) == false) {
-//
-//				if (doSchlagStein(player1, startfeld, zielfeld) == true) {
-//					if (SchlagMoeglich(zielfeld) == true) {
-//						askSchlagen(player1, zielfeld);
-//
-//					}
-//				} else {
-//
-//					return false;
-//				}
-//
-//			}
-//		}
-//		return true;
-//	}
+	public boolean doTheMove(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
+		if (startfeld.getSpielfigur().isDame() == true) {
+			if (moveDameLegit(player1, startfeld, zielfeld) == true) {
+				move(startfeld, zielfeld);
+				return true;
+			}
+			if (schlagenDameLegit(player1, startfeld, zielfeld) == true) {
+				schlagenDame(player1, startfeld, zielfeld);
+				if (schlagMoeglichDame(zielfeld) == true) {
+					askSchlagen(player1, zielfeld);
+				}
+			} else {
+
+				return false;
+			}
+		} else if (startfeld.getSpielfigur().isDame() == false) {
+
+			if (doMoveStein(player1, startfeld, zielfeld) == false) {
+
+				if (doSchlagStein(player1, startfeld, zielfeld) == true) {
+					if (SchlagMoeglich(zielfeld) == true) {
+						askSchlagen(player1, zielfeld);
+
+					}
+				} else {
+
+					return false;
+				}
+
+			}else{
+				move(startfeld, zielfeld);
+			}
+		}
+		return true;
+	}
+	/**
+	 * Ueberprueft ob Dame sich bewegen kann von startfeld auf zielfeld.
+	 * 
+	 * @param player1
+	 * @param startfeld
+	 * @param zielfeld
+	 * @return boolean
+	 */
 	public boolean moveDameLegit(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
 		if (dameStartZiel(player1, startfeld, zielfeld) == "nope") {
 			return false;
@@ -415,12 +426,12 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 */
 	public boolean schlagMoeglichDame(Spielfeld startfeld) {
 
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
-			announceWinner(this.getSpieler()[0]);
-		}
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
-			announceWinner(this.getSpieler()[1]);
-		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+//			announceWinner(this.getSpieler()[0]);
+//		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+//			announceWinner(this.getSpieler()[1]);
+//		}
 		try {
 			for (int i = 1; i < spielbrett.getBrett().length - 2; i++) {
 				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() != null) {
@@ -629,67 +640,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		return false;
 	}
 
-	/**
-	 * Ueberprueft ob Dame sich bewegen kann von startfeld auf zielfeld.
-	 * 
-	 * @param player1
-	 * @param startfeld
-	 * @param zielfeld
-	 * @return boolean
-	 */
-	public boolean p(Spieler player1, Spielfeld startfeld, Spielfeld zielfeld) {
-		if (dameStartZiel(player1, startfeld, zielfeld) == "nope") {
-			return false;
-		}
-
-		if (dameStartZiel(player1, startfeld, zielfeld) == "top-right") {
-
-			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() + i] == zielfeld) {
-						return true;
-					}
-				} else {
-					return false;
-				}
-			}
-		}
-		if (dameStartZiel(player1, startfeld, zielfeld) == "top-left") {
-			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() + i][startfeld.getPosX() - i] == zielfeld) {
-						return true;
-					}
-				} else {
-					return false;
-				}
-			}
-		}
-		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-right") {
-			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() + i] == zielfeld) {
-						return true;
-					}
-				} else {
-					return false;
-				}
-			}
-		}
-		if (dameStartZiel(player1, startfeld, zielfeld) == "bottom-left") {
-			for (int i = 1; i < spielbrett.getBrett().length - 1; i++) {
-				if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i].getSpielfigur() == null) {
-					if (spielbrett.getBrett()[startfeld.getPosY() - i][startfeld.getPosX() - i] == zielfeld) {
-						return true;
-					}
-				} else {
-					return false;
-				}
-			}
-		}
-		return false;
-	}
-
+	
 	/**
 	 * Findet heraus in welche Richtung der Spieler mit der Dame ziehen moechte.
 	 * 
@@ -968,12 +919,12 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @return
 	 */
 	private boolean moveMoeglichDame(Spieler player1, Spielfeld startfeld) {
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
-			announceWinner(this.getSpieler()[0]);
-		}
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
-			announceWinner(this.getSpieler()[1]);
-		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+//			announceWinner(this.getSpieler()[0]);
+//		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+//			announceWinner(this.getSpieler()[1]);
+//		}
 
 		if (startfeld.getSpielfigur() == null) {
 			return false;
@@ -1037,12 +988,12 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @return
 	 */
 	private boolean moveMoeglich(Spieler player1, Spielfeld startfeld) {
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
-			announceWinner(this.getSpieler()[0]);
-		}
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
-			announceWinner(this.getSpieler()[1]);
-		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+//			announceWinner(this.getSpieler()[0]);
+//		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+//			announceWinner(this.getSpieler()[1]);
+//		}
 
 		if (startfeld.getSpielfigur() == null) {
 			return false;
@@ -1381,12 +1332,12 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		LoeschSteinAufFeld.setSpielfigur(null);
 
 		System.out.println(spielbrett);
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
-			announceWinner(this.getSpieler()[0]);
-		}
-		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
-			announceWinner(this.getSpieler()[1]);
-		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
+//			announceWinner(this.getSpieler()[0]);
+//		}
+//		if (nochSteineaufBrettandererSpieler(this.getSpieler()[1]) == false) {
+//			announceWinner(this.getSpieler()[1]);
+//		}
 
 	}
 
@@ -1498,9 +1449,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * 
 	 * @param player
 	 */
-	private boolean checkSiegkondition(Spieler player) { // Siegkondition, kann
-		// nicht
-		// mehr ziehen fehlt noch.
+	public boolean checkSiegkondition(Spieler player) { 
 		if (nochSteineaufBrettandererSpieler(player) == false) {
 			return true;
 		}

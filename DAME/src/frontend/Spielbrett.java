@@ -30,6 +30,16 @@ public class Spielbrett {
 JPanel	pustDialogpanelSouth = new JPanel();
 	JButton pustDialogButton1= new JButton();
 	JButton pustDialogButton2= new JButton();
+	JDialog spielGewonnenDialog = new JDialog();
+	JButton spielGewonnenDialogButton= new JButton();
+	JPanel spielGewonnenDialogPanel= new JPanel(new BorderLayout());
+	JLabel spielGewonnenText= new JLabel("", SwingConstants.CENTER);
+	
+	
+	JDialog kiDialog= new JDialog();
+	JPanel kipanel= new JPanel(new BorderLayout());
+	JLabel kilabel= new JLabel("", SwingConstants.CENTER);
+	JButton kiButton= new JButton();
 	private Color schwarzFeldColor= new Color(156, 93, 82);
 	private static final String spaltenbuchstaben = "ABCDEFGHIJKL";
 	
@@ -55,8 +65,27 @@ JPanel	pustDialogpanelSouth = new JPanel();
 		pustDialog.setMinimumSize(pustDialog.getPreferredSize());
 		pustDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
 		pustDialog.setLocationRelativeTo(null);
-		
-		
+		spielGewonnenDialogButton.setText("OK.");
+		spielGewonnenDialogButton.addActionListener(eh);
+		spielGewonnenDialogPanel.add(spielGewonnenDialogButton, BorderLayout.SOUTH);
+		spielGewonnenDialogPanel.add(spielGewonnenText);
+		spielGewonnenDialog.add(spielGewonnenDialogPanel);
+		spielGewonnenDialog.setModalityType(ModalityType.APPLICATION_MODAL);
+		spielGewonnenDialog.setSize(500,200);
+		spielGewonnenDialog.setMinimumSize(pustDialog.getPreferredSize());
+		spielGewonnenDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		spielGewonnenDialog.setLocationRelativeTo(null);
+		kilabel.setText("KI am Zug.");
+		kipanel.add(kilabel, BorderLayout.NORTH);
+		kiButton.setText("OK.");
+		kiButton.addActionListener(eh);
+		kipanel.add(kiButton, BorderLayout.SOUTH );
+		kiDialog.add(kipanel);
+		kiDialog.setModalityType(ModalityType.APPLICATION_MODAL);
+		kiDialog.setSize(500,200);
+		kiDialog.setMinimumSize(pustDialog.getPreferredSize());
+		kiDialog.setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
+		kiDialog.setLocationRelativeTo(null);
 		
 		Spielbrett.setBorder(new LineBorder(Color.black));
 
