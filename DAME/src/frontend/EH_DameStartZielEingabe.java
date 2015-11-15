@@ -8,8 +8,11 @@ import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 
+import backend.Spiel;
+
 public class EH_DameStartZielEingabe implements ActionListener {
 	DameStartZielEingabe DEF = null;
+	Spiel spiel;
 
 	public EH_DameStartZielEingabe(DameStartZielEingabe lol) {
 		this.DEF = lol;
@@ -35,7 +38,7 @@ public class EH_DameStartZielEingabe implements ActionListener {
 				String[] sz = new String[2];
 				sz = DEF.jTF_Start_Ziel.getText().split("-", 2);
 				
-				if ((DEF.spiel.doTheMove(DEF.spiel.getActiveSpieler(), DEF.spiel.EingabeSpielfeld(sz[0]), DEF.spiel.EingabeSpielfeld(sz[1])) == false)) {
+				if ((spiel.doTheMove(spiel.getActiveSpieler(), spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1])) == false)) {
 					// System.out.println("Falscher Zug bzw Zug nicht möglich erneute eingabe");
 					ausgabe = DEF.jTF_Start_Ziel.getText()+"ist kein gültiger Zug";
 					// sp.addToTextArea(ausgabe);
@@ -49,7 +52,7 @@ public class EH_DameStartZielEingabe implements ActionListener {
 					// DEF.jb.setIcon(Icon);
 				} else {
 					DEF.jl.setForeground(Color.green);
-					DEF.jl.setText(DEF.spiel.getActiveSpieler()+" hat von "+sz[0]+" nach "+sz[1]+ " gezogen");
+					DEF.jl.setText(spiel.getActiveSpieler()+" hat von "+sz[0]+" nach "+sz[1]+ " gezogen");
 					ausgabe = sz[0] + "-" + sz[1];
 					// System.out.println(ausgabe);
 					// sp.addToTextArea(ausgabe);
@@ -76,5 +79,7 @@ public class EH_DameStartZielEingabe implements ActionListener {
 
 		}
 	}
-
+public void setSpiel(Spiel spiel){
+	this.spiel=spiel;
+}
 }

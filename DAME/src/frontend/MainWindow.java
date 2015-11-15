@@ -21,26 +21,27 @@ public class MainWindow {
 	private JPanel panel;
 	private JPanel panelFuerLeiste;
 	private JPanel panelWest;
-	private JLabel labelWestSpielerName;
+	private JLabel spielerWeissName;
 	private JFrame jf;
 	private Rectangle bounds;
 	private Spielbrett spielbrett;
 	private ScrollPane sp;
 	private DameStartZielEingabe dsze;
 	GraphicsEnvironment env;
+	private JDialog spielStartDialog;
 
 	public MainWindow(String title) {
-		EH_Spielbrett eh = new EH_Spielbrett();
+		EventHandler eh = new EventHandler();
 		panel = new JPanel(new BorderLayout());
-		ml = new MenuLeiste();
+		ml = new MenuLeiste(eh);
 		spielbrett = new Spielbrett(eh);
 		sp = new ScrollPane();
 		dsze = new DameStartZielEingabe();
 		panelWest = new JPanel(new BorderLayout());
-		labelWestSpielerName = new JLabel();
-		labelWestSpielerName.setHorizontalAlignment(JLabel.RIGHT);
-		labelWestSpielerName.setVerticalAlignment(JLabel.BOTTOM);
-		panelWest.add(labelWestSpielerName, BorderLayout.SOUTH);
+		spielerWeissName = new JLabel();
+		spielerWeissName.setHorizontalAlignment(JLabel.RIGHT);
+		spielerWeissName.setVerticalAlignment(JLabel.BOTTOM);
+		panelWest.add(spielerWeissName, BorderLayout.SOUTH);
 		panelFuerLeiste = new JPanel(new BorderLayout());
 		panelFuerLeiste.add(ml.getJPanel(), BorderLayout.WEST);
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
@@ -49,17 +50,19 @@ public class MainWindow {
 		panel.add(spielbrett.getSpielbrett(), BorderLayout.CENTER);
 		panel.add(sp.getJPanel(), BorderLayout.SOUTH);
 		panel.add(dsze.getJPanel(), BorderLayout.EAST);
-		panel.add(labelWestSpielerName, BorderLayout.WEST);
-		Spiel spiel = new Spiel("Harald", false, "Johannes", true);
-		eh.setSpiel(spiel, spielbrett);
+		panel.add(spielerWeissName, BorderLayout.WEST);
+		spielStartDialog=ml.jd_neuesSpiel;
+
+		eh.setSpielbrett(spielbrett);
 		eh.setScrollPane(sp);
+		eh.setMenu(ml);
 		jf = new JFrame(title);
 
 		jf.setContentPane(panel);
 		jf.setSize(bounds.width, bounds.height);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setVisible(true);
-
+	spielStartDialog.setVisible(true);
 	}
 
 }

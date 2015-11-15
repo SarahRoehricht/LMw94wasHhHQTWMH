@@ -13,7 +13,7 @@ public enum FarbEnum implements Serializable{
 		@Override
 		public String toString() {
 			
-			return "Weiß";
+			return "Weiss";
 		}
 	}, nichts;
 	

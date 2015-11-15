@@ -35,7 +35,7 @@ public class MenuLeiste extends JFrame {
 	private static final long serialVersionUID = 1L;
 	GraphicsEnvironment env;
 	Rectangle bounds;
-	EH_MenuLeiste eh = new EH_MenuLeiste(this);
+	EventHandler eh;
 	/********* Für JPaneText *************/
 	JFrame f;
 	JTextPane pane;
@@ -113,8 +113,8 @@ public class MenuLeiste extends JFrame {
 
 	JMenuItem spielBeschreibung;
 
-	public MenuLeiste() {
-
+	public MenuLeiste(EventHandler eh) {
+this.eh=eh;
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		bounds = env.getMaximumWindowBounds();
 

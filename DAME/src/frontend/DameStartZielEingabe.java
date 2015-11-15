@@ -20,22 +20,22 @@ import backend.Spiel;
 
 public class DameStartZielEingabe implements FocusListener{
 
-	Spiel spiel;
-	EH_DameStartZielEingabe eh = null;
+	
+	EH_DameStartZielEingabe eh;
 
 	Container c;
 	JTextField jTF_Start_Ziel;
 	DameStartZielEingabe Texthandler;
 	String Startziel = "";
 	JPanel jp;
-	JFrame jf;
+	JPanel jpborderl= new JPanel(new BorderLayout());
 	JButton jb;
 	JLabel jl;
 	Font font;
+	JLabel spielerSchwarzName= new JLabel();
 
 	public DameStartZielEingabe() {
 		JTFStartZiel();
-		spiel = new Spiel("Jonas", false, "Peter", false);
 		// this.jTF_Start_Ziel = jTF_Start_Ziel;
 		
 		font = new Font("ARIAL", Font.BOLD, 14);
@@ -44,9 +44,9 @@ public class DameStartZielEingabe implements FocusListener{
 
 	public void JTFStartZiel() {
 		String s = "z.B. a5-b6";
-		jf = new JFrame();
+		jpborderl.add(spielerSchwarzName);
 		jp = new JPanel();
-		jf.add(jp, BorderLayout.EAST);
+		jpborderl.add(jp, BorderLayout.SOUTH);
 		jTF_Start_Ziel = new JTextField(7);
 		jTF_Start_Ziel.setText(s);
 		jTF_Start_Ziel.addFocusListener(new FocusListener() {
@@ -68,7 +68,7 @@ public class DameStartZielEingabe implements FocusListener{
 		jp.add(jl);
 		jp.add(jTF_Start_Ziel);
 		jp.add(jb);
-		jf.add(jp);
+		
 		jb.setForeground(Color.BLUE);
 		ImageIcon Icon = new ImageIcon("check.png");
 		ImageIcon Icon2 = new ImageIcon("error.png");
@@ -85,7 +85,7 @@ public class DameStartZielEingabe implements FocusListener{
 	}
 
 	public Component getJPanel() {
-		return jp;
+		return jpborderl;
 	}
 
 	@Override

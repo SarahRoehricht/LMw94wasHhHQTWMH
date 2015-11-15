@@ -21,7 +21,7 @@ public class Spielbrett {
 	
 	public JButton[][] Spielfelder = new JButton[12][12];
 	private JPanel Spielbrett;
-	EH_Spielbrett eh;
+	EventHandler eh;
 	JDialog pustDialog= new JDialog();
 	JPanel pustDialogpanel= new JPanel(new BorderLayout());
 	JPanel pustDialogTextPanel= new JPanel(new BorderLayout());
@@ -44,7 +44,7 @@ JPanel	pustDialogpanelSouth = new JPanel();
 	private static final String spaltenbuchstaben = "ABCDEFGHIJKL";
 	
 	
-	public Spielbrett(EH_Spielbrett eh){
+	public Spielbrett(EventHandler eh){
 		this.eh=eh;
 		Spielbrett= new JPanel();
 		Spielbrett.setLayout(new GridLayout(0,14));
@@ -104,7 +104,7 @@ JPanel	pustDialogpanelSouth = new JPanel();
 				
 				b.setBackground(Color.white);
 			}
-			b.setText(""+i+j);
+			
 			Spielfelder[j][i]=b;
 			b.addActionListener(eh);
 			}

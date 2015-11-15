@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-
 import backend.FarbEnum;
 import backend.Spiel;
 
@@ -29,9 +26,7 @@ public class EH_Spielbrett implements ActionListener {
 	private int[] pusten1 = new int[2];
 	private int[] pusten2 = new int[2];
 
-	public EH_Spielbrett(Spielbrett spielbrett) {
-		this.spielbrett = spielbrett;
-	}
+	
 
 	public EH_Spielbrett() {
 
@@ -70,16 +65,16 @@ public class EH_Spielbrett implements ActionListener {
 								ImageIcon icon = new ImageIcon("Schwarz.gif");
 								spielbrett.Spielfelder[j][i].setIcon(icon);
 							} else {
-								ImageIcon icon = new ImageIcon("Dame.png");
+								ImageIcon icon = new ImageIcon("SchwarzDame.png");
 								spielbrett.Spielfelder[j][i].setIcon(icon);
 							}
 						} else {
 							if (spiel.getSpielbrett().getBrett()[i][j].getSpielfigur().isDame() == false) {
 
-								ImageIcon icon = new ImageIcon("Weiss.png");
+								ImageIcon icon = new ImageIcon("Dame_Stein_weiss_klein.png");
 								spielbrett.Spielfelder[j][i].setIcon(icon);
 							} else {
-								ImageIcon icon = new ImageIcon("WeissDame.png");
+								ImageIcon icon = new ImageIcon("Dame_Dame_weiss_klein.png");
 								spielbrett.Spielfelder[j][i].setIcon(icon);
 							}
 						}
@@ -416,15 +411,18 @@ public void spielerRotation(){
 	/**
 	 * JAVAVA JVAJVA VAVJAVAVAVJ DOCCCCCCCCCCCC PLPPLLSLLSLSLSLSSSSSSS!!!!
 	 */
-	public void setSpiel(Spiel spiel, Spielbrett spielbrett) {
+	public void setSpiel(Spiel spiel) {
 		this.spiel = spiel;
-		this.spielbrett = spielbrett;
-		setzeSteine();
 	}
 
 	public void setScrollPane(ScrollPane sp) {
 		this.sp = sp;
 
+	}
+
+	public void setSpielbrett(Spielbrett spielbrett) {
+	this.spielbrett=spielbrett;
+		
 	}
 
 }

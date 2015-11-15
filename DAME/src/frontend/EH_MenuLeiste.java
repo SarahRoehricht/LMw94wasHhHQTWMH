@@ -15,13 +15,14 @@ import backend.Spiel;
  *
  */
 public class EH_MenuLeiste implements ActionListener {
-
+	EH_DameStartZielEingabe ehdsze;
+	EH_Spielbrett ehs;
 	MenuLeiste menu = null;
 	Spiel spiel;
 
 	public EH_MenuLeiste(MenuLeiste menu) {
 		this.menu = menu;
-		spiel = new Spiel();
+		
 	}
 
 	@Override
@@ -174,6 +175,12 @@ public class EH_MenuLeiste implements ActionListener {
 				System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz
 						+ ", " + dame2);
 				spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
+			
+		//v unnoetig, falls ein EH genutzt wird.
+		ehs.setSpiel(spiel);
+		ehdsze.setSpiel(spiel);
+		ehs.setzeSteine();
+			//^	
 				menu.jf.dispose();
 			}
 			
