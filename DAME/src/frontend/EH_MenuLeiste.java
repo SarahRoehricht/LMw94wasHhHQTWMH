@@ -22,7 +22,7 @@ public class EH_MenuLeiste implements ActionListener {
 
 	public EH_MenuLeiste(MenuLeiste menu) {
 		this.menu = menu;
-		
+
 	}
 
 	@Override
@@ -35,18 +35,13 @@ public class EH_MenuLeiste implements ActionListener {
 
 		}
 		if (e.getSource() == menu.jmi_laden && spiel == null) {
-			menu.jfc_speichernVorLaden
-					.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile()
-					.getName();
-			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter()
-					.getDescription();
-			String pfad = menu.jfc_speichernVorLaden.getSelectedFile()
-					.getAbsolutePath();
+			menu.jfc_speichernVorLaden.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile().getName();
+			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter().getDescription();
+			String pfad = menu.jfc_speichernVorLaden.getSelectedFile().getAbsolutePath();
 			int pfadLaenge = pfad.length();
 			int dateiNameLaenge = dateiName.length();
-			String pfadOhneDateiname = pfad.substring(0, pfadLaenge
-					- dateiNameLaenge);
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
 
 			/******** Testausgabe **********/
 			System.out.println(dateiName + "." + dateiTyp);
@@ -60,18 +55,13 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jfc_speichernVorLaden.setVisible(true);
 			menu.jfc_speichernVorLaden.showSaveDialog(menu);
 
-			menu.jfc_speichernVorLaden
-					.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile()
-					.getName();
-			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter()
-					.getDescription();
-			String pfad = menu.jfc_speichernVorLaden.getSelectedFile()
-					.getAbsolutePath();
+			menu.jfc_speichernVorLaden.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile().getName();
+			String dateiTyp = menu.jfc_speichernVorLaden.getFileFilter().getDescription();
+			String pfad = menu.jfc_speichernVorLaden.getSelectedFile().getAbsolutePath();
 			int pfadLaenge = pfad.length();
 			int dateiNameLaenge = dateiName.length();
-			String pfadOhneDateiname = pfad.substring(0, pfadLaenge
-					- dateiNameLaenge);
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
 
 			/******** Testausgabe **********/
 			System.out.println(dateiName + "." + dateiTyp);
@@ -94,8 +84,7 @@ public class EH_MenuLeiste implements ActionListener {
 			int rueckgabeWert = menu.jfc_laden.showOpenDialog(menu);
 			if (rueckgabeWert == JFileChooser.APPROVE_OPTION) {
 				String datei = menu.jfc_laden.getSelectedFile().getName();
-				String dateiName = datei.substring(0, menu.jfc_laden
-						.getSelectedFile().getName().length() - 4);
+				String dateiName = datei.substring(0, menu.jfc_laden.getSelectedFile().getName().length() - 4);
 				String dateiEndung = datei.substring(datei.length() - 3);
 				if (dateiEndung.equals("csv")) {
 					try {
@@ -135,55 +124,55 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jf.dispose();
 		}
 
-		// Mensch RadioButton als default ausgewählt
-		menu.rb_mensch1.setSelected(true);
-		menu.rb_mensch2.setSelected(true);
-
 		if (e.getSource() == menu.jb_bestaetigen) {
-			boolean dame1 = false;
-			boolean dame2 = false;
-			if (menu.rb_ki1.isSelected()) {
-				dame1 = true;
-			} else {
-				dame1 = false;
-			}
-			if (menu.rb_ki2.isSelected()) {
-				dame2 = true;
-			} else {
-				dame2 = false;
-			}
+			// Mensch RadioButton als default ausgewählt
+				menu.rb_mensch1.setSelected(true);
+				menu.rb_mensch2.setSelected(true);
+				boolean dame1 = false;
+				boolean dame2 = false;
+				if (menu.rb_ki1.isSelected()) {
+					menu.rb_ki1.setSelected(true);
+					menu.rb_mensch1.setSelected(false);
+					dame1 = true;
+				} else {
+					menu.rb_ki1.setSelected(false);
+					menu.rb_mensch1.setSelected(true);
+					dame1 = false;
+				}
+				if (menu.rb_ki2.isSelected()) {
+					menu.rb_mensch2.setSelected(false);
+					menu.rb_ki2.setSelected(true);
+					dame2 = true;
+				} else {
+					menu.rb_mensch2.setSelected(true);
+					menu.rb_ki2.setSelected(false);
+					dame2 = false;
+				}
 
 			String nameWeiß = menu.jt_spieler1.getText();
 			String nameSchwarz = menu.jt_spieler2.getText();
-			
+
 			if (e.getSource() == menu.jb_bestaetigen && (nameWeiß.length() < 3)) {
-				JOptionPane.showMessageDialog(null,
-						"Spieler 1: Ihr Name muss mindestens 3 Zeichen lang sein!",
-						"Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Spieler 1: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
-			
+
 			if (e.getSource() == menu.jb_bestaetigen && (nameSchwarz.length() < 3)) {
-				JOptionPane.showMessageDialog(null,
-						"Spieler 2: Ihr Name muss mindestens 3 Zeichen lang sein!",
-						"Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Spieler 2: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
-			if(e.getSource() == menu.jb_bestaetigen && nameWeiß.equals(nameSchwarz)){
-				JOptionPane.showMessageDialog(null,
-						"Spieler 1 und Spieler 2 dürfen nicht den selben Namen besitzen!",
-						"Fehlerhafte Eingabe!", JOptionPane.WARNING_MESSAGE);
+			if (e.getSource() == menu.jb_bestaetigen && nameWeiß.equals(nameSchwarz)) {
+				JOptionPane.showMessageDialog(null, "Spieler 1 und Spieler 2 dürfen nicht den selben Namen besitzen!", "Fehlerhafte Eingabe!", JOptionPane.WARNING_MESSAGE);
 			} else {
-				System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz
-						+ ", " + dame2);
+				System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz + ", " + dame2);
 				spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
-			
-		//v unnoetig, falls ein EH genutzt wird.
-		ehs.setSpiel(spiel);
-		ehdsze.setSpiel(spiel);
-		ehs.setzeSteine();
-			//^	
+
+				// v unnoetig, falls ein EH genutzt wird.
+				ehs.setSpiel(spiel);
+				ehdsze.setSpiel(spiel);
+				ehs.setzeSteine();
+				// ^
 				menu.jf.dispose();
 			}
-			
+
 		}
 
 		// Schliessen
@@ -203,17 +192,13 @@ public class EH_MenuLeiste implements ActionListener {
 			menu.jfc_speichern.setVisible(true);
 			menu.jfc_speichern.showSaveDialog(menu);
 
-			menu.jfc_speichern
-					.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			menu.jfc_speichern.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			String dateiName = menu.jfc_speichern.getSelectedFile().getName();
-			String dateiTyp = menu.jfc_speichern.getFileFilter()
-					.getDescription();
-			String pfad = menu.jfc_speichern.getSelectedFile()
-					.getAbsolutePath();
+			String dateiTyp = menu.jfc_speichern.getFileFilter().getDescription();
+			String pfad = menu.jfc_speichern.getSelectedFile().getAbsolutePath();
 			int pfadLaenge = pfad.length();
 			int dateiNameLaenge = dateiName.length();
-			String pfadOhneDateiname = pfad.substring(0, pfadLaenge
-					- dateiNameLaenge);
+			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
 
 			/******** Testausgabe **********/
 			System.out.println(dateiName + "." + dateiTyp);

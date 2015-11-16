@@ -435,21 +435,30 @@ public class EventHandler implements ActionListener {
 			menu.jf.dispose();
 		}
 
-		// Mensch RadioButton als default ausgewählt
-		menu.rb_mensch1.setSelected(true);
-		menu.rb_mensch2.setSelected(true);
+		
 
 		if (e.getSource() == menu.jb_bestaetigen) {
+		// Mensch RadioButton als default ausgewählt
+			menu.rb_mensch1.setSelected(true);
+			menu.rb_mensch2.setSelected(true);
 			boolean dame1 = false;
 			boolean dame2 = false;
 			if (menu.rb_ki1.isSelected()) {
+				menu.rb_ki1.setSelected(true);
+				menu.rb_mensch1.setSelected(false);
 				dame1 = true;
 			} else {
+				menu.rb_ki1.setSelected(false);
+				menu.rb_mensch1.setSelected(true);
 				dame1 = false;
 			}
 			if (menu.rb_ki2.isSelected()) {
+				menu.rb_mensch2.setSelected(false);
+				menu.rb_ki2.setSelected(true);
 				dame2 = true;
 			} else {
+				menu.rb_mensch2.setSelected(true);
+				menu.rb_ki2.setSelected(false);
 				dame2 = false;
 			}
 
