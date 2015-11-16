@@ -39,6 +39,9 @@ public class EventHandler implements ActionListener {
 
 	private int[] pusten1 = new int[2];
 	private int[] pusten2 = new int[2];
+	private String regel = "[a-lA-L]{1}[0-9]{1}[0-2]{0,1}-{1}[a-lA-L]{1}[0-9]{1}[0-2]{0,1}";
+	private String ausgabe;
+	private Font font= new Font("ARIAL", Font.BOLD, 14);
 
 	public EventHandler() {
 	}
@@ -536,10 +539,7 @@ public class EventHandler implements ActionListener {
 
 		// ------------------------------------------------------------------------------------#-------------------------------------________EASTBEREICH_________-------========_______ANFANG_=======------
 
-		String regel = "[a-lA-L]{1}[0-9]{1}[0-2]{0,1}-{1}[a-lA-L]{1}[0-9]{1}[0-2]{0,1}";
-		String ausgabe;
-		Font font;
-		font = new Font("ARIAL", Font.BOLD, 14);
+	
 		DEF.jl.setText("");
 		if (e.getSource() == DEF.jTF_Start_Ziel || e.getSource() == DEF.jb) {
 			DEF.jTF_Start_Ziel.setForeground(Color.black);
