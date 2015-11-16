@@ -1753,11 +1753,11 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 			Spiel spiel = (Spiel) serial.laden(filename, "ser");
 			System.out.println("Spiel wurde geladen!");
 			System.out.println(spiel.getSpielbrett());
-			if (spiel.spieler[0] == spiel.getActiveSpieler()) {
-				spiel.playerRotation(spiel.getActiveSpieler(), spiel.spieler[1]);
-			} else {
-				spiel.playerRotation(spiel.getActiveSpieler(), spiel.spieler[0]);
-			}
+//			if (spiel.spieler[0] == spiel.getActiveSpieler()) {
+//				spiel.playerRotation(spiel.getActiveSpieler(), spiel.spieler[1]);
+//			} else {
+//				spiel.playerRotation(spiel.getActiveSpieler(), spiel.spieler[0]);
+//			}
 
 		} catch (IOException e1) {
 			e1.printStackTrace();
@@ -1837,11 +1837,11 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 			spielbrett.printBrett();
 			System.out.println("");
 
-			if (this.spieler[0] == this.getActiveSpieler()) {
-				this.playerRotation(this.getActiveSpieler(), this.spieler[1]);
-			} else {
-				this.playerRotation(this.getActiveSpieler(), this.spieler[0]);
-			}
+//			if (this.spieler[0] == this.getActiveSpieler()) {
+//				this.playerRotation(this.getActiveSpieler(), this.spieler[1]);
+//			} else {
+//				this.playerRotation(this.getActiveSpieler(), this.spieler[0]);
+//			}
 
 		} catch (IOException e) {
 			e.printStackTrace();
