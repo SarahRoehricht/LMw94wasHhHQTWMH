@@ -342,7 +342,7 @@ public class EventHandler implements ActionListener {
 			menu.jd_speichernVorLaden.setVisible(true);
 
 		}
-		
+
 		if (e.getSource() == menu.jmi_laden && spiel == null) {
 			menu.jfc_speichernVorLaden.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 			String dateiName = menu.jfc_speichernVorLaden.getSelectedFile().getName();
@@ -405,7 +405,7 @@ public class EventHandler implements ActionListener {
 				} else {
 					try {
 						spiel.loadSerialize(dateiName);
-						
+
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}
@@ -435,12 +435,12 @@ public class EventHandler implements ActionListener {
 			menu.jf.dispose();
 		}
 
-		
+		// Mensch RadioButton als default ausgewählt
+		menu.rb_mensch1.setSelected(true);
+		menu.rb_mensch2.setSelected(true);
 
 		if (e.getSource() == menu.jb_bestaetigen) {
-		// Mensch RadioButton als default ausgewählt
-			menu.rb_mensch1.setSelected(true);
-			menu.rb_mensch2.setSelected(true);
+
 			boolean dame1 = false;
 			boolean dame2 = false;
 			if (menu.rb_ki1.isSelected()) {
@@ -485,6 +485,9 @@ public class EventHandler implements ActionListener {
 					spielbrett.kiDialog.setVisible(true);
 				}
 			}
+
+			menu.jt_spieler1.setText("");
+			menu.jt_spieler2.setText("");
 
 		}
 
