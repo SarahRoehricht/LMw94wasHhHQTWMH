@@ -187,8 +187,10 @@ this.eh=eh;
 			jl_spieler1.setText("Weiß");
 			rb_mensch1.setBounds(15, 55, 100, 25);
 			rb_mensch1.setText("Mensch");
+			rb_mensch1.setSelected(true);
 			rb_ki1.setBounds(15, 80, 100, 25);
 			rb_ki1.setText("KI");
+			
 			jt_spieler1.setBounds(15, 120, 100, 25);
 			jt_spieler1.setSize(140, 30);
 			jt_spieler1.setFont(fontEingabe);
@@ -203,6 +205,7 @@ this.eh=eh;
 			jl_spieler2.setText("Schwarz");
 			rb_mensch2.setBounds(200, 55, 100, 25);
 			rb_mensch2.setText("Mensch");
+			rb_mensch2.setSelected(true);
 			rb_ki2.setBounds(200, 80, 100, 25);
 			rb_ki2.setText("KI");
 			jt_spieler2.setBounds(200, 120, 100, 25);

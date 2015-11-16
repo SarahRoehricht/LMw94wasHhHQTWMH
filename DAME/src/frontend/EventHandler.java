@@ -32,6 +32,7 @@ public class EventHandler implements ActionListener {
 
 	private ImageIcon Icon = new ImageIcon("check.png");
 	private ImageIcon Icon2 = new ImageIcon("error.png");
+	private MainWindow mw;
 
 	private MenuLeiste menu;
 	private int[] buttonkoords = new int[2];
@@ -41,9 +42,10 @@ public class EventHandler implements ActionListener {
 	private int[] pusten2 = new int[2];
 	private String regel = "[a-lA-L]{1}[0-9]{1}[0-2]{0,1}-{1}[a-lA-L]{1}[0-9]{1}[0-2]{0,1}";
 	private String ausgabe;
-	private Font font= new Font("ARIAL", Font.BOLD, 14);
+	private Font font = new Font("ARIAL", Font.BOLD, 14);
 
-	public EventHandler() {
+	public EventHandler(MainWindow mw) {
+		this.mw = mw;
 	}
 
 	/**
@@ -328,10 +330,12 @@ public class EventHandler implements ActionListener {
 
 			spiel.act(spiel.getActiveSpieler());
 
-			sp.addToTextArea(spiel.getActiveSpieler() + "");
-			setzeSteine();
-			spielerRotation();
+			sp.addToTextArea(spiel.getActiveSpieler() + " von "+ " >secret stuff " + " auf " +"over 9000"+" gezogen.");
+			
 			spielbrett.kiDialog.setVisible(false);
+			
+			
+			
 
 		}
 
@@ -383,11 +387,14 @@ public class EventHandler implements ActionListener {
 
 			if (dateiTyp.equals("csv")) {
 				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
+				sp.addToTextArea("Spielstand wurde als .csv gespeichert");
 			}
 			if (dateiTyp.equals("ser")) {
 				spiel.saveSerialize(dateiName);
+				sp.addToTextArea("Spielstand wurde als .ser gespeichert");
 			} else {
 				// PDF speichern
+				sp.addToTextArea("Spielstand wurde als .pdf gespeichert Laden von .pdf nicht moeglich");
 			}
 		}
 		if (e.getSource() == menu.vorLadenSpeichern_nein) {
@@ -401,14 +408,14 @@ public class EventHandler implements ActionListener {
 				if (dateiEndung.equals("csv")) {
 					try {
 						spiel.laden(dateiName, "csv");
-						System.out.println("ahsdk");
+						sp.addToTextArea("Spielstand wurde geladen");
 					} catch (IOException e1) {
 						e1.printStackTrace();
 					}
 				} else {
 					try {
 						spiel.loadSerialize(dateiName);
-
+sp.addToTextArea("Spielstand wurde geladen");
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}
@@ -422,6 +429,7 @@ public class EventHandler implements ActionListener {
 		if (e.getSource() == menu.jmi_neuesSpiel && spiel != null) {
 			menu.jd_neuesSpiel.setVisible(true);
 		}
+		
 		if (e.getSource() == menu.jmi_neuesSpiel && spiel == null) {
 			menu.jf.setVisible(true);
 		}
@@ -439,29 +447,29 @@ public class EventHandler implements ActionListener {
 		}
 
 		// Mensch RadioButton als default ausgewählt
-		menu.rb_mensch1.setSelected(true);
-		menu.rb_mensch2.setSelected(true);
+
 
 		if (e.getSource() == menu.jb_bestaetigen) {
 
-			boolean dame1 = false;
-			boolean dame2 = false;
+			boolean dame1;
+			boolean dame2;
 			if (menu.rb_ki1.isSelected()) {
-				menu.rb_ki1.setSelected(true);
-				menu.rb_mensch1.setSelected(false);
+				// menu.rb_ki1.setSelected(true);
+				// menu.rb_mensch1.setSelected(false);
 				dame1 = true;
+
 			} else {
-				menu.rb_ki1.setSelected(false);
-				menu.rb_mensch1.setSelected(true);
+				// menu.rb_ki1.setSelected(false);
+				// menu.rb_mensch1.setSelected(true);
 				dame1 = false;
 			}
 			if (menu.rb_ki2.isSelected()) {
-				menu.rb_mensch2.setSelected(false);
-				menu.rb_ki2.setSelected(true);
+				// menu.rb_mensch2.setSelected(false);
+				// menu.rb_ki2.setSelected(true);
 				dame2 = true;
 			} else {
-				menu.rb_mensch2.setSelected(true);
-				menu.rb_ki2.setSelected(false);
+				// menu.rb_mensch2.setSelected(true);
+				// menu.rb_ki2.setSelected(false);
 				dame2 = false;
 			}
 
@@ -471,7 +479,12 @@ public class EventHandler implements ActionListener {
 			if (e.getSource() == menu.jb_bestaetigen && (nameWeiß.length() < 3)) {
 				JOptionPane.showMessageDialog(null, "Spieler 1: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
-
+			if (e.getSource() == menu.jb_bestaetigen && (nameWeiß.length() > 15)) {
+				JOptionPane.showMessageDialog(null, "Spieler 1: Ihr Name darf maximal 15 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+			}
+			if (e.getSource() == menu.jb_bestaetigen && (nameSchwarz.length() > 15)) {
+				JOptionPane.showMessageDialog(null, "Spieler 2: Ihr Name darf maximal 15 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+			}
 			if (e.getSource() == menu.jb_bestaetigen && (nameSchwarz.length() < 3)) {
 				JOptionPane.showMessageDialog(null, "Spieler 2: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
@@ -481,9 +494,10 @@ public class EventHandler implements ActionListener {
 				this.spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
 				sp.addToTextArea("Zug 1: Weiss");
 				setzeSteine();
-
 				rundenZaehler = 1;
 				menu.jf.dispose();
+				DEF.spielerSchwarzName.setText(spiel.getSpieler()[1] + "");
+				mw.spielerWeissName.setText(spiel.getSpieler()[0] + "");
 				if (spiel.getActiveSpieler().getKi() != null) {
 					spielbrett.kiDialog.setVisible(true);
 				}
@@ -491,7 +505,8 @@ public class EventHandler implements ActionListener {
 
 			menu.jt_spieler1.setText("");
 			menu.jt_spieler2.setText("");
-
+		menu.rb_mensch1.setSelected(true);
+		menu.rb_mensch2.setSelected(true);
 		}
 
 		// Schliessen
@@ -551,8 +566,6 @@ public class EventHandler implements ActionListener {
 
 		// ------------------------------------------------------------------------------------#-------------------------------------________EASTBEREICH_________-------========_______ANFANG_=======------
 
-	
-		DEF.jl.setText("");
 		if (e.getSource() == DEF.jTF_Start_Ziel || e.getSource() == DEF.jb) {
 			DEF.jTF_Start_Ziel.setForeground(Color.black);
 			DEF.jTF_Start_Ziel.setFont(font);
@@ -561,45 +574,133 @@ public class EventHandler implements ActionListener {
 				String[] sz = new String[2];
 				sz = DEF.jTF_Start_Ziel.getText().split("-", 2);
 
-				if ((spiel.doTheMove(spiel.getActiveSpieler(), spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1])) == false)) {
-					// System.out.println("Falscher Zug bzw Zug nicht möglich erneute eingabe");
-					ausgabe = DEF.jTF_Start_Ziel.getText() + "ist kein gültiger Zug";
-					// sp.addToTextArea(ausgabe);
-					DEF.jl.setForeground(Color.red);
-					DEF.jl.setText(DEF.jTF_Start_Ziel.getText() + " ist kein gültiger Zug");
-					DEF.jTF_Start_Ziel.setFont(font);
-					DEF.jTF_Start_Ziel.setBackground(Color.red);
-					DEF.jTF_Start_Ziel.setForeground(Color.white);
-					// DEF.jb.setIcon(Icon2);
+				if (spiel.EingabeSpielfeld(sz[0]).getSpielfigur().isDame() == true) {
 
-					// DEF.jb.setIcon(Icon);
-				} else {
-					DEF.jl.setForeground(Color.green);
-					DEF.jl.setText(spiel.getActiveSpieler() + " hat von " + sz[0] + " nach " + sz[1] + " gezogen");
-					ausgabe = sz[0] + "-" + sz[1];
-					// System.out.println(ausgabe);
-					// sp.addToTextArea(ausgabe);
-					DEF.jTF_Start_Ziel.setText("");
-					// if((DEF.spiel.zugdone)==true)
-					// DEF.jb.setIcon(Icon);
+					if (spiel.moveDameLegit(spiel.getActiveSpieler(), spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1])) == true) {
+
+						ArrayList<int[]> pusten = spiel.doCheckPusten(spiel.EingabeSpielfeld(sz[0]));
+						if (pusten.isEmpty()) {
+
+							spiel.move(spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1]));
+							spielerRotation();
+							sp.addToTextArea(spiel.EingabeSpielfeld(sz[0]).getSchachNotation() + " auf " + spiel.EingabeSpielfeld(sz[1]).getSchachNotation() + ".");
+						} else if (pusten.size() == 1) {
+							int[] abc = new int[2];
+							abc = pusten.get(0);
+							spiel.removeSpielfigur(spiel.getSpielbrett().getBrett()[abc[0]][abc[1]]);
+							sp.addToTextArea("Schlag war moeglich an Stelle " + spiel.getSpielbrett().getBrett()[abc[0]][abc[1]].getSchachNotation() + ". Stein wird entfernt.");
+							if (spiel.getSpielbrett().getBrett()[abc[0]][abc[1]] == spiel.EingabeSpielfeld(sz[0])) {
+
+							} else {
+								spiel.move(spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1]));
+								spielerRotation();
+							}
+						} else if (pusten.size() == 2) {
+							int[] abc = new int[2];
+							abc = pusten.get(0);
+							int[] abc2 = new int[2];
+							abc2 = pusten.get(1);
+							pusten1[0] = abc[0];
+							pusten1[1] = abc[1];
+							pusten2[0] = abc2[0];
+							pusten2[1] = abc2[1];
+							spielbrett.Spielfelder[pusten1[1]][pusten1[0]].setBackground(Color.red);
+							spielbrett.Spielfelder[pusten2[1]][pusten2[0]].setBackground(Color.red);
+							spielbrett.pustDialogText1.setText("Es wurde gezogen obwohl man haette schlagen koennen.");
+							spielbrett.pustDialogText2.setText(spiel.getActiveSpieler() + ": Trenne dich von einem Stein.");
+							spielbrett.pustDialogButton1.setText(spiel.getSpielbrett().getBrett()[abc[0]][abc[1]].getSpielfigur() + " auf " + spiel.getSpielbrett().getBrett()[abc[0]][abc[1]].getSchachNotation() + ".");
+							spielbrett.pustDialogButton2.setText(spiel.getSpielbrett().getBrett()[abc2[0]][abc2[1]].getSpielfigur() + " auf " + spiel.getSpielbrett().getBrett()[abc2[0]][abc2[1]].getSchachNotation() + ".");
+							spielbrett.pustDialog.setVisible(true);
+							spiel.move(spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1]));
+
+							spielerRotation();
+						}
+
+					}
+					if (spiel.schlagenDameLegit(spiel.getActiveSpieler(), spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1])) == true) {
+						spiel.schlagenDame(spiel.getActiveSpieler(), spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1]));
+						sp.addToTextArea("von " + spiel.EingabeSpielfeld(sz[0]).getSchachNotation() + " auf " + spiel.EingabeSpielfeld(sz[1]).getSchachNotation() + ", dabei Stein geschlagen.");
+						if (spiel.schlagMoeglichDame(spiel.EingabeSpielfeld(sz[1])) == true) {
+							schlagMoeglich = true;
+							schlagStartKoords[0] = spiel.EingabeSpielfeld(sz[1]).getPosY();
+							schlagStartKoords[1] = spiel.EingabeSpielfeld(sz[1]).getPosX();
+							sp.addToTextArea(spiel.EingabeSpielfeld(sz[1]).getSpielfigur() + " auf " + spiel.EingabeSpielfeld(sz[1]).getSchachNotation() + " kann noch einmal schlagen.");
+						} else {
+							schlagMoeglich = false;
+							spielerRotation();
+						}
+					} else {
+						sp.addToTextArea(DEF.jTF_Start_Ziel.getText() + " ist kein gültiger Zug");
+					}
+				} else if (spiel.EingabeSpielfeld(sz[0]).getSpielfigur().isDame() == false) {
+
+					if (spiel.doMoveStein(spiel.getActiveSpieler(), spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1])) == false) {
+
+						if (spiel.doSchlagStein(spiel.getActiveSpieler(), spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1])) == true) {
+							sp.addToTextArea("von " + spiel.EingabeSpielfeld(sz[0]).getSchachNotation() + " auf " + spiel.EingabeSpielfeld(sz[1]).getSchachNotation() + ", dabei Stein geschlagen.");
+							if (spiel.SchlagMoeglich(spiel.EingabeSpielfeld(sz[1])) == true) {
+								schlagMoeglich = true;
+								sp.addToTextArea(spiel.EingabeSpielfeld(sz[1]).getSpielfigur() + " auf " + spiel.EingabeSpielfeld(sz[1]).getSchachNotation() + " kann noch einmal schlagen.");
+								schlagStartKoords[0] = spiel.EingabeSpielfeld(sz[1]).getPosY();
+								schlagStartKoords[1] = spiel.EingabeSpielfeld(sz[1]).getPosX();
+
+							} else {
+								schlagMoeglich = false;
+								spielerRotation();
+							}
+						} else {
+							sp.addToTextArea(DEF.jTF_Start_Ziel.getText() + " ist kein gültiger Zug");
+						}
+
+					} else {
+						ArrayList<int[]> pusten = spiel.doCheckPusten(spiel.EingabeSpielfeld(sz[0]));
+						if (pusten.isEmpty()) {
+
+							spiel.move(spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1]));
+							sp.addToTextArea(spiel.EingabeSpielfeld(sz[0]).getSchachNotation() + " auf " + spiel.EingabeSpielfeld(sz[1]).getSchachNotation() + ".");
+						} else if (pusten.size() == 1) {
+							int[] abc = new int[2];
+							abc = pusten.get(0);
+							spiel.removeSpielfigur(spiel.getSpielbrett().getBrett()[abc[0]][abc[1]]);
+							sp.addToTextArea("Schlag war moeglich an Stelle " + spiel.getSpielbrett().getBrett()[abc[0]][abc[1]].getSchachNotation() + ". Stein wird entfernt.");
+							if (spiel.getSpielbrett().getBrett()[abc[0]][abc[1]] == spiel.getSpielbrett().getBrett()[buttonkoords[1]][buttonkoords[0]]) {
+
+							} else {
+								spiel.move(spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1]));
+							}
+						} else if (pusten.size() == 2) {
+							int[] abc = new int[2];
+							abc = pusten.get(0);
+							int[] abc2 = new int[2];
+							abc2 = pusten.get(1);
+							pusten1[0] = abc[0];
+							pusten1[1] = abc[1];
+							pusten2[0] = abc2[0];
+							pusten2[1] = abc2[1];
+							spielbrett.Spielfelder[pusten1[1]][pusten1[0]].setBackground(Color.red);
+							spielbrett.Spielfelder[pusten2[1]][pusten2[0]].setBackground(Color.red);
+							spielbrett.pustDialogText1.setText("Es wurde gezogen obwohl man haette schlagen koennen.");
+							spielbrett.pustDialogText2.setText(spiel.getActiveSpieler() + ": Trenne dich von einem Stein.");
+							spielbrett.pustDialogButton1.setText(spiel.getSpielbrett().getBrett()[abc[0]][abc[1]].getSpielfigur() + " auf " + spiel.getSpielbrett().getBrett()[abc[0]][abc[1]].getSchachNotation() + ".");
+							spielbrett.pustDialogButton2.setText(spiel.getSpielbrett().getBrett()[abc2[0]][abc2[1]].getSpielfigur() + " auf " + spiel.getSpielbrett().getBrett()[abc2[0]][abc2[1]].getSchachNotation() + ".");
+							spielbrett.pustDialog.setVisible(true);
+							spiel.move(spiel.EingabeSpielfeld(sz[0]), spiel.EingabeSpielfeld(sz[1]));
+
+						}
+						spielerRotation();
+					}
 				}
-			} else {
 
-				ausgabe = "Eingabe Syntax nicht korrekt, Feld nicht auf Spielbrett";
-				// DEF.jb.setIcon(Icon2);
-				DEF.jl.setForeground(Color.red);
-				DEF.jl.setText("Eingabe Syntax nicht korrekt, Feld nicht auf Spielbrett");
+				setzeSteine();
+			} else {
+				sp.addToTextArea("Eingabe Syntax nicht korrekt, Feld nicht auf Spielbrett");
+
 				DEF.jTF_Start_Ziel.setFont(font);
 				DEF.jTF_Start_Ziel.setBackground(Color.red);
 				DEF.jTF_Start_Ziel.setForeground(Color.white);
 
-				// sp.addToTextArea(ausgabe);
-				// System.out.println("Falsche eingabe neue eingabe");// an unteres
-				// Textfeld
-				// weiterleiten
-				// eingabe erneut starten...
 			}
-
+			DEF.jTF_Start_Ziel.setText("");
 		}
 
 		// ------------------------------------------------------------------------------------#-------------------------------------________EASTBEREICH_________-------========_______ENDE_=======------

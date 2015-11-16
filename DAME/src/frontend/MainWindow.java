@@ -21,22 +21,22 @@ public class MainWindow {
 	private JPanel panel;
 	private JPanel panelFuerLeiste;
 	private JPanel panelWest;
-	private JLabel spielerWeissName;
+	JLabel spielerWeissName;
 	private JFrame jf;
 	private Rectangle bounds;
 	private Spielbrett spielbrett;
 	private ScrollPane sp;
 	private DameStartZielEingabe dsze;
 	GraphicsEnvironment env;
-	private JDialog spielStartDialog;
+	JFrame spielStartDialog;
 
 	public MainWindow(String title) {
-		EventHandler eh = new EventHandler();
+		EventHandler eh = new EventHandler(this);
 		panel = new JPanel(new BorderLayout());
 		ml = new MenuLeiste(eh);
 		spielbrett = new Spielbrett(eh);
 		sp = new ScrollPane();
-		dsze = new DameStartZielEingabe();
+		dsze = new DameStartZielEingabe(eh);
 		panelWest = new JPanel(new BorderLayout());
 		spielerWeissName = new JLabel();
 		spielerWeissName.setHorizontalAlignment(JLabel.RIGHT);
@@ -51,18 +51,21 @@ public class MainWindow {
 		panel.add(sp.getJPanel(), BorderLayout.SOUTH);
 		panel.add(dsze.getJPanel(), BorderLayout.EAST);
 		panel.add(spielerWeissName, BorderLayout.WEST);
-		spielStartDialog=ml.jd_neuesSpiel;
 
-		eh.setSpielbrett(spielbrett);
-		eh.setScrollPane(sp);
-		eh.setMenu(ml);
 		jf = new JFrame(title);
 
 		jf.setContentPane(panel);
 		jf.setSize(bounds.width, bounds.height);
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.setVisible(true);
-	spielStartDialog.setVisible(true);
+
+		spielStartDialog = ml.jf;
+
+		eh.setSpielbrett(spielbrett);
+		eh.setScrollPane(sp);
+		eh.setMenu(ml);
+		eh.setDEF(dsze);
+		spielStartDialog.setVisible(true);
 	}
 
 }

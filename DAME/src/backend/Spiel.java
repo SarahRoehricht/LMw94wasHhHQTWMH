@@ -1775,6 +1775,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * 
 	 * @param filename
 	 */
+	@SuppressWarnings("unchecked")
 	private void ladenCSV(String filename) {
 		iDatenzugriff load = new DatenzugriffCSV();
 		spielbrett = new SpielBrett();
@@ -1786,7 +1787,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 				if (i == 0) {
 					boolean istki = args[2].equals("1");
 					FarbEnum farbe;
-					if (args[1].equals("schwarz")) {
+					if (args[1].equals("Schwarz")) {
 						farbe = FarbEnum.schwarz;
 					} else {
 						farbe = FarbEnum.weiss;
@@ -1796,14 +1797,14 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 				} else if (i == 1) {
 					boolean istki = args[2].equals("1");
 					FarbEnum farbe;
-					if (args[1].equals("schwarz")) {
+					if (args[1].equals("Schwarz")) {
 						farbe = FarbEnum.schwarz;
 					} else {
 						farbe = FarbEnum.weiss;
 					}
 					Spieler s2 = new Spieler(args[0], farbe, istki);
 					this.add(s2);
-					// i an der Stelle 2 ist ActivSpieler
+					// i an der Stelle 2 ist ActiveSpieler
 				} else if (i == 2) {
 					if (args[0].equals("0")) {
 						this.setActiveSpieler(this.spieler[0]);
@@ -1822,7 +1823,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 						// args[2] istDame
 						boolean b = args[2].equals("true");
 						// args[1] schwarz oder weiss
-						if (args[1].equals("schwarz")) {
+						if (args[1].equals("Schwarz")) {
 							farbe = FarbEnum.schwarz;
 						} else {
 							farbe = FarbEnum.weiss;

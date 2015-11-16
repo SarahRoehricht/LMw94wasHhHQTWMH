@@ -18,39 +18,39 @@ import javax.swing.JTextField;
 
 import backend.Spiel;
 
-public class DameStartZielEingabe implements FocusListener{
+public class DameStartZielEingabe {
 
-	
-	EH_DameStartZielEingabe eh;
+	EventHandler eh;
 
 	Container c;
 	JTextField jTF_Start_Ziel;
 	DameStartZielEingabe Texthandler;
 	String Startziel = "";
 	JPanel jp;
-	JPanel jpborderl= new JPanel(new BorderLayout());
+	JPanel jpborderl = new JPanel(new BorderLayout());
 	JButton jb;
 	JLabel jl;
 	Font font;
-	JLabel spielerSchwarzName= new JLabel();
+	JLabel spielerSchwarzName = new JLabel();
 
-	public DameStartZielEingabe() {
+	public DameStartZielEingabe(EventHandler eh) {
+		this.eh = eh;
 		JTFStartZiel();
 		// this.jTF_Start_Ziel = jTF_Start_Ziel;
-		
+
 		font = new Font("ARIAL", Font.BOLD, 14);
 		jTF_Start_Ziel.setFont(font);
 	}
 
 	public void JTFStartZiel() {
 		String s = "z.B. a5-b6";
-		jpborderl.add(spielerSchwarzName);
+		jpborderl.add(spielerSchwarzName, BorderLayout.NORTH);
 		jp = new JPanel();
 		jpborderl.add(jp, BorderLayout.SOUTH);
 		jTF_Start_Ziel = new JTextField(7);
 		jTF_Start_Ziel.setText(s);
 		jTF_Start_Ziel.addFocusListener(new FocusListener() {
-
+			@Override
 			public void focusLost(FocusEvent e) {
 				if (jTF_Start_Ziel.getText().equals("")) {
 					jTF_Start_Ziel.setText(s);
@@ -58,17 +58,16 @@ public class DameStartZielEingabe implements FocusListener{
 
 			}
 
+			@Override
 			public void focusGained(FocusEvent e) {
 				jTF_Start_Ziel.setText("");
 
 			}
 		});
 		jb = new JButton("los");
-		jl = new JLabel("Zugeingabe: ");
-		jp.add(jl);
 		jp.add(jTF_Start_Ziel);
 		jp.add(jb);
-		
+
 		jb.setForeground(Color.BLUE);
 		ImageIcon Icon = new ImageIcon("check.png");
 		ImageIcon Icon2 = new ImageIcon("error.png");
@@ -77,8 +76,7 @@ public class DameStartZielEingabe implements FocusListener{
 		jTF_Start_Ziel.setVisible(true);
 		jb.setPreferredSize(new Dimension(70, 25));
 		jb.setVisible(true);
-		jl.setSize(100, 50);
-		jl.setVisible(true);
+
 		jTF_Start_Ziel.addActionListener(eh);
 		jb.addActionListener(eh);
 
@@ -86,18 +84,6 @@ public class DameStartZielEingabe implements FocusListener{
 
 	public Component getJPanel() {
 		return jpborderl;
-	}
-
-	@Override
-	public void focusGained(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void focusLost(FocusEvent e) {
-		// TODO Auto-generated method stub
-		
 	}
 
 }
