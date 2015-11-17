@@ -229,7 +229,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param message
 	 */
 //	private void continueEnter(String message) {
-//		System.out.println(message);
+//		//System.out.println(message);
 //		Scanner keyboard = new Scanner(System.in);
 //		keyboard.nextLine();
 //	}
@@ -249,13 +249,13 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 
 				Scanner scanner = new Scanner(System.in);
 
-				System.out.println("Eingabe Start, Ziel getrennt mit '-'");
+				//System.out.println("Eingabe Start, Ziel getrennt mit '-'");
 				String szeingabe = scanner.nextLine();
 
 				if ("s".equals(szeingabe) == true) {
-					System.out.println("Dateinamen eingeben");
+					//System.out.println("Dateinamen eingeben");
 					String filename = scanner.nextLine();
-					System.out.println("Speichertyp [csv] oder [ser] eingeben.");
+					//System.out.println("Speichertyp [csv] oder [ser] eingeben.");
 					try {
 						this.speichern(this, filename);
 					} catch (IOException e1) {
@@ -268,46 +268,46 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 					String[] startZiel = new String[2];
 					startZiel = szeingabe.split("-", 2);
 					if (startZiel[0] == null) {
-						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
+						//System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
 						break;
 					}
 					if (startZiel.length == 1) {
-						System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
+						//System.out.println("Gebe Bitte Start und Zielfeld ein, getrennt mit einem '-'\t z.B. g5-h6");
 						break;
 					}
-					System.out.println(startZiel[0] + startZiel[1]);
+					//System.out.println(startZiel[0] + startZiel[1]);
 					String coorda = startZiel[0];
 					if (checkLegitFeld(coorda) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
+						//System.out.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
 					Spielfeld startfeld = EingabeSpielfeld(coorda);
 					if (startfeld.getSpielfigur() == null) {
-						System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
+						//System.out.println("Keine Spielfigur auf dem Spielfeld " + coorda + "!");
 						break;
 					}
 
 					if (startfeld.getSpielfigur() != null) {
 						while (!startfeld.getSpielfigur().getFarbe().equals(player1.getFarbe())) {
-							System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
+							//System.out.println("kein " + player1.getFarbe() + "er Spielstein!");
 							break;
 						}
 					}
 					String coordb = startZiel[1];
 
 					if (checkLegitFeld(coordb) == false) {
-						System.out.println("Das ist kein Feld, versuche es erneut!");
+						//System.out.println("Das ist kein Feld, versuche es erneut!");
 						break;
 					}
 					Spielfeld zielfeld = EingabeSpielfeld(coordb);
 					if (startfeld.equals(zielfeld)) {
-						System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
+						//System.out.println("Startfeld = Zielfeld, ungueltiger Zug");
 						break;
 
 					}
 
 					if (zielfeld.getSpielfigur() != null) {
-						System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
+						//System.out.println("Auf dem Zielfeld befindet sich bereits eine Spielfigur! Zug ungueltig.");
 						break;
 					}
 					spielerFeldArray[0] = startfeld;
@@ -1331,14 +1331,14 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 */
 	private void schlagen(Spielfeld startfeld, Spielfeld zielfeld, Spielfeld LoeschSteinAufFeld) {
 
-		System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe() + ",(" + startfeld.getSpielfigur() + ") " + startfeld.getSchachNotation() + " -> " + zielfeld.getSchachNotation() + "   (" + LoeschSteinAufFeld.getSpielfigur() + ") auf Feld: " + LoeschSteinAufFeld.getSchachNotation()
-				+ " geschlagen");
+		//System.out.println("Zug von: " + startfeld.getSpielfigur().getFarbe() + ",(" + startfeld.getSpielfigur() + ") " + startfeld.getSchachNotation() + " -> " + zielfeld.getSchachNotation() + "   (" + LoeschSteinAufFeld.getSpielfigur() + ") auf Feld: " + LoeschSteinAufFeld.getSchachNotation()
+		//		+ " geschlagen");
 
 		zielfeld.setSpielfigur(startfeld.getSpielfigur());
 		startfeld.setSpielfigur(null);
 		LoeschSteinAufFeld.setSpielfigur(null);
 
-		System.out.println(spielbrett);
+		//System.out.println(spielbrett);
 //		if (nochSteineaufBrettandererSpieler(this.getSpieler()[0]) == false) {
 //			announceWinner(this.getSpieler()[0]);
 //		}
@@ -1397,8 +1397,8 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param player1
 	 */
 	private void announceWinner(Spieler player1) {
-		System.out.println("Spiel zuende!");
-		System.out.println(player1 + " hat gewonnen.");
+	//	System.out.println("Spiel zuende!");
+		//System.out.println(player1 + " hat gewonnen.");
 		// System.out.println("Neues Spiel? y/n?");
 		// Scanner c = new Scanner(System.in);
 		// String yesNo = c.nextLine();
@@ -1569,9 +1569,9 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		// Zielfeld.
 		// Setzt Spielfigur auf Startfeld auf null.
 
-		System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
+	//	System.out.println("Zug von: " + posxy.getSpielfigur().getFarbe() + ",(" + posxy.getSpielfigur() + ") " + stein1.getSchachNotation() + " -> " + posxy.getSchachNotation());
 		stein1.setSpielfigur(null);
-		System.out.println(spielbrett);
+		//System.out.println(spielbrett);
 		}
 	}
 
@@ -1634,8 +1634,8 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	private void wirdDame(Spielfeld spielfeld) {
 		if (spielfeld.getSpielfigur() != null) {
 			spielfeld.getSpielfigur().setDame(true);
-			System.out.println("Spielfigur auf Feld " + spielfeld.getSchachNotation() + " wurde zu einer Dame! TETEREETEEE");
-			System.out.println(spielbrett);
+//			System.out.println("Spielfigur auf Feld " + spielfeld.getSchachNotation() + " wurde zu einer Dame! TETEREETEEE");
+//			System.out.println(spielbrett);
 		}
 	}
 
@@ -1756,8 +1756,8 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 		iDatenzugriff serial = new DatenzugriffSerialisiert();
 		try {
 			Spiel spiel = (Spiel) serial.laden(filename, "ser");
-			System.out.println("Spiel wurde geladen!");
-			System.out.println(spiel.getSpielbrett());
+//			System.out.println("Spiel wurde geladen!");
+//			System.out.println(spiel.getSpielbrett());
 //			if (spiel.spieler[0] == spiel.getActiveSpieler()) {
 //				spiel.playerRotation(spiel.getActiveSpieler(), spiel.spieler[1]);
 //			} else {
@@ -1770,7 +1770,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 			try {
 				serial.close();
 			} catch (IOException fehler) {
-				System.out.println(fehler.getMessage());
+//				System.out.println(fehler.getMessage());
 			}
 		}
 	}
@@ -1841,7 +1841,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 				}
 			}
 			spielbrett.printBrett();
-			System.out.println("");
+//			System.out.println("");
 
 //			if (this.spieler[0] == this.getActiveSpieler()) {
 //				this.playerRotation(this.getActiveSpieler(), this.spieler[1]);

@@ -80,19 +80,19 @@ public class Spielfigur implements Serializable{
 	public String toString() {
 		if(farbe== FarbEnum.weiss){
 			if(this.dame==false){
-			return ">|O|<";
+			return ">Stein<";
 			}
 			if(this.dame==true){
-				return ">|LOL|<";
+				return ">Dame<";
 			}
 		}
 		if(farbe==FarbEnum.schwarz){
 			if(this.dame==false){
 				
 			
-			return ">|X|<";	
+			return ">Stein<";	
 		}if(this.dame==true){
-		return ">|XXX|<";	
+		return ">Dame<";	
 		}
 		}
 			return "|_DASD|";

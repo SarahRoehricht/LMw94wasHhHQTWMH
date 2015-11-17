@@ -673,7 +673,9 @@ public class SpielTester implements iBediener, iDatenzugriff, Serializable {
 					}
 
 				} else {
-					zielfeld = player1.getKi().actAgain(startfeld, spielbrett.getBrett()); // KI
+					int[] zielfeldkoords= new int[2];
+					zielfeldkoords=player1.getKi().actAgain(startfeld, spielbrett.getBrett()); // KI
+					zielfeld =spielbrett.getBrett()[zielfeldkoords[0]][zielfeldkoords[1]];
 
 				}
 				if (startfeld.getSpielfigur().isDame() == false) {

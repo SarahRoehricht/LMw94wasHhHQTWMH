@@ -3,6 +3,9 @@ package frontend;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
+import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.Dialog.ModalityType;
@@ -16,7 +19,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.LineBorder;
 
 public class Spielbrett {
-	private final JPanel gui = new JPanel(new BorderLayout(3, 3));
+	private final JPanel gui = new JPanel();
+
 
 	public JButton[][] Spielfelder = new JButton[12][12];
 	private JPanel Spielbrett;
@@ -33,6 +37,7 @@ public class Spielbrett {
 	JButton spielGewonnenDialogButton = new JButton();
 	JPanel spielGewonnenDialogPanel = new JPanel(new BorderLayout());
 	JLabel spielGewonnenText = new JLabel("", SwingConstants.CENTER);
+	JPanel boardConstraints = new JPanel(new GridBagLayout());
 
 	JDialog kiDialog = new JDialog();
 	JPanel kipanel = new JPanel(new BorderLayout());
@@ -43,9 +48,33 @@ public class Spielbrett {
 
 	public Spielbrett(EventHandler eh) {
 		this.eh = eh;
-		Spielbrett = new JPanel();
-		Spielbrett.setLayout(new GridLayout(0, 14));
-		gui.add(Spielbrett);
+		Spielbrett = new JPanel(new GridLayout(0, 14)){
+			public final Dimension getPreferredSize() 
+       {
+           Dimension d = super.getPreferredSize();
+           Dimension prefSize = null;
+           Component c = getParent();
+           if (c == null) 
+           {
+               prefSize = new Dimension(
+                       (int)d.getWidth(),(int)d.getHeight());
+           } else if (c!=null &&
+                   c.getWidth()>d.getWidth() &&
+                   c.getHeight()>d.getHeight()
+                   ) 
+           {
+               prefSize = c.getSize();
+           } else {
+               prefSize = d;
+           }
+           int w = (int) prefSize.getWidth()-100;
+           int h = (int) prefSize.getHeight()-20;
+           // the smaller of the two sizes
+           int s = (w>h ? h : w);
+           return new Dimension(s,s);
+       }
+		};
+
 		pustDialog.setTitle("Pusten!");
 		pustDialogButton1.addActionListener(eh);
 		pustDialogButton2.addActionListener(eh);
@@ -135,12 +164,13 @@ public class Spielbrett {
 			Spielbrett.add(new JLabel(spaltenbuchstaben.substring(i, i + 1),
 					SwingConstants.CENTER));
 		}
+		
 		Spielbrett.add(new JLabel(""));
-
+		
+    boardConstraints.add(Spielbrett);
 	}
 
 	public Component getSpielbrett() {
 
-		return Spielbrett;
-	}
-}
+		return boardConstraints;
+	}}

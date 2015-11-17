@@ -1,6 +1,8 @@
 package frontend;
 
+import java.awt.BorderLayout;
 import java.awt.Component;
+
 import javax.swing.JPanel;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
@@ -13,11 +15,11 @@ public class ScrollPane {
 	
 	public ScrollPane() {
 
-		jp = new JPanel();	
-		jta = new JTextArea(10 ,150);
+		jp = new JPanel(new BorderLayout());	
+		jta = new JTextArea(10 ,30);
 		jta.setEditable(false);	
 		jta.add(new JScrollBar());
-		jp.add( new JScrollPane(jta));
+		jp.add( new JScrollPane(jta), BorderLayout.SOUTH);
 		
 	}
 	

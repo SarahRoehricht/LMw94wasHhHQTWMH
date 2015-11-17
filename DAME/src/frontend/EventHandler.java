@@ -330,7 +330,7 @@ public class EventHandler implements ActionListener {
 			int[] kikoords = new int[4];
 
 			kikoords = spiel.act(spiel.getActiveSpieler());
-			System.out.println(kikoords);
+			////System.out.println(kikoords);
 			if (spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]].getSpielfigur().isDame() == true) {
 
 				if (spiel.moveDameLegit(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == true) {
@@ -426,9 +426,9 @@ public class EventHandler implements ActionListener {
 			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
 
 			/******** Testausgabe **********/
-			System.out.println(dateiName + "." + dateiTyp);
-			System.out.println(pfad);
-			System.out.println(pfadOhneDateiname);
+			////System.out.println(dateiName + "." + dateiTyp);
+			//System.out.println(pfad);
+			//System.out.println(pfadOhneDateiname);
 			/****************************/
 
 		}
@@ -446,9 +446,9 @@ public class EventHandler implements ActionListener {
 			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
 
 			/******** Testausgabe **********/
-			System.out.println(dateiName + "." + dateiTyp);
-			System.out.println(pfad);
-			System.out.println(pfadOhneDateiname);
+			//System.out.println(dateiName + "." + dateiTyp);
+			//System.out.println(pfad);
+			//System.out.println(pfadOhneDateiname);
 			/****************************/
 
 			if (dateiTyp.equals("csv")) {
@@ -509,7 +509,7 @@ public class EventHandler implements ActionListener {
 			menu.jd_neuesSpiel.dispose();
 		}
 		if (e.getSource() == menu.jb_abbruch) {
-			System.out.println("blub abbruch");
+			//System.out.println("blub abbruch");
 			menu.jf.dispose();
 		}
 
@@ -558,6 +558,10 @@ public class EventHandler implements ActionListener {
 				JOptionPane.showMessageDialog(null, "Spieler 1 und Spieler 2 dürfen nicht den selben Namen besitzen!", "Fehlerhafte Eingabe!", JOptionPane.WARNING_MESSAGE);
 			} else {
 				this.spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
+				
+				sp.addToTextArea("Willkommen zu einem neuen Spiel der internationalen Dame");
+				sp.addToTextArea("Spielregeln sind ueber das Hilfe Menu zu erreichen");
+				sp.addToTextArea("Viel Spass.");
 				sp.addToTextArea("Zug 1: Weiss");
 				setzeSteine();
 				rundenZaehler = 1;
@@ -601,9 +605,9 @@ public class EventHandler implements ActionListener {
 			String pfadOhneDateiname = pfad.substring(0, pfadLaenge - dateiNameLaenge);
 
 			/******** Testausgabe **********/
-			System.out.println(dateiName + "." + dateiTyp);
-			System.out.println(pfad);
-			System.out.println(pfadOhneDateiname);
+			//System.out.println(dateiName + "." + dateiTyp);
+			//System.out.println(pfad);
+			//System.out.println(pfadOhneDateiname);
 			/****************************/
 
 			if (dateiTyp.equals("csv")) {
