@@ -18,7 +18,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 import backend.FarbEnum;
-
+/**
+ * 
+ * @author A-2
+ *
+ */
 public class EventHandler implements ActionListener {
 
 	private Spielbrett spielbrett;
@@ -49,7 +53,14 @@ public class EventHandler implements ActionListener {
 	}
 
 	/**
-	 * JAVAVA JVAJVA VAVJAVAVAVJ DOCCCCCCCCCCCC PLPPLLSLLSLSLSLSSSSSSS!!!!
+	 * Findet zuerst heraus, ob ein JButton des Spielbretts JButton[][] gedrueckt wurde, falls bereits einer zuvor gedrueckt wurde falls ja, geht die einzelnen Spielzugoptionen durch und 
+	 * veraendert die einzelnen JBUtton Hintergruende, fuer die Steinauswahl, fuer eine weitere Schlagmoeglichkeit(gruen), und fuer pusten(rot).
+	 *  Menueleiste listened die einzelnen Menueobjekte ab, die diesen EH als ActionListener implementiert haben. Sie sollen die vom Benutzer erwarteten Aktionen durchfuehren. So sind diese Abfragen auch zu stellen. 
+	 *  Der PustDialog wird bei einer Pustmoeglichkeit von 2 oder Mehr steinen aufgerufen, und gibt eine Auswahl von den 2 Pustmoeglichkeiten, die der Benutzer durch Anklicken der JButton im Dialog auswaehlen kann. 
+	 *  Der KIDialog wird aufgerufen, wenn eine KI am ZUG ist, sie ruft die Ki.act Methode auf, und gibt ebenfalls wie bei einem normalen Zug die Zugfelder auf dem Scrollpane aus(sp.addTextToArea(s))
+	 *  Der EastBereich uebernimmt die Abhandlung der Spielfeld Start-Ziel Eingabe per String, und reagiert auf ENTER oder JButton klick. Er ueberprueft die Eingabe ueber einen regulaeren Ausdruck der nur ein gueltiges Startfeld und Zielfeld erlaubt, getrennt mit einem '-'
+	 *  Der Spielgewonnen Dialog actionperformed Teil dient lediglich dazu das Fenster zu schliessen.
+	 *  
 	 */
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -777,7 +788,8 @@ public class EventHandler implements ActionListener {
 	}
 
 	/**
-	 * JAVAVA JVAJVA VAVJAVAVAVJ DOCCCCCCCCCCCC PLPPLLSLLSLSLSLSSSSSSS!!!!
+	 * Ueberprueft ob in dem JButton[][] von Spielbrett bereits ein Stein geklickt wurde
+	 * @return boolean ob bereits geklickt, oder nicht.
 	 */
 	public boolean schonGeklickt(JButton[][] spielfelder) {
 		for (int i = 0; i < spielfelder.length; i++) {
@@ -794,7 +806,7 @@ public class EventHandler implements ActionListener {
 	}
 
 	/**
-	 * JAVAVA JVAJVA VAVJAVAVAVJ DOCCCCCCCCCCCC PLPPLLSLLSLSLSLSSSSSSS!!!!
+	 * Setzt Icons im JButton[][], an den Stellen bei denen bereits im Spiel ein Stein ist.
 	 */
 	public void setzeSteine() {
 
@@ -829,7 +841,10 @@ public class EventHandler implements ActionListener {
 			}
 		}
 	}
-
+/**
+ * Setzt den active Spieler auf den anderen im Spieler[] Array  im Spiel, und ueberprueft davor ob Siegkonditionen erfuellt wurden. 
+ * wenn 2 KIs gegeneinanderspielen, wird der Dialog nicht geschlossen.
+ */
 	public void spielerRotation() {
 		setzeSteine();
 		if (spiel.getSpieler()[0].getKi() == null || spiel.getSpieler()[1].getKi() == null) {
@@ -894,7 +909,7 @@ public class EventHandler implements ActionListener {
 	}
 
 	/**
-	 * JAVAVA JVAJVA VAVJAVAVAVJ DOCCCCCCCCCCCC PLPPLLSLLSLSLSLSSSSSSS!!!!
+	 * setter fuer Mainwindow aufrufe, damit EH die GUI Objekte kennenlernt.
 	 */
 	public void setSpiel(Spiel spiel) {
 		this.spiel = spiel;
