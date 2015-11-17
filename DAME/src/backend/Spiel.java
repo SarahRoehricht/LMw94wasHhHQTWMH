@@ -1670,9 +1670,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * @param pfad
 	 *          , dateiname, typ
 	 */
-	public void speichern(String pfad, String dateiname, String typ) {
 
-	}
 
 	@Override
 	public void speichern(Object obj, String name) throws IOException {
@@ -1715,7 +1713,7 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	 * 
 	 * @param filename
 	 */
-	private void saveCSV(String filename) {
+	public void saveCSV(String filename) {
 		iDatenzugriff csv = new DatenzugriffCSV();
 		String s = "";
 		s += spieler[0].generiereCSV() + "\n";

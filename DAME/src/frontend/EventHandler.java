@@ -452,7 +452,7 @@ public class EventHandler implements ActionListener {
 			/****************************/
 
 			if (dateiTyp.equals("csv")) {
-				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
+				spiel.saveCSV(dateiName);
 				sp.addToTextArea("Spielstand wurde als .csv gespeichert");
 			}
 			if (dateiTyp.equals("ser")) {
@@ -474,6 +474,7 @@ public class EventHandler implements ActionListener {
 				if (dateiEndung.equals("csv")) {
 					try {
 						spiel.laden(dateiName, "csv");
+						setzeSteine();
 						sp.addToTextArea("Spielstand wurde geladen");
 					} catch (IOException e1) {
 						e1.printStackTrace();
@@ -606,7 +607,7 @@ public class EventHandler implements ActionListener {
 			/****************************/
 
 			if (dateiTyp.equals("csv")) {
-				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
+				spiel.saveCSV(dateiName);
 			}
 			if (dateiTyp.equals("ser")) {
 				spiel.saveSerialize(dateiName);

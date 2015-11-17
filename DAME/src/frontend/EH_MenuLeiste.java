@@ -70,7 +70,7 @@ public class EH_MenuLeiste implements ActionListener {
 			/****************************/
 
 			if (dateiTyp.equals("csv")) {
-				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
+				spiel.saveCSV(dateiName);
 			}
 			if (dateiTyp.equals("ser")) {
 				spiel.saveSerialize(dateiName);
@@ -102,7 +102,7 @@ public class EH_MenuLeiste implements ActionListener {
 			}
 		}
 
-		// Neues Spiel starten mÃ¶glich , nur wenn Spiel != null
+		// Neues Spiel starten moeglich , nur wenn Spiel != null
 		// ansonsten wurde ja noch kein Spiel gespielt, also muss auch keines
 		// geladen werden.
 		if (e.getSource() == menu.jmi_neuesSpiel && spiel != null) {
@@ -125,7 +125,7 @@ public class EH_MenuLeiste implements ActionListener {
 		}
 
 		if (e.getSource() == menu.jb_bestaetigen) {
-			// Mensch RadioButton als default ausgewählt
+			// Mensch RadioButton als default ausgewaehlt
 				menu.rb_mensch1.setSelected(true);
 				menu.rb_mensch2.setSelected(true);
 				boolean dame1 = false;
@@ -149,21 +149,21 @@ public class EH_MenuLeiste implements ActionListener {
 					dame2 = false;
 				}
 
-			String nameWeiß = menu.jt_spieler1.getText();
+			String nameWeiss = menu.jt_spieler1.getText();
 			String nameSchwarz = menu.jt_spieler2.getText();
 
-			if (e.getSource() == menu.jb_bestaetigen && (nameWeiß.length() < 3)) {
-				JOptionPane.showMessageDialog(null, "Spieler 1: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+			if (e.getSource() == menu.jb_bestaetigen && (nameWeiss.length() < 3)) {
+				JOptionPane.showMessageDialog(null, "Spieler 1: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollstaendige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
 
 			if (e.getSource() == menu.jb_bestaetigen && (nameSchwarz.length() < 3)) {
-				JOptionPane.showMessageDialog(null, "Spieler 2: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollständige Eingabe!", JOptionPane.WARNING_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Spieler 2: Ihr Name muss mindestens 3 Zeichen lang sein!", "Unvollstaendige Eingabe!", JOptionPane.WARNING_MESSAGE);
 			}
-			if (e.getSource() == menu.jb_bestaetigen && nameWeiß.equals(nameSchwarz)) {
-				JOptionPane.showMessageDialog(null, "Spieler 1 und Spieler 2 dürfen nicht den selben Namen besitzen!", "Fehlerhafte Eingabe!", JOptionPane.WARNING_MESSAGE);
+			if (e.getSource() == menu.jb_bestaetigen && nameWeiss.equals(nameSchwarz)) {
+				JOptionPane.showMessageDialog(null, "Spieler 1 und Spieler 2 duerfen nicht den selben Namen besitzen!", "Fehlerhafte Eingabe!", JOptionPane.WARNING_MESSAGE);
 			} else {
-				System.out.println(nameWeiß + ", " + dame1 + ", " + nameSchwarz + ", " + dame2);
-				spiel = new Spiel(nameWeiß, dame1, nameSchwarz, dame2);
+				System.out.println(nameWeiss + ", " + dame1 + ", " + nameSchwarz + ", " + dame2);
+				spiel = new Spiel(nameWeiss, dame1, nameSchwarz, dame2);
 
 				// v unnoetig, falls ein EH genutzt wird.
 				ehs.setSpiel(spiel);
@@ -207,7 +207,7 @@ public class EH_MenuLeiste implements ActionListener {
 			/****************************/
 
 			if (dateiTyp.equals("csv")) {
-				spiel.speichern(pfadOhneDateiname, dateiName, dateiTyp);
+				spiel.saveCSV(dateiName);
 			}
 			if (dateiTyp.equals("ser")) {
 				spiel.saveSerialize(dateiName);

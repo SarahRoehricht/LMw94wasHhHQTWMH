@@ -36,14 +36,14 @@ public class MenuLeiste extends JFrame {
 	GraphicsEnvironment env;
 	Rectangle bounds;
 	EventHandler eh;
-	/********* Für JPaneText *************/
+	/********* Fuer JPaneText *************/
 	JFrame f;
 	JTextPane pane;
 	HTMLEditorKit eKit;
 
 	/**********************************/
 	
-	/*********Fenster für NEUES SPIEL**************/
+	/*********Fenster fuer NEUES SPIEL**************/
 	
 	JFrame jf;
 	JPanel jp;
@@ -118,20 +118,20 @@ this.eh=eh;
 		env = GraphicsEnvironment.getLocalGraphicsEnvironment();
 		bounds = env.getMaximumWindowBounds();
 
-		/************** Für JPaneText ************/
-		final String text = "<h1>Die internationale Damevariante</h1> " + "<p>Diese wird auf einem quadratischen Brett mit abwechselnd weißen und " + "schwarzen Feldern gespielt.Die Größe des Spielbretts beträgt 12x12 Felder, "
+		/************** Fuer JPaneText ************/
+		final String text = "<h1>Die internationale Damevariante</h1> " + "<p>Diese wird auf einem quadratischen Brett mit abwechselnd weissen und " + "schwarzen Feldern gespielt.Die Groesse des Spielbretts betraegt 12x12 Felder, "
 				+ "wobei jeder Spieler 30 Steine besitzt.Gespielt wird nur auf den dunklen Feldern.</p>"
 
-				+ "<p>Die Steine ziehen ein Feld in diagonaler Richtung, aber nur vorwärts. Gegnerische " + "Steine müssen übersprungen und dadurch geschlagen werden, sofern das direkt angrenzende " + "dahinter liegende Feld frei ist, indem auf dieses freie Feld gezogen wird. "
-				+ "Wenn das Zielfeld eines Sprungs auf ein Feld führt, von dem aus ein weiterer " + "Stein übersprungen werden kann, so wird der Sprung fortgesetzt. Alle übersprungenen " + "Steine werden vom Brett genommen.Erreicht ein Spielstein die gegnerische Grundlinie, "
-				+ "wird er zur Dame befördert. Dies wird kenntlich gemacht, indem ein zweiter Stein " + "obenauf gesetzt wird.</p>"
+				+ "<p>Die Steine ziehen ein Feld in diagonaler Richtung, aber nur vorwaerts. Gegnerische " + "Steine muessen uebersprungen und dadurch geschlagen werden, sofern das direkt angrenzende " + "dahinter liegende Feld frei ist, indem auf dieses freie Feld gezogen wird. "
+				+ "Wenn das Zielfeld eines Sprungs auf ein Feld fuehrt, von dem aus ein weiterer " + "Stein uebersprungen werden kann, so wird der Sprung fortgesetzt. Alle uebersprungenen " + "Steine werden vom Brett genommen.Erreicht ein Spielstein die gegnerische Grundlinie, "
+				+ "wird er zur Dame befoerdert. Dies wird kenntlich gemacht, indem ein zweiter Stein " + "obenauf gesetzt wird.</p>"
 
-				+ "<p>Eine Dame darf beliebig weit vorwärts oder rückwärts ziehen und springen. Beim " + "Überspringen eines gegnerischen Steines muss die Dame allerdings auf dem unmittelbar " + "dahinterliegen Diagonalfeld aufsetzen. Falls sie von dem neuen Feld aus über andere "
-				+ "Steine springen kann, muss sie das auch tun. Es gelten also die Sprungregeln für einfache " + "Steine, mit der zusätzlichen Regel, dass die Dame über mehrere " + "Felder vorwärts und eben auch rückwärts springen kann.</p>"
-				+ "<p>Da eine Dame auf dem Feld hinter dem geschlagenen Stein aufsetzen muss, ist es möglich," + " ein Endspiel von zwei Damen gegen eine einzelne gegnerische Dame zu gewinnen. Beim " + "Erreichen der gegnerischen Grundlinie eines Spielsteins durch Schlagen gegnerischer Figuren "
-				+ "geschieht ebenfalls eine Umwandlung zur Dame. Der Zug endet damit; es ist nicht möglich, " + "mit der Umwandlung zur Dame sofort weitere gegnerische Spielsteine zu schlagen." + "Die Spielsteine können diagonal gezogen werden und auch andere Steine schlagen.</p>"
+				+ "<p>Eine Dame darf beliebig weit vorwaerts oder rueckwaerts ziehen und springen. Beim " + "ueberspringen eines gegnerischen Steines muss die Dame allerdings auf dem unmittelbar " + "dahinterliegen Diagonalfeld aufsetzen. Falls sie von dem neuen Feld aus ueber andere "
+				+ "Steine springen kann, muss sie das auch tun. Es gelten also die Sprungregeln fuer einfache " + "Steine, mit der zusaetzlichen Regel, dass die Dame ueber mehrere " + "Felder vorwaerts und eben auch rueckwaerts springen kann.</p>"
+				+ "<p>Da eine Dame auf dem Feld hinter dem geschlagenen Stein aufsetzen muss, ist es moeglich," + " ein Endspiel von zwei Damen gegen eine einzelne gegnerische Dame zu gewinnen. Beim " + "Erreichen der gegnerischen Grundlinie eines Spielsteins durch Schlagen gegnerischer Figuren "
+				+ "geschieht ebenfalls eine Umwandlung zur Dame. Der Zug endet damit; es ist nicht moeglich, " + "mit der Umwandlung zur Dame sofort weitere gegnerische Spielsteine zu schlagen." + "Die Spielsteine koennen diagonal gezogen werden und auch andere Steine schlagen.</p>"
 				
-				+ "<p>Ziel des Spieles ist es, dem Gegner alle Zugmöglichkeiten " + "zu nehmen, also alle gegnerischen Steine zu schlagen oder zu blockieren.</p>";
+				+ "<p>Ziel des Spieles ist es, dem Gegner alle Zugmoeglichkeiten " + "zu nehmen, also alle gegnerischen Steine zu schlagen oder zu blockieren.</p>";
 
 		f = new JFrame("Spielbeschreibung");
 		pane = new JTextPane();
@@ -143,7 +143,7 @@ this.eh=eh;
 		f.setLocationRelativeTo(null);
 		/**************************************/
 
-		/*************************Fenster für NEUES SPIEL *******************************/
+		/*************************Fenster fuer NEUES SPIEL *******************************/
 		
 		jf = new JFrame(); 
 		jp = new JPanel();
@@ -184,7 +184,7 @@ this.eh=eh;
 			jl_spieler1.setBounds(30, 15, 120, 25);
 			jl_spieler1.setFont(spieler);
 			//jl_spieler1.setText("Spieler 1");
-			jl_spieler1.setText("Weiß");
+			jl_spieler1.setText("Weiss");
 			rb_mensch1.setBounds(15, 55, 100, 25);
 			rb_mensch1.setText("Mensch");
 			rb_mensch1.setSelected(true);
@@ -213,14 +213,14 @@ this.eh=eh;
 			jt_spieler2.setFont(fontEingabe);
 			jt_spieler2.setHorizontalAlignment(JTextField.CENTER);
 			jb_bestaetigen.setBounds(210, 160, 120, 25);
-			jb_bestaetigen.setText("bestätigen");
+			jb_bestaetigen.setText("bestaetigen");
 
 			jb_abbruch.addActionListener(eh);
 			jb_bestaetigen.addActionListener(eh);
 			
 			jf.add(jp);
 
-			jf.setSize(360, 230);
+			jf.setSize(380, 250);
 			jf.setLocationRelativeTo(null);
 		
 //		// Spieler 1 (links)
@@ -251,7 +251,7 @@ this.eh=eh;
 //		jt_spieler2.setFont(fontEingabe);
 //		jt_spieler2.setHorizontalAlignment(JTextField.CENTER);
 //		jb_bestaetigen.setBounds(180, 160, 100, 25);
-//		jb_bestaetigen.setText("bestätigen");
+//		jb_bestaetigen.setText("bestaetigen");
 //
 //		add(jp);
 //
@@ -290,10 +290,10 @@ this.eh=eh;
 		jl_laden = new JLabel("Soll der aktuelle Spielstand gespeichert werden?");
 		jl_laden.setHorizontalAlignment(JLabel.CENTER);
 
-		jl_neuesSpiel = new JLabel("Möchten Sie das aktuelle Spiel wirklich beenden?");
+		jl_neuesSpiel = new JLabel("Moechten Sie das aktuelle Spiel wirklich beenden?");
 		jl_neuesSpiel.setHorizontalAlignment(JLabel.CENTER);
 
-		jl_schliessen = new JLabel("Möchten Sie das Spiel wirklich verlassen?");
+		jl_schliessen = new JLabel("Moechten Sie das Spiel wirklich verlassen?");
 		jl_schliessen.setHorizontalAlignment(JLabel.CENTER);
 
 		// Leiste mit Unterpunkten
@@ -309,11 +309,11 @@ this.eh=eh;
 
 		jmi_neuesSpiel = new JMenuItem("neues Spiel starten");
 
-		jmi_schliessen = new JMenuItem("schließen");
+		jmi_schliessen = new JMenuItem("schliessen");
 
-		hintergrundAendern = new JMenuItem("Hintergrund ändern");
+		hintergrundAendern = new JMenuItem("Hintergrund aendern");
 
-		SteineFarbeAendern = new JMenuItem("Steinfarbe ändern");
+		SteineFarbeAendern = new JMenuItem("Steinfarbe aendern");
 
 		spielBeschreibung = new JMenuItem("Spielbeschreibung");
 
