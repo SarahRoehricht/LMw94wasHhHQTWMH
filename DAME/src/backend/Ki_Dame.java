@@ -37,8 +37,6 @@ public class Ki_Dame extends Ki implements Serializable {
 			moveMoeglichkeiten = moveMoeglichkeitenSpieler();
 			Collections.shuffle(moveMoeglichkeiten);
 			startZiel = moveMoeglichkeiten.get(0);
-			System.out.println(startZiel[0]);
-			System.out.println(startZiel[1]);
 		} else {
 			Collections.shuffle(schlagMoeglichkeiten);
 			startZiel = schlagMoeglichkeiten.get(0);
@@ -863,7 +861,7 @@ public class Ki_Dame extends Ki implements Serializable {
 	 * Aktualisiert Spielbrett und findet eine schlagmoeglichkeit fuer den Stein,
 	 * der noch einmal schlagen kann heraus, und gibt dieses Zielfeld zurueck.
 	 */
-	public Spielfeld actAgain(Spielfeld startfeld, Spielfeld[][] brett) {
+	public int[] actAgain(Spielfeld startfeld, Spielfeld[][] brett) {
 		this.setSpielbrett(brett);
 		Spielfeld[] startZiel = new Spielfeld[2];
 		if (startfeld.getSpielfigur().isDame() == false) {
@@ -871,8 +869,10 @@ public class Ki_Dame extends Ki implements Serializable {
 		} else {
 			startZiel = schlagMoeglichDameStartZiel(startfeld);
 		}
-		
-		return startZiel[1];
+		int[] zielkoords=new int[2];
+		zielkoords[0]= startZiel[1].getPosY();
+		zielkoords[1]= startZiel[1].getPosX();
+		return zielkoords;
 
 	}
 

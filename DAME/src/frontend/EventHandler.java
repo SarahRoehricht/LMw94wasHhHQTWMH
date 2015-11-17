@@ -327,15 +327,81 @@ public class EventHandler implements ActionListener {
 		// ------------------------------------------------------------------------------------#-------------------------------------________SPIELGEWONNEN_________-------========_______ENDE_=======------
 		// ------------------------------------------------------------------------------------#-------------------------------------________KIDIALOG_________-------========_______ANFANG_=======------
 		if (e.getSource() == spielbrett.kiButton) {
+			int[] kikoords = new int[4];
 
-			spiel.act(spiel.getActiveSpieler());
+			kikoords = spiel.act(spiel.getActiveSpieler());
+			System.out.println(kikoords);
+			if (spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]].getSpielfigur().isDame() == true) {
 
-			sp.addToTextArea(spiel.getActiveSpieler() + " von "+ " >secret stuff " + " auf " +"over 9000"+" gezogen.");
-			
-			spielbrett.kiDialog.setVisible(false);
-			
-			
-			
+				if (spiel.moveDameLegit(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == true) {
+
+					spiel.move(spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]);
+					spielerRotation();
+					sp.addToTextArea(spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]].getSchachNotation() + " auf " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + ".");
+
+				}
+
+				if (spiel.schlagenDameLegit(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == true) {
+					spiel.schlagenDame(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]);
+					sp.addToTextArea("von " + spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]].getSchachNotation() + " auf " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + ", dabei Stein geschlagen.");
+					while (spiel.schlagMoeglichDame(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == true) {
+						sp.addToTextArea(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSpielfigur() + " auf " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + " kann noch einmal schlagen.");
+
+						int[] zielkoords = new int[2];
+						zielkoords = spiel.getActiveSpieler().getKi().actAgain(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]], spiel.getSpielbrett().getBrett());
+
+						spiel.schlagenDame(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]], spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]]);
+						sp.addToTextArea("von " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + " auf " + spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]].getSchachNotation() + ", dabei Stein geschlagen.");
+						kikoords[2] = spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]].getPosY();
+						kikoords[3] = spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]].getPosX();
+
+					}
+					if (spiel.schlagMoeglichDame(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == false) {
+						spielerRotation();
+					}
+				} else {
+
+				}
+			} else if (spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]].getSpielfigur().isDame() == false) {
+
+				if (spiel.doMoveStein(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == false) {
+
+					if (spiel.doSchlagStein(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == true) {
+						sp.addToTextArea("von " + spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]].getSchachNotation() + " auf " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + ", dabei Stein geschlagen.");
+						while (spiel.schlagMoeglichDame(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == true) {
+							sp.addToTextArea(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSpielfigur() + " auf " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + " kann noch einmal schlagen.");
+
+							int[] zielkoords = new int[2];
+							zielkoords = spiel.getActiveSpieler().getKi().actAgain(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]], spiel.getSpielbrett().getBrett());
+
+							spiel.doSchlagStein(spiel.getActiveSpieler(), spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]], spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]]);
+							sp.addToTextArea("von " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + " auf " + spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]].getSchachNotation() + ", dabei Stein geschlagen.");
+							kikoords[2] = spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]].getPosY();
+							kikoords[3] = spiel.getSpielbrett().getBrett()[zielkoords[0]][zielkoords[1]].getPosX();
+
+						}
+						if (spiel.schlagMoeglichDame(spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]) == false) {
+							spielerRotation();
+						}
+					} else {
+
+					}
+
+				} else {
+
+					spiel.move(spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]], spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]]);
+					sp.addToTextArea(spiel.getSpielbrett().getBrett()[kikoords[0]][kikoords[1]].getSchachNotation() + " auf " + spiel.getSpielbrett().getBrett()[kikoords[2]][kikoords[3]].getSchachNotation() + ".");
+					spielerRotation();
+				}
+			}
+
+			setzeSteine();
+
+			if (spiel.getSpieler()[0].getKi() != null && spiel.getSpieler()[1].getKi() != null) {
+				
+			}else{
+				spielbrett.kiDialog.setVisible(false);
+			}
 
 		}
 
@@ -415,7 +481,7 @@ public class EventHandler implements ActionListener {
 				} else {
 					try {
 						spiel.loadSerialize(dateiName);
-sp.addToTextArea("Spielstand wurde geladen");
+						sp.addToTextArea("Spielstand wurde geladen");
 					} catch (Exception e2) {
 						e2.printStackTrace();
 					}
@@ -429,7 +495,7 @@ sp.addToTextArea("Spielstand wurde geladen");
 		if (e.getSource() == menu.jmi_neuesSpiel && spiel != null) {
 			menu.jd_neuesSpiel.setVisible(true);
 		}
-		
+
 		if (e.getSource() == menu.jmi_neuesSpiel && spiel == null) {
 			menu.jf.setVisible(true);
 		}
@@ -447,7 +513,6 @@ sp.addToTextArea("Spielstand wurde geladen");
 		}
 
 		// Mensch RadioButton als default ausgewählt
-
 
 		if (e.getSource() == menu.jb_bestaetigen) {
 
@@ -505,8 +570,8 @@ sp.addToTextArea("Spielstand wurde geladen");
 
 			menu.jt_spieler1.setText("");
 			menu.jt_spieler2.setText("");
-		menu.rb_mensch1.setSelected(true);
-		menu.rb_mensch2.setSelected(true);
+			menu.rb_mensch1.setSelected(true);
+			menu.rb_mensch2.setSelected(true);
 		}
 
 		// Schliessen
@@ -762,30 +827,63 @@ sp.addToTextArea("Spielstand wurde geladen");
 
 	public void spielerRotation() {
 		setzeSteine();
-		if (spiel.getActiveSpieler() == spiel.getSpieler()[0]) {
-			if (spiel.checkSiegkondition(spiel.getActiveSpieler())) {
-				spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler() + " hat gewonnen.");
-				spielbrett.spielGewonnenDialog.setVisible(true);
-			}
-			spiel.checkAndGetDame(spiel.getActiveSpieler());
-			spiel.setActiveSpieler(spiel.getSpieler()[1]);
+		if (spiel.getSpieler()[0].getKi() == null || spiel.getSpieler()[1].getKi() == null) {
+			if (spiel.getActiveSpieler() == spiel.getSpieler()[0]) {
+				if (spiel.checkSiegkondition(spiel.getActiveSpieler())) {
+					spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler() + " hat gewonnen.");
+					spielbrett.spielGewonnenDialog.setVisible(true);
+				}
 
-			sp.addToTextArea("Zug " + rundenZaehler + ": " + spiel.getActiveSpieler().getFarbe());
-			if (spiel.getActiveSpieler().getKi() != null) {
-				spielbrett.kiDialog.setVisible(true);
-			}
-			rundenZaehler++;
-		} else {
-			if (spiel.checkSiegkondition(spiel.getActiveSpieler())) {
-				spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler() + " hat gewonnen.");
-				spielbrett.spielGewonnenDialog.setVisible(true);
-			}
-			spiel.checkAndGetDame(spiel.getActiveSpieler());
-			spiel.setActiveSpieler(spiel.getSpieler()[0]);
+				spiel.checkAndGetDame(spiel.getActiveSpieler());
+				spiel.setActiveSpieler(spiel.getSpieler()[1]);
 
-			sp.addToTextArea("Zug " + rundenZaehler + ": " + spiel.getActiveSpieler().getFarbe());
-			if (spiel.getActiveSpieler().getKi() != null) {
-				spielbrett.kiDialog.setVisible(true);
+				sp.addToTextArea("Zug " + rundenZaehler + ": " + spiel.getActiveSpieler().getFarbe());
+
+				rundenZaehler++;
+				if (spiel.getActiveSpieler().getKi() != null) {
+					spielbrett.kiDialog.setVisible(true);
+				}
+			} else {
+				if (spiel.checkSiegkondition(spiel.getActiveSpieler())) {
+					spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler() + " hat gewonnen.");
+					spielbrett.spielGewonnenDialog.setVisible(true);
+				}
+				spiel.checkAndGetDame(spiel.getActiveSpieler());
+				spiel.setActiveSpieler(spiel.getSpieler()[0]);
+
+				sp.addToTextArea("Zug " + rundenZaehler + ": " + spiel.getActiveSpieler().getFarbe());
+				if (spiel.getActiveSpieler().getKi() != null) {
+					spielbrett.kiDialog.setVisible(true);
+				}
+			}
+		}
+		if (spiel.getSpieler()[0].getKi() != null && spiel.getSpieler()[1].getKi() != null) {
+
+			if (spiel.getActiveSpieler() == spiel.getSpieler()[0]) {
+				if (spiel.checkSiegkondition(spiel.getActiveSpieler())) {
+					spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler() + " hat gewonnen.");
+					spielbrett.kiDialog.setVisible(false);
+					spielbrett.spielGewonnenDialog.setVisible(true);
+				}
+
+				spiel.checkAndGetDame(spiel.getActiveSpieler());
+				spiel.setActiveSpieler(spiel.getSpieler()[1]);
+
+				sp.addToTextArea("Zug " + rundenZaehler + ": " + spiel.getActiveSpieler().getFarbe());
+
+				rundenZaehler++;
+
+			} else {
+				if (spiel.checkSiegkondition(spiel.getActiveSpieler())) {
+					spielbrett.spielGewonnenText.setText(spiel.getActiveSpieler() + " hat gewonnen.");
+					spielbrett.kiDialog.setVisible(false);
+					spielbrett.spielGewonnenDialog.setVisible(true);
+				}
+				spiel.checkAndGetDame(spiel.getActiveSpieler());
+				spiel.setActiveSpieler(spiel.getSpieler()[0]);
+
+				sp.addToTextArea("Zug " + rundenZaehler + ": " + spiel.getActiveSpieler().getFarbe());
+
 			}
 		}
 	}

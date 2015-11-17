@@ -11,7 +11,7 @@ private FarbEnum farbe;
 	public abstract void setFarbe(FarbEnum farbe);
 	public abstract Spielfeld[] kiAct(Spielfeld[][] brett);
 
-	public abstract Spielfeld actAgain(Spielfeld startfeld, Spielfeld[][] brett);
+	public abstract int[] actAgain(Spielfeld startfeld, Spielfeld[][] brett);
 
 	}
 
