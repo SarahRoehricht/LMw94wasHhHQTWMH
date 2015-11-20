@@ -37,7 +37,7 @@ public class Spielbrett {
 	JButton spielGewonnenDialogButton = new JButton();
 	JPanel spielGewonnenDialogPanel = new JPanel(new BorderLayout());
 	JLabel spielGewonnenText = new JLabel("", SwingConstants.CENTER);
-	JPanel boardConstraints = new JPanel(new GridBagLayout());
+	static JPanel boardConstraints = new JPanel(new GridBagLayout());
 
 	JDialog kiDialog = new JDialog();
 	JPanel kipanel = new JPanel(new BorderLayout());
@@ -170,7 +170,7 @@ public class Spielbrett {
     boardConstraints.add(Spielbrett);
 	}
 
-	public Component getSpielbrett() {
+	public static Component getSpielbrett() {
 
 		return boardConstraints;
 	}}

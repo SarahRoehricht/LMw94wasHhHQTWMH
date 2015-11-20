@@ -2,8 +2,12 @@ package frontend;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -16,6 +20,14 @@ import java.util.regex.Pattern;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+
+import com.itextpdf.text.BadElementException;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Image;
+import com.itextpdf.text.PageSize;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
 
 import backend.FarbEnum;
 /**
@@ -626,9 +638,43 @@ public class EventHandler implements ActionListener {
 			}
 			if (dateiTyp.equals("ser")) {
 				spiel.saveSerialize(dateiName);
-			} else {
-				// PDF speichern
+			} else if (dateiTyp.equals("pdf")){
+					try {
+					String filename = dateiName + ".png";
+					BufferedImage image = new BufferedImage (Spielbrett.getSpielbrett().getSize ().width,  Spielbrett.getSpielbrett().getSize().height,  BufferedImage.TYPE_INT_RGB );
+					Spielbrett.getSpielbrett().paintAll(image.getGraphics());
+					ImageIO.write(image, "png", new File(filename));
+
+					Document document = new Document(PageSize.A4, 20, 20, 20, 20);
+	
+					FileOutputStream fos = new FileOutputStream(dateiName + ".pdf");
+					PdfWriter writer = PdfWriter.getInstance(document, fos);
+					writer.open();
+					document.open();
+					
+					document.add(new Paragraph("Lieber User,\n\nvielen Dank, dass Sie unser Spiel gespielt haben. Ihren Spielstand zum Zeitpunkt des Speicherns finden Sie direkt unterhalb dieses Textes in Form eines Bildes wieder. Wir hoffen dass Ihnen unser Spiel Freude bereiten konnte. \nBei Rückfragen oder für Feedback stehen wir gerne für Sie bereit.\n\nMit freundlichen Grüßen, \nTeam -A2-"));
+					
+					
+					Image img;
+					img = Image.getInstance(filename);
+					float documentWidth = document.getPageSize().getWidth() - document.leftMargin() - document.rightMargin();
+					float documentHeight = document.getPageSize().getHeight() - document.topMargin() - document.bottomMargin();
+					img.scaleToFit(documentWidth, documentHeight);
+					document.add(img);
+					document.close();
+					writer.close();
+					sp.addToTextArea("Spielstand wurde als .pdf gespeichert Laden von .pdf nicht moeglich");
+					
+					} catch (BadElementException | IOException e1) {
+						e1.printStackTrace();
+					} catch (DocumentException e1) {
+						e1.printStackTrace();
+					}
+					
+				
+					
 			}
+			
 
 		}
 
