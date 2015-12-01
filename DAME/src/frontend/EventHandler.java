@@ -11,6 +11,7 @@ import javax.imageio.ImageIO;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import backend.Mail;
 import backend.Spiel;
 
 import java.awt.Color;
@@ -1042,7 +1043,17 @@ public class EventHandler implements ActionListener {
 			menu.rb_mensch1.setSelected(true);
 			menu.rb_mensch2.setSelected(true);
 		}
-
+		//email
+		if(e.getSource() == menu.jmi_email){
+			menu.jd_emailSenden.setVisible(true);
+		}
+		if(e.getSource()== menu.jbEmail){
+			String s = menu.tf.getText();
+			String t = "Lieber User,\n\nvielen Dank, dass Sie unser Spiel gespielt haben. Ihren Spielstand zum Zeitpunkt des Speicherns finden Sie direkt unterhalb dieses Textes in Form eines Bildes wieder. Wir hoffen dass Ihnen unser Spiel Freude bereiten konnte. \nBei Rückfragen oder für Feedback stehen wir gerne für Sie bereit.\n\nMit freundlichen Grüßen, \nTeam -A2-";
+			
+			new Mail(s ,"Spielstand", t , "eee.pdf", "pdf-datei.pdf", null, null);
+			menu.jd_emailSenden.dispose();
+		}
 		// Schliessen
 		if (e.getSource() == menu.jmi_schliessen) {
 			menu.jd_schliessen.setVisible(true);
