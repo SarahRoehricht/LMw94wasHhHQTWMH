@@ -26,8 +26,8 @@ public class Mail extends Thread {
 		private String password;
 
 		public MailAuthenticator() {
-			this.user = "" + p.get("mail.smtp.user");
-			this.password = "" + p.get("mail.smtp.password");
+			this.user = p.getProperty("mail.smtp.user");
+			this.password = p.getProperty("mail.smtp.password");
 		}
 
 		public PasswordAuthentication getPasswordAuthentication() {
@@ -46,8 +46,8 @@ public class Mail extends Thread {
 		p.put("mail.smtp.host", "mail.gmx.net");
 		p.put("mail.smtp.user", "informatik2_praktikum_a2@gmx.de");
 		p.put("mail.smtp.password", "JoJoCaSaA2");
-		p.put("mail.smtp.socketFactory.port", "465");
-		p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+		//p.put("mail.smtp.socketFactory.port", "465");
+		//p.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
 		p.put("mail.smtp.auth", "true");
 		p.put("mail.smtp.port", "465");
 		p.put("mail.smtp.ssl.enable", "true");

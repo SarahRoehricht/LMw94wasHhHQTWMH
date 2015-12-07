@@ -1059,8 +1059,9 @@ public class EventHandler implements ActionListener {
 				new Mail(s ,"Spielstand", t , a +".pdf", a+".pdf", null, null);
 				
 			}
-			sp.addToTextArea("Spielstand wurde in gewünschtem Foramt per Email gesendet");
 			menu.jd_emailSenden.dispose();
+			sp.addToTextArea("Spielstand wurde in gewünschtem Format per Email gesendet");
+			
 		}
 		// Schliessen
 		if (e.getSource() == menu.jmi_schliessen) {
