@@ -1,13 +1,24 @@
 package frontend;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GraphicsEnvironment;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
+import java.awt.Image;
+import java.awt.Insets;
 import java.awt.Rectangle;
+import java.awt.Toolkit;
+
 import javax.swing.ButtonGroup;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
@@ -22,6 +33,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.JTextPane;
+import javax.swing.SwingConstants;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.text.html.HTMLEditorKit;
 
@@ -31,7 +43,7 @@ import javax.swing.text.html.HTMLEditorKit;
  *
  */
 public class MenuLeiste extends JFrame {
-
+	
 	private static final long serialVersionUID = 1L;
 	GraphicsEnvironment env;
 	Rectangle bounds;
@@ -53,6 +65,8 @@ public class MenuLeiste extends JFrame {
 	JRadioButton rb_ki1;
 	JRadioButton rb_mensch2;
 	JRadioButton rb_ki2;
+	JRadioButton rb_PDF;
+	JRadioButton rb_SER;
 	ButtonGroup bg1;
 	ButtonGroup bg2;
 	JTextField jt_spieler1;
@@ -87,9 +101,14 @@ public class MenuLeiste extends JFrame {
 	JLabel jl_laden;
 	JLabel jl_neuesSpiel;
 	JLabel jl_schliessen;
-
+	//Email
 	JTextArea jText;
 	JTextField tf; 
+	JTextField tf2;
+	JLabel jlEmailFormat;
+	JLabel jlLeer;
+	JLabel jlLeer2;
+	
 	
 	JButton vorLadenSpeichern_ja;
 	JButton vorLadenSpeichern_nein;
@@ -406,22 +425,98 @@ public class MenuLeiste extends JFrame {
 		/******************************** JDialog-Fenster EMAIL **************************************/
 		jd_emailSenden = new JDialog();
 		jd_emailSenden.setTitle("Spielstand per Email senden");
-		jd_emailSenden.setSize(400, 130);
+		jd_emailSenden.setSize(445, 235);
+		jd_emailSenden.setResizable(false);
+//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		//System.out.println(screenSize.width+","+screenSize.height);
+		jd_emailSenden.setLocationRelativeTo(null);
 		jd_emailSenden.setModal(true);
+		Image image = Toolkit.getDefaultToolkit().getImage("Emailb.png");
+		jd_emailSenden.setIconImage(image);
 		tf = new JTextField();
+		tf.setOpaque(true);
+		tf.setBackground(Color.WHITE);
+		tf2 = new JTextField();
+		tf2.setOpaque(true);
+		tf2.setBackground(Color.WHITE);
+		//jlEmailFormat= new JLabel("Wählen Sie bitte aus welches Format");
+		jlEmailFormat= new JLabel("Bitte wählen Sie aus welches Format");
+		jlEmailFormat.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		
+		jlEmailFormat.setOpaque(true);
+		jlEmailFormat.setBackground(Color.WHITE);
+		jlEmailFormat.setForeground(Color.BLACK);
+		jlLeer = new JLabel(", Sie per Email senden möchten");
+		jlLeer.setHorizontalAlignment(SwingConstants.LEFT);
+		
+		
+		jlLeer2 = new JLabel("");
+		jlLeer.setOpaque(true);
+		jlLeer.setBackground(Color.WHITE);
+		jlLeer.setForeground(Color.BLACK);
+		jlLeer2.setOpaque(true);
+		jlLeer2.setBackground(Color.WHITE);
+		jlLeer2.setIcon(new ImageIcon("Emailb2.png"));
+		jlLeer2.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		rb_PDF = new JRadioButton("PDF als Anhang",true);
+		rb_SER = new JRadioButton("SER als Anhang");
+		rb_PDF.setBackground(Color.WHITE);
+		rb_SER.setBackground(Color.WHITE);
+		rb_PDF.setForeground(Color.BLACK);
+		rb_SER.setForeground(Color.BLACK);
+		rb_SER.setHorizontalAlignment(SwingConstants.LEFT);
+		rb_PDF.setHorizontalAlignment(SwingConstants.RIGHT);;
+		ButtonGroup bg = new ButtonGroup();
+		GridBagConstraints gbcEmail = new GridBagConstraints();
+		bg.add(rb_PDF);
+		bg.add(rb_SER);
 		tf.setPreferredSize(new Dimension(90,25));
+		tf2.setPreferredSize(new Dimension(90,25));
 		jd_emailSenden.add(tf);
 		
-		jbEmail = new JButton("Senden");
-		jbEmail.setPreferredSize(new Dimension(90,25));
-		JPanel jpEmail = new JPanel();
+		jbEmail = new JButton();
+		jbEmail.setIcon(new ImageIcon("Emailsenden.png"));
+		//jbEmail.setText("Senden");
+		//jbEmail.setPreferredSize(new Dimension(20,25));
+		jbEmail.setBackground(Color.WHITE);
+		
+
+		JPanel jpEmail = new JPanel(new GridBagLayout());
+		
+
+		JLabel BackgroundImage = new JLabel(); 
+		BackgroundImage.setIcon(new ImageIcon("Emailb.png"));
+		BackgroundImage.setHorizontalAlignment(SwingConstants.CENTER);
+		jpEmail.add(BackgroundImage,gbcEmail,0);
 		JLabel jlEmail = new JLabel("An: ");
-		jpEmail.add(jlEmail);
-		jpEmail.add(tf);
-		jpEmail.add(jbEmail);
+		jlEmail.setHorizontalAlignment(SwingConstants.RIGHT);
+		
+		jlEmail.setOpaque(true);
+		jlEmail.setBackground(Color.WHITE);
+		jlEmail.setForeground(Color.BLACK);
+		
+		jpEmail.setLayout(new GridLayout(5,2,2,2));
+		jpEmail.add(jlEmail,gbcEmail,0);
+		jpEmail.add(tf,gbcEmail,1);	
+		jpEmail.add(jlEmailFormat,gbcEmail,2);
+		jpEmail.add(jlLeer,gbcEmail,3);
+		jpEmail.add(rb_PDF,gbcEmail,4);
+		jpEmail.add(rb_SER,gbcEmail,5);	
+		JLabel jl2Email = new JLabel("Dateiname: ");
+		jl2Email.setOpaque(true);
+		jl2Email.setForeground(Color.BLACK);
+		jl2Email.setBackground(Color.WHITE);
+		jl2Email.setHorizontalAlignment(SwingConstants.RIGHT);
+		jpEmail.add(jl2Email,gbcEmail,6);
+		jpEmail.add(tf2,gbcEmail,7);
+		jpEmail.add(jlLeer2, 8);
+		jpEmail.add(jbEmail,gbcEmail,9);
+		jd_emailSenden.add(BackgroundImage);
+
 		jd_emailSenden.add(jpEmail);
-		
-		
+				
 		/******************************** JDialog-Fenster SCHLIESSEN **************************************/
 		jd_schliessen = new JDialog();
 		jd_schliessen.setTitle("Spiel verlassen");
@@ -452,6 +547,7 @@ public class MenuLeiste extends JFrame {
 		schliessen_nein.addActionListener(eh);
 
 	}
+	
 
 	public Component getJPanel() {
 		panel.add(leiste);

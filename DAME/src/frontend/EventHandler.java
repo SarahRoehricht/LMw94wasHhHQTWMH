@@ -1049,9 +1049,17 @@ public class EventHandler implements ActionListener {
 		}
 		if(e.getSource()== menu.jbEmail){
 			String s = menu.tf.getText();
+			String a= menu.tf2.getText();
 			String t = "Lieber User,\n\nvielen Dank, dass Sie unser Spiel gespielt haben. Ihren Spielstand zum Zeitpunkt des Speicherns finden Sie direkt unterhalb dieses Textes in Form eines Bildes wieder. Wir hoffen dass Ihnen unser Spiel Freude bereiten konnte. \nBei Rückfragen oder für Feedback stehen wir gerne für Sie bereit.\n\nMit freundlichen Grüßen, \nTeam -A2-";
 			
-			new Mail(s ,"Spielstand", t , "eee.pdf", "pdf-datei.pdf", null, null);
+			if(menu.rb_SER.isSelected()){
+			new Mail(s,"Spielstand", t , a+".ser",a+".ser",null, null);
+			}
+			else if(menu.rb_PDF.isSelected()){
+				new Mail(s ,"Spielstand", t , a +".pdf", a+".pdf", null, null);
+				
+			}
+			sp.addToTextArea("Spielstand wurde in gewünschtem Foramt per Email gesendet");
 			menu.jd_emailSenden.dispose();
 		}
 		// Schliessen
