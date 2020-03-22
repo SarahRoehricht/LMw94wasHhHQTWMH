@@ -1732,14 +1732,14 @@ public class Spiel implements iBediener, iDatenzugriff, Serializable {
 	}
 
 	public void savePDF(String filename){
-//		iDatenzugriff pdf = new DatenzugriffPDF();
-//		
-//			try {
-//				pdf.speichern(this, filename);
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		
+		iDatenzugriff pdf = new DatenzugriffPDF();
+		
+			try {
+				pdf.speichern(this, filename);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		
 		
 	}
 	
